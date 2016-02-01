@@ -1,4 +1,7 @@
 <?php
+namespace Blog;
+
+
 return array(
     'router' => array(
         'routes' => array(
