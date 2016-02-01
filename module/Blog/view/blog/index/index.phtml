@@ -1,0 +1,17 @@
+<div id="content">
+	<?php foreach ($this->entries as $entry): ?>
+	<div class="post">
+		<p class="meta">
+			<span class="date"><?= $entry->date ?></span>
+			<span class="posted">Posted by <a href="#"><?= $entry->author ?></a></span>
+		</p>
+		<div style="clear: both;">&nbsp;</div>
+		<div class="entry">
+			<p><?= $entry->message ?></p>
+			<p class="links"><a href="#">Read More</a></p>
+		</div>
+	</div>
+	<?php endforeach; ?>
+	<div style="clear: both;">&nbsp;</div>
+</div>
+<!-- end #content -->
