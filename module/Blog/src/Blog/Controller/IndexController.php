@@ -10,10 +10,27 @@
 namespace Blog\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
+use Doctrine\ORM\EntityManager;
 use Blog\Service\Entry;
+
+use Zend\View\Model\ViewModel;
+use Blog\Model\Album;
 
 class IndexController extends AbstractActionController
 {
+
+    /**
+     * @var DoctrineORMEntityManager
+     */
+    protected $em;
+
+    public function getEntityManager()
+    {
+        if (null === $this->em) {
+            $this->em = $this->getServiceLocator()->get('doctrine.entitymanager.orm_default');
+        }
+        return $this->em;
+    }
     
     public function indexAction()
     {
