@@ -23,5 +23,13 @@
                      )
              )
          )
+     ),
+     'migrations_configuration' => array(
+         'orm_default' => array(
+             'name' => 'Application Migrations',
+             'directory' => __DIR__ . "/../../migrations",
+             'namespace' => 'Application\Migrations',
+             'table_name' => 'doctrine_migration',
+         )
      )
  );
