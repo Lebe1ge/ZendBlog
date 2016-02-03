@@ -34,7 +34,6 @@ class IndexController extends AbstractActionController
     public function indexAction()
     {
         $resultSet = $this->getEntityManager()->getRepository('Blog\Entity\Post')->findAll();
-
         return new ViewModel(array(
             'posts' => $resultSet,
         ));
