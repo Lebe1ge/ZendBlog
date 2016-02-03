@@ -42,10 +42,12 @@ return array(
                         'options' => array(
                             'route'    => '/[:controller[/:action]]',
                             'constraints' => array(
-                                'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
                                 'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
+                                'id'         => '[0-9]+'
                             ),
                             'defaults' => array(
+                                'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                                'action'     => 'index'
                             ),
                         ),
                     ),

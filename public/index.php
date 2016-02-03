@@ -1,13 +1,15 @@
 <?php
-define('APPLICATION_ENV','development');
+//define('APPLICATION_ENV','development');
+//
+///**
+// * Display all errors when APPLICATION_ENV is development.
+// */
+//if ($_SERVER['APPLICATION_ENV'] == 'development') {
+//    error_reporting(E_ALL);
+//    ini_set("display_errors", 1);
+//}
 
-/**
- * Display all errors when APPLICATION_ENV is development.
- */
-if ($_SERVER['APPLICATION_ENV'] == 'development') {
-    error_reporting(E_ALL);
-    ini_set("display_errors", 1);
-}
+
 /**
  * This makes our life easier when dealing with paths. Everything is relative
  * to the application root now.

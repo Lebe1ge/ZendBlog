@@ -11,10 +11,9 @@ namespace Blog\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
 use Doctrine\ORM\EntityManager;
-use Blog\Service\Entry;
+use Doctrine\ORM\Query;
 
 use Zend\View\Model\ViewModel;
-use Blog\Model\Album;
 
 class IndexController extends AbstractActionController
 {
@@ -34,8 +33,11 @@ class IndexController extends AbstractActionController
     
     public function indexAction()
     {
-        $entryService = new Entry();
-        return ['entries' => $entryService->getLasts()];
+        $resultSet = $this->getEntityManager()->getRepository('Blog\Entity\Post')->findAll();
+
+        return new ViewModel(array(
+            'posts' => $resultSet,
+        ));
     }
 
     public function fooAction()
