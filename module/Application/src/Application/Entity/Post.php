@@ -40,7 +40,8 @@ class Post extends AbstractEntity
      */
     protected $author;
 
-    protected $url;
+    protected $inputFilter;
+
 
     /**
      * Magic getter to expose protected properties.
@@ -85,7 +86,6 @@ class Post extends AbstractEntity
         $this->title = (isset($data['title'])) ? $data['title'] : null;
         $this->content = (isset($data['content'])) ? $data['content'] : null;
         $this->author = (isset($data['author'])) ? $data['author'] : null;
-        $this->url = "/post/".$this->id;
     }
 
     public function setInputFilter(InputFilterInterface $inputFilter)
