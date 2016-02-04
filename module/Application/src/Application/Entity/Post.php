@@ -1,6 +1,10 @@
 <?php
-namespace Application\Model;
+namespace Application\Entity;
 use Doctrine\ORM\Mapping as ORM;
+use Zend\InputFilter\InputFilter;
+use Zend\InputFilter\Factory as InputFactory;
+use Zend\InputFilter\InputFilterAwareInterface;
+use Zend\InputFilter\InputFilterInterface;
 
 /**
  * Représentation d'un utilisateur
@@ -10,11 +14,13 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @author
  */
-class Post
+class Post implements InputFilterAwareInterface
 {
     /*********************************
      * ATTRIBUTS
      *********************************/
+
+    protected $inputFilter;
 
     /**
      * @var int L'identifiant utilisateur
@@ -22,27 +28,27 @@ class Post
      * @ORM\Column(type="integer", name="post_id")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    protected $_id;
+    protected $id;
     /**
      * @var string Le titre
      * @ORM\Column(type="string", length=255, unique=true, nullable=true, name="title")
      */
-    protected $_title;
+    protected $title;
     /**
      * @var string Le contenu
      * @ORM\Column(type="string", unique=true,  length=255, name="content")
      */
-    protected $_content;
+    protected $content;
     /**
      * @var string L'auteur
      * @ORM\Column(type="string", length=50, nullable=true, name="author")
      */
-    protected $_author;
+    protected $author;
     /**
      * @var int Statut du post
      * @ORM\Column(type="integer", name="state")
      */
-    protected $_state;
+    protected $state;
 
     /*********************************
      * ACCESSEURS
@@ -51,106 +57,28 @@ class Post
     /*********** GETTERS ************/
 
     /**
-     * Obtient l'identifiant du post
-     * @return int
+     * Magic getter to expose protected properties.
+     *
+     * @param string $property
+     * @return mixed
      */
-    public function getId()
+    public function __get($property)
     {
-        return $this->_id;
-    }
-
-    /**
-     * Obtient le titre
-     * @return string
-     */
-    public function getTitle()
-    {
-        return $this->_title;
-    }
-
-    /**
-     * Obtient le contenu
-     * @return string
-     */
-    public function getContent()
-    {
-        return $this->_content;
-    }
-
-    /**
-     * Obtient l'auteur
-     * @return string
-     */
-    public function getAuthor()
-    {
-        return $this->_author;
-    }
-
-    /**
-     * Obtient le statut du post
-     * @return int
-     */
-    public function getState()
-    {
-        return $this->_state;
+        return $this->$property;
     }
 
 
     /*********** SETTERS ************/
 
     /**
-     * Définit l'id du post
-     * @param int $id L'identifiant
-     * @return Post
+     * Magic setter to save protected properties.
+     *
+     * @param string $property
+     * @param mixed $value
      */
-    public function setId($id)
+    public function __set($property, $value)
     {
-        $this->_id = (int) $id;
-        return $this;
-    }
-
-    /**
-     * Définit le titre
-     * @param string $title Le titre
-     * @return Post
-     */
-    public function setTitle($title)
-    {
-        $this->_title = $title;
-        return $this;
-    }
-
-    /**
-     * Définit le contenu
-     * @param string $content Le contenu
-     * @return Post
-     */
-    public function setContent($content)
-    {
-        $this->_content = $content;
-        return $this;
-    }
-
-    /**
-     * Définit l'auteur
-     * @param string $author L'auteur
-     * @return Post
-     */
-    public function setAuthor($author)
-    {
-        $this->_author = $author;
-        return $this;
-    }
-
-    /**
-     * Définit l'état
-     * @param int $state L'etat
-     * @return Post
-     */
-    public function setState($state)
-    {
-        $this->_state = $state;
-        return $this;
+        $this->$property = $value;
     }
 
     /*********************************
@@ -170,6 +98,109 @@ class Post
      *********************************/
 
     /************ PUBLIC ************/
+    /**
+     * Convert the object to an array.
+     *
+     * @return array
+     */
+    public function getArrayCopy()
+    {
+        return get_object_vars($this);
+    }
+
+    /**
+     * Populate from an array.
+     *
+     * @param array $data
+     */
+    public function exchangeArray ($data = array())
+    {
+        $this->id = $data['id'];
+        $this->title = $data['title'];
+        $this->content = $data['content'];
+        $this->author = $data['author'];
+    }
+
+    public function setInputFilter(InputFilterInterface $inputFilter)
+    {
+        throw new \Exception("Not used");
+    }
+
+    public function getInputFilter()
+    {
+        if (!$this->inputFilter) {
+            $inputFilter = new InputFilter();
+
+            $inputFilter->add(array(
+                'name'     => 'id',
+                'required' => true,
+                'filters'  => array(
+                    array('name' => 'Int'),
+                ),
+            ));
+
+            $inputFilter->add(array(
+                'name'     => 'title',
+                'required' => true,
+                'filters'  => array(
+                    array('name' => 'StripTags'),
+                    array('name' => 'StringTrim'),
+                ),
+                'validators' => array(
+                    array(
+                        'name'    => 'StringLength',
+                        'options' => array(
+                            'encoding' => 'UTF-8',
+                            'min'      => 1,
+                            'max'      => 255,
+                        ),
+                    ),
+                ),
+            ));
+
+            $inputFilter->add(array(
+                'name'     => 'content',
+                'required' => true,
+                'filters'  => array(
+                    array('name' => 'StripTags'),
+                    array('name' => 'StringTrim'),
+                ),
+                'validators' => array(
+                    array(
+                        'name'    => 'StringLength',
+                        'options' => array(
+                            'encoding' => 'UTF-8',
+                            'min'      => 1,
+                        ),
+                    ),
+                ),
+            ));
+
+            $inputFilter->add(array(
+                'name'     => 'author',
+                'required' => true,
+                'filters'  => array(
+                    array('name' => 'StripTags'),
+                    array('name' => 'StringTrim'),
+                ),
+                'validators' => array(
+                    array(
+                        'name'    => 'StringLength',
+                        'options' => array(
+                            'encoding' => 'UTF-8',
+                            'min'      => 1,
+                            'max'      => 255,
+                        ),
+                    ),
+                ),
+            ));
+
+            $this->inputFilter = $inputFilter;
+        }
+
+        return $this->inputFilter;
+    }
+
 
     /*********** PROTECTED **********/
 

@@ -40,13 +40,14 @@ return array(
                 'options' => array(
                     'route'    => '/admin[/:controller][/:action][/:id]',
                     'constraints' => array(
-                        'controller' => '[a-zA-Z][a-zA-Z0-9_-]*'.'Admin',
+                        'controller' => '[a-zA-Z]*',
                         'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
                         'id'     => '[0-9]+',
                     ),
                     'defaults' => array(
                         'controller' => 'Application\Controller\IndexAdmin',
                         'action'     => 'index',
+                        'id'     => '',
                     ),
                 ),
             ),
@@ -90,6 +91,7 @@ return array(
             'Zend\Log\LoggerAbstractServiceFactory',
         ),
         'factories' => array(
+            'Application\Service\PostService' => 'Application\Service\Factory\PostServiceFactory',
             'Application\Service\UserService' => 'Application\Service\Factory\UserServiceFactory'
         ),
         'aliases' => array(
@@ -109,7 +111,9 @@ return array(
     'controllers' => array(
         'invokables' => array(
             'Application\Controller\Index' => 'Application\Controller\IndexController',
-            'Application\Controller\Post' => 'Application\Controller\PostController'
+            'Application\Controller\Post' => 'Application\Controller\PostController',
+            'Application\Controller\IndexAdmin' => 'Application\Controller\IndexAdminController',
+            'Application\Controller\PostAdmin' => 'Application\Controller\PostAdminController'
         ),
     ),
     'view_manager' => array(
@@ -140,7 +144,7 @@ return array(
             __NAMESPACE__ . '_driver' => array(
                 'class' => 'Doctrine\ORM\Mapping\Driver\AnnotationDriver',
                 'cache' => 'array',
-                'paths' => array(__DIR__ . '/../src/' . __NAMESPACE__ . '/Model/Entity')
+                'paths' => array(__DIR__ . '/../src/' . __NAMESPACE__ . '/Entity')
             ),
             'orm_default' => array(
                 'drivers' => array(

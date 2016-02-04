@@ -68,7 +68,7 @@ class FeedRenderer implements RendererInterface
     public function render($nameOrModel, $values = null)
     {
         if ($nameOrModel instanceof Model) {
-            // Use case 1: View Model provided
+            // Use case 1: View Service provided
             // Non-FeedModel: cast to FeedModel
             if (!$nameOrModel instanceof FeedModel) {
                 $vars    = $nameOrModel->getVariables();

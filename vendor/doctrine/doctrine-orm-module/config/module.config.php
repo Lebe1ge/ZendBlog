@@ -156,7 +156,7 @@ return array(
             'orm_default' => array(
                 // name of the object manager to use. By default, the EntityManager is used
                 'objectManager' => 'doctrine.entitymanager.orm_default',
-                //'identityClass' => 'Application\Model\User',
+                //'identityClass' => 'Application\Service\User',
                 //'identityProperty' => 'username',
                 //'credentialProperty' => 'password'
             ),

@@ -156,7 +156,7 @@ class View implements EventManagerAwareInterface
      * Internally, the following workflow is used:
      *
      * - Trigger the "renderer" event to select a renderer.
-     * - Call the selected renderer with the provided Model
+     * - Call the selected renderer with the provided Service
      * - Trigger the "response" event
      *
      * @triggers renderer(ViewEvent)

@@ -14,7 +14,7 @@ use Zend\View\Model\ModelInterface;
 use Zend\View\Resolver\ResolverInterface;
 
 /**
- * Class for Zend\View\Model\ConsoleModel to help enforce private constructs.
+ * Class for Zend\View\Service\ConsoleModel to help enforce private constructs.
  *
  * Note: all private variables in this class are prefixed with "__". This is to
  * mark them as part of the internal implementation, and thus prevent conflict

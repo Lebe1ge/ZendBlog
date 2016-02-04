@@ -16,7 +16,7 @@ use Zend\Stdlib\ArrayUtils;
 abstract class AbstractCallback implements CallbackInterface
 {
     /**
-     * An instance of Zend\Feed\Pubsubhubbub\Model\SubscriptionPersistenceInterface
+     * An instance of Zend\Feed\Pubsubhubbub\Service\SubscriptionPersistenceInterface
      * used to background save any verification tokens associated with a subscription
      * or other.
      *
@@ -96,7 +96,7 @@ abstract class AbstractCallback implements CallbackInterface
     }
 
     /**
-     * Sets an instance of Zend\Feed\Pubsubhubbub\Model\SubscriptionPersistence used
+     * Sets an instance of Zend\Feed\Pubsubhubbub\Service\SubscriptionPersistence used
      * to background save any verification tokens associated with a subscription
      * or other.
      *
@@ -110,7 +110,7 @@ abstract class AbstractCallback implements CallbackInterface
     }
 
     /**
-     * Gets an instance of Zend\Feed\Pubsubhubbub\Model\SubscriptionPersistence used
+     * Gets an instance of Zend\Feed\Pubsubhubbub\Service\SubscriptionPersistence used
      * to background save any verification tokens associated with a subscription
      * or other.
      *

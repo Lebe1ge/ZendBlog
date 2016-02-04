@@ -18,32 +18,30 @@ use Zend\View\Model\ViewModel;
 class PostController extends AbstractActionController
 {
 
-    /**
-     * @var DoctrineORMEntityManager
-     */
-    protected $em;
+//    /**
+//     * @var DoctrineORMEntityManager
+//     */
+//    protected $em;
 
-    public function getEntityManager()
-    {
-        if (null === $this->em) {
-            $this->em = $this->getServiceLocator()->get('doctrine.entitymanager.orm_default');
-        }
-        return $this->em;
-    }
+//    public function getEntityManager()
+//    {
+//        if (null === $this->em) {
+//            $this->em = $this->getServiceLocator()->get('doctrine.entitymanager.orm_default');
+//        }
+//        return $this->em;
+//    }
 
     public function indexAction()
     {
-        $data = $this->getEntityManager()->getRepository('Application\Entity\Post')->findAll();
         return new ViewModel(array(
-            'posts' => $data,
+            'posts' => $this->getServiceLocator()->get('Application\Service\PostService')->getAll(),
         ));
     }
 
     public function showAction()
     {
-        $data = $this->getEntityManager()->getRepository('Application\Entity\Post')->find($this->params('id'));
         return new ViewModel(array(
-            'post' => $data,
+            'post' => $this->getServiceLocator()->get('Application\Service\PostService')->getById($this->params('id')),
         ));
     }
 

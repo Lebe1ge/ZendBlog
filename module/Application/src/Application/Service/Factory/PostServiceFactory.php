@@ -1,11 +1,11 @@
 <?php
 namespace Application\Service\Factory;
 
-use Application\Service\UserService;
+use Application\Service\PostService;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
-class UserServiceFactory implements FactoryInterface
+class PostServiceFactory implements FactoryInterface
 {
     /**
      * (non-PHPdoc)
@@ -15,8 +15,7 @@ class UserServiceFactory implements FactoryInterface
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
         $entityManager = $serviceLocator->get('Doctrine\ORM\EntityManager');
-        $userRepository = $entityManager->getRepository('Application\Model\User');
-
-        return new UserService($entityManager, $userRepository);
+        $postRepository = $entityManager->getRepository('Application\Entity\Post');
+        return new PostService($entityManager, $postRepository);
     }
 }

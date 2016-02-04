@@ -15,7 +15,7 @@ $settings = array(
     //'zend_db_adapter' => 'Zend\Db\Adapter\Adapter',
 
     /**
-     * User Model Entity Class
+     * User Service Entity Class
      *
      * Name of Entity class to use. Useful for using your own entity class
      * instead of the default one provided. Default is ZfcUser\Entity\User.

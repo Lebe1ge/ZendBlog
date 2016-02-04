@@ -1,32 +1,55 @@
 <?php
+namespace Application\Service;
+
+
+use \Doctrine\ORM\EntityManager;
+use \Doctrine\ORM\EntityRepository;
 /**
- * Created by PhpStorm.
- * User: Lebelge
- * Date: 01/02/2016
- * Time: 12:41
+ * Service layer - Abstract class
+ *
+ * @package Application\Service
+ * @author Bidoum
+ *
  */
+abstract class AbstractService{
 
-namespace Application\Model\Entity;
+    /**
+     * @var \Doctrine\ORM\EntityManager L'entity manager
+     */
+    private $_em;
+    /**
+     * @var \Doctrine\ORM\EntityRepository Le repository
+     */
+    private $_rep;
 
-
-abstract class AbstractService
-{
-    public function getArrayCopy(){
-        return get_object_vars($this);
+    /**
+     * Constructeur
+     * @param \Doctrine\ORM\EntityManager $em L'Entity manager
+     * @param \Doctrine\ORM\EntityRepository $rep Le repository
+     */
+    public function __construct(EntityManager $em, EntityRepository $rep)
+    {
+        $this->_em = $em;
+        $this->_rep = $rep;
     }
 
-    public function exchangeArray($options){
-        $methods = get_class_methods($this);
-        foreach($options as $key => $value) {
-            $method = $this->getSetterMethod($key);
-            if (in_array($method, $methods)) {
-                $this->$method($value);
-            }
-        }
-        return $this;
+    /**
+     * Obtient l'entity manager
+     * @return \Doctrine\ORM\EntityManager
+     */
+    protected function getEm()
+    {
+        return $this->_em;
     }
 
-    public function getSetterMethod($propertyName){
-        return "set" . str_replace(' ', '', ucwords(str_replace('_', '', $propertyName)));
+    /**
+     * Obtient le repository
+     * @return \Doctrine\ORM\EntityRepository
+     */
+    protected function getRep()
+    {
+        return $this->_rep;
     }
+
 }
+?>
