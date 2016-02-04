@@ -9,7 +9,7 @@
 namespace Application\Model\Entity;
 
 
-abstract class AbstractEntity
+abstract class AbstractService
 {
     public function getArrayCopy(){
         return get_object_vars($this);

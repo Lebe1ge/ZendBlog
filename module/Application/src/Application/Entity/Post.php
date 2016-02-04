@@ -1,152 +1,177 @@
 <?php
-
-namespace Application\Entity;
-
+namespace Application\Model;
 use Doctrine\ORM\Mapping as ORM;
-use Application\Model\Entity\AbstractEntity;
 
 /**
- * Class Article
+ * Représentation d'un utilisateur
  *
- * @package Application\Model\Entity
- * @ORM\Table(name="post")
  * @ORM\Entity
- * @property string $content
- * @property string $title
- * @property int $id
+ * @ORM\Table(name="post")
+ *
+ * @author
  */
-class Post extends AbstractEntity
+class Post
 {
+    /*********************************
+     * ATTRIBUTS
+     *********************************/
 
     /**
+     * @var int L'identifiant utilisateur
      * @ORM\Id
-     * @ORM\Column(type="integer");
+     * @ORM\Column(type="integer", name="post_id")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    protected $id;
+    protected $_id;
+    /**
+     * @var string Le titre
+     * @ORM\Column(type="string", length=255, unique=true, nullable=true, name="title")
+     */
+    protected $_title;
+    /**
+     * @var string Le contenu
+     * @ORM\Column(type="string", unique=true,  length=255, name="content")
+     */
+    protected $_content;
+    /**
+     * @var string L'auteur
+     * @ORM\Column(type="string", length=50, nullable=true, name="author")
+     */
+    protected $_author;
+    /**
+     * @var int Statut du post
+     * @ORM\Column(type="integer", name="state")
+     */
+    protected $_state;
+
+    /*********************************
+     * ACCESSEURS
+     *********************************/
+
+    /*********** GETTERS ************/
 
     /**
-     * @ORM\Column(type="string")
+     * Obtient l'identifiant du post
+     * @return int
      */
-    protected $content;
-
-    /**
-     * @ORM\Column(type="string")
-     */
-    protected $title;
-
-    /**
-     * @ORM\Column(type="string")
-     */
-    protected $author;
-
-    protected $inputFilter;
-
-
-    /**
-     * Magic getter to expose protected properties.
-     *
-     * @param string $property
-     * @return mixed
-     */
-    public function __get($property)
+    public function getId()
     {
-        return $this->$property;
+        return $this->_id;
     }
 
     /**
-     * Magic setter to save protected properties.
-     *
-     * @param string $property
-     * @param mixed $value
+     * Obtient le titre
+     * @return string
      */
-    public function __set($property, $value)
+    public function getTitle()
     {
-        $this->$property = $value;
+        return $this->_title;
     }
 
     /**
-     * Convert the object to an array.
-     *
-     * @return array
+     * Obtient le contenu
+     * @return string
      */
-    public function getArrayCopy()
+    public function getContent()
     {
-        return get_object_vars($this);
+        return $this->_content;
     }
 
     /**
-     * Populate from an array.
-     *
-     * @param array $data
+     * Obtient l'auteur
+     * @return string
      */
-    public function exchangeArray ($data = array())
+    public function getAuthor()
     {
-        $this->id = (isset($data['id'])) ? $data['id'] : null;
-        $this->title = (isset($data['title'])) ? $data['title'] : null;
-        $this->content = (isset($data['content'])) ? $data['content'] : null;
-        $this->author = (isset($data['author'])) ? $data['author'] : null;
+        return $this->_author;
     }
 
-    public function setInputFilter(InputFilterInterface $inputFilter)
+    /**
+     * Obtient le statut du post
+     * @return int
+     */
+    public function getState()
     {
-        throw new \Exception("Not used");
+        return $this->_state;
     }
 
-    public function getInputFilter()
+
+    /*********** SETTERS ************/
+
+    /**
+     * Définit l'id du post
+     * @param int $id L'identifiant
+     * @return Post
+     */
+    public function setId($id)
     {
-        if (!$this->inputFilter) {
-            $inputFilter = new InputFilter();
-
-            $inputFilter->add(array(
-                'name'     => 'id',
-                'required' => true,
-                'filters'  => array(
-                    array('name' => 'Int'),
-                ),
-            ));
-
-            $inputFilter->add(array(
-                'name'     => 'content',
-                'required' => true,
-                'filters'  => array(
-                    array('name' => 'StripTags'),
-                    array('name' => 'StringTrim'),
-                ),
-                'validators' => array(
-                    array(
-                        'name'    => 'StringLength',
-                        'options' => array(
-                            'encoding' => 'UTF-8',
-                            'min'      => 1,
-                            'max'      => 100,
-                        ),
-                    ),
-                ),
-            ));
-
-            $inputFilter->add(array(
-                'name'     => 'title',
-                'required' => true,
-                'filters'  => array(
-                    array('name' => 'StripTags'),
-                    array('name' => 'StringTrim'),
-                ),
-                'validators' => array(
-                    array(
-                        'name'    => 'StringLength',
-                        'options' => array(
-                            'encoding' => 'UTF-8',
-                            'min'      => 1,
-                            'max'      => 100,
-                        ),
-                    ),
-                ),
-            ));
-
-            $this->inputFilter = $inputFilter;
-        }
-
-        return $this->inputFilter;
+        $this->_id = (int) $id;
+        return $this;
     }
+
+    /**
+     * Définit le titre
+     * @param string $title Le titre
+     * @return Post
+     */
+    public function setTitle($title)
+    {
+        $this->_title = $title;
+        return $this;
+    }
+
+    /**
+     * Définit le contenu
+     * @param string $content Le contenu
+     * @return Post
+     */
+    public function setContent($content)
+    {
+        $this->_content = $content;
+        return $this;
+    }
+
+    /**
+     * Définit l'auteur
+     * @param string $author L'auteur
+     * @return Post
+     */
+    public function setAuthor($author)
+    {
+        $this->_author = $author;
+        return $this;
+    }
+
+    /**
+     * Définit l'état
+     * @param int $state L'etat
+     * @return Post
+     */
+    public function setState($state)
+    {
+        $this->_state = $state;
+        return $this;
+    }
+
+    /*********************************
+     * CONSTRUCTEUR / DESTRUCTEUR
+     *********************************/
+
+    /**
+     * Constructeur
+     */
+    public function __construct()
+    {
+
+    }
+
+    /*********************************
+     * METHODES
+     *********************************/
+
+    /************ PUBLIC ************/
+
+    /*********** PROTECTED **********/
+
+    /************ PRIVATE ***********/
 }

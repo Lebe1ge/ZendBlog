@@ -1,6 +1,10 @@
 <?php
+/**
+ * User
+ * @author Julien
+ *
+ */
 namespace Application\Model;
-use Application\Model\Entity\AbstractEntity;
 use Doctrine\ORM\Mapping as ORM;
 use ZfcUser\Entity\UserInterface;
 
@@ -12,7 +16,7 @@ use ZfcUser\Entity\UserInterface;
  *
  * @author
  */
-class User extends AbstractEntity
+class User implements UserInterface
 {
     /*********************************
      * ATTRIBUTS

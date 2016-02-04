@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Class Article
  *
- * @package Application\Model\Entity
+ * @package Application\Service\Entity
  * @ORM\Table(name="article")
  * @ORM\Entity
  * @property string $content
