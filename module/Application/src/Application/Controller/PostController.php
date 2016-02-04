@@ -33,10 +33,20 @@ class IndexController extends AbstractActionController
 
     public function indexAction()
     {
+        $resultSet = $this->getEntityManager()->getRepository('Application\Entity\Post')->findAll();
+        return new ViewModel(array(
+            'posts' => $resultSet,
+        ));
     }
 
     public function showAction()
     {
+        var_dump("COUCOUC4EEST NOUS");
+        die();
+//        $resultSet = $this->getEntityManager()->getRepository('Application\Entity\Post')->findBy();
+//        return new ViewModel(array(
+//            'posts' => $resultSet,
+//        ));
     }
 
     public function fooAction()
