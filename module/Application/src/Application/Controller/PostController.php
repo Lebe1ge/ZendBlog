@@ -15,7 +15,7 @@ use Doctrine\ORM\Query;
 
 use Zend\View\Model\ViewModel;
 
-class IndexController extends AbstractActionController
+class PostController extends AbstractActionController
 {
 
     /**
@@ -33,20 +33,18 @@ class IndexController extends AbstractActionController
 
     public function indexAction()
     {
-        $resultSet = $this->getEntityManager()->getRepository('Application\Entity\Post')->findAll();
+        $data = $this->getEntityManager()->getRepository('Application\Entity\Post')->findAll();
         return new ViewModel(array(
-            'posts' => $resultSet,
+            'posts' => $data,
         ));
     }
 
     public function showAction()
     {
-        var_dump("COUCOUC4EEST NOUS");
-        die();
-//        $resultSet = $this->getEntityManager()->getRepository('Application\Entity\Post')->findBy();
-//        return new ViewModel(array(
-//            'posts' => $resultSet,
-//        ));
+        $data = $this->getEntityManager()->getRepository('Application\Entity\Post')->find($this->params('id'));
+        return new ViewModel(array(
+            'post' => $data,
+        ));
     }
 
     public function fooAction()

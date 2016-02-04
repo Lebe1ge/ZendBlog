@@ -16,7 +16,36 @@ return array(
                 'options' => array(
                     'route'    => '/',
                     'defaults' => array(
-                        'controller' => 'Application\Controller\Index',
+                        'controller' => 'Application\Controller\Post',
+                        'action'     => 'index',
+                    ),
+                ),
+            ),
+            'postBlog' => array(
+                'type'    => 'segment',
+                'options' => array(
+                    'route'    => '/post[/:action][/:id]',
+                    'constraints' => array(
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'id'     => '[0-9]+',
+                    ),
+                    'defaults' => array(
+                        'controller' => 'Application\Controller\Post',
+                        'action'     => 'index',
+                    ),
+                ),
+            ),
+            'adminBlog' => array(
+                'type'    => 'segment',
+                'options' => array(
+                    'route'    => '/admin[/:controller][/:action][/:id]',
+                    'constraints' => array(
+                        'controller' => '[a-zA-Z][a-zA-Z0-9_-]*'.'Admin',
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'id'     => '[0-9]+',
+                    ),
+                    'defaults' => array(
+                        'controller' => 'Application\Controller\IndexAdmin',
                         'action'     => 'index',
                     ),
                 ),
@@ -79,7 +108,8 @@ return array(
     ),
     'controllers' => array(
         'invokables' => array(
-            'Application\Controller\Index' => 'Application\Controller\IndexController'
+            'Application\Controller\Index' => 'Application\Controller\IndexController',
+            'Application\Controller\Post' => 'Application\Controller\PostController'
         ),
     ),
     'view_manager' => array(

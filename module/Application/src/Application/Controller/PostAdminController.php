@@ -15,7 +15,7 @@ use Doctrine\ORM\Query;
 
 use Zend\View\Model\ViewModel;
 
-class PostController extends AbstractActionController
+class PostAdminController extends AbstractActionController
 {
 
     /**

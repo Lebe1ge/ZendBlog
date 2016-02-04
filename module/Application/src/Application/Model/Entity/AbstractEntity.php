@@ -18,7 +18,7 @@ abstract class AbstractEntity
     public function exchangeArray($options){
         $methods = get_class_methods($this);
         foreach($options as $key => $value) {
-            $methods = $this->getSetterMethod($key);
+            $method = $this->getSetterMethod($key);
             if (in_array($method, $methods)) {
                 $this->$method($value);
             }

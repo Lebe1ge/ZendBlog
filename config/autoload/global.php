@@ -19,17 +19,14 @@
                  'params' => array(
                      'host' => 'localhost',
                      'port' => '3306',
-                     'user' => 'root', 'password' => 'root', 'dbname' => 'zendBlog',
+                     'user' => 'root',
+                     'password' => 'root',
+                     'dbname' => 'zendBlog',
+                     'unix_socket' => '/Applications/MAMP/tmp/mysql/mysql.sock',
+                     'charset' => 'utf8',
+                     'driverOptions' => array(1002=>'SET NAMES utf8')
                      )
              )
          )
      ),
-     'migrations_configuration' => array(
-         'orm_default' => array(
-             'name' => 'Application Migrations',
-             'directory' => __DIR__ . "/../../migrations",
-             'namespace' => 'Application\Migrations',
-             'table_name' => 'doctrine_migration',
-         )
-     )
  );

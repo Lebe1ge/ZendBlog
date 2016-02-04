@@ -15,7 +15,7 @@ use Doctrine\ORM\Query;
 
 use Zend\View\Model\ViewModel;
 
-class IndexController extends AbstractActionController
+class IndexAdminController extends AbstractActionController
 {
 
     /**
@@ -33,6 +33,7 @@ class IndexController extends AbstractActionController
 
     public function indexAction()
     {
+        var_dump("Admin accueil");
     }
 
     public function showAction()
