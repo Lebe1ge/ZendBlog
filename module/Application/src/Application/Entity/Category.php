@@ -1,38 +1,60 @@
 <?php
-
-namespace Application\Model\Entity;
-
+namespace Application\Entity;
 use Doctrine\ORM\Mapping as ORM;
+use Zend\InputFilter\InputFilter;
+use Zend\InputFilter\Factory as InputFactory;
+use Zend\InputFilter\InputFilterAwareInterface;
+use Zend\InputFilter\InputFilterInterface;
 
 /**
- * Class Article
+ * Représentation d'un utilisateur
  *
- * @package Application\Service\Entity
- * @ORM\Table(name="article")
  * @ORM\Entity
- * @property string $content
- * @property string $title
- * @property int $id
+ * @ORM\Table(name="post")
+ *
+ * @author
  */
-class Article extends AbstractEntity
+class Post implements InputFilterAwareInterface
 {
+    /*********************************
+     * ATTRIBUTS
+     *********************************/
+
+    protected $inputFilter;
 
     /**
+     * @var int L'identifiant utilisateur
      * @ORM\Id
-     * @ORM\Column(type="integer");
+     * @ORM\Column(type="integer", name="post_id")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
-
     /**
-     * @ORM\Column(type="string")
-     */
-    protected $content;
-
-    /**
-     * @ORM\Column(type="string")
+     * @var string Le titre
+     * @ORM\Column(type="string", length=255, unique=true, nullable=true, name="title")
      */
     protected $title;
+    /**
+     * @var string Le contenu
+     * @ORM\Column(type="string", unique=true,  length=255, name="content")
+     */
+    protected $content;
+    /**
+     * @var string L'auteur
+     * @ORM\Column(type="string", length=50, nullable=true, name="author")
+     */
+    protected $author;
+    /**
+     * @var int Statut du post
+     * @ORM\Column(type="integer", name="state")
+     */
+    protected $state;
+
+    /*********************************
+     * ACCESSEURS
+     *********************************/
+
+    /*********** GETTERS ************/
 
     /**
      * Magic getter to expose protected properties.
@@ -45,6 +67,9 @@ class Article extends AbstractEntity
         return $this->$property;
     }
 
+
+    /*********** SETTERS ************/
+
     /**
      * Magic setter to save protected properties.
      *
@@ -56,6 +81,23 @@ class Article extends AbstractEntity
         $this->$property = $value;
     }
 
+    /*********************************
+     * CONSTRUCTEUR / DESTRUCTEUR
+     *********************************/
+
+    /**
+     * Constructeur
+     */
+    public function __construct()
+    {
+
+    }
+
+    /*********************************
+     * METHODES
+     *********************************/
+
+    /************ PUBLIC ************/
     /**
      * Convert the object to an array.
      *
@@ -74,8 +116,9 @@ class Article extends AbstractEntity
     public function exchangeArray ($data = array())
     {
         $this->id = $data['id'];
-        $this->content = $data['content'];
         $this->title = $data['title'];
+        $this->content = $data['content'];
+        $this->author = $data['author'];
     }
 
     public function setInputFilter(InputFilterInterface $inputFilter)
@@ -97,25 +140,6 @@ class Article extends AbstractEntity
             ));
 
             $inputFilter->add(array(
-                'name'     => 'content',
-                'required' => true,
-                'filters'  => array(
-                    array('name' => 'StripTags'),
-                    array('name' => 'StringTrim'),
-                ),
-                'validators' => array(
-                    array(
-                        'name'    => 'StringLength',
-                        'options' => array(
-                            'encoding' => 'UTF-8',
-                            'min'      => 1,
-                            'max'      => 100,
-                        ),
-                    ),
-                ),
-            ));
-
-            $inputFilter->add(array(
                 'name'     => 'title',
                 'required' => true,
                 'filters'  => array(
@@ -128,7 +152,44 @@ class Article extends AbstractEntity
                         'options' => array(
                             'encoding' => 'UTF-8',
                             'min'      => 1,
-                            'max'      => 100,
+                            'max'      => 255,
+                        ),
+                    ),
+                ),
+            ));
+
+            $inputFilter->add(array(
+                'name'     => 'content',
+                'required' => true,
+                'filters'  => array(
+                    array('name' => 'StripTags'),
+                    array('name' => 'StringTrim'),
+                ),
+                'validators' => array(
+                    array(
+                        'name'    => 'StringLength',
+                        'options' => array(
+                            'encoding' => 'UTF-8',
+                            'min'      => 1,
+                        ),
+                    ),
+                ),
+            ));
+
+            $inputFilter->add(array(
+                'name'     => 'author',
+                'required' => true,
+                'filters'  => array(
+                    array('name' => 'StripTags'),
+                    array('name' => 'StringTrim'),
+                ),
+                'validators' => array(
+                    array(
+                        'name'    => 'StringLength',
+                        'options' => array(
+                            'encoding' => 'UTF-8',
+                            'min'      => 1,
+                            'max'      => 255,
                         ),
                     ),
                 ),
@@ -139,4 +200,9 @@ class Article extends AbstractEntity
 
         return $this->inputFilter;
     }
+
+
+    /*********** PROTECTED **********/
+
+    /************ PRIVATE ***********/
 }

@@ -15,29 +15,34 @@ use Doctrine\ORM\Query;
 
 use Zend\View\Model\ViewModel;
 
-class IndexAdminController extends AbstractActionController
+class PostController extends AbstractActionController
 {
 
-    /**
-     * @var DoctrineORMEntityManager
-     */
-    protected $em;
+//    /**
+//     * @var DoctrineORMEntityManager
+//     */
+//    protected $em;
 
-    public function getEntityManager()
-    {
-        if (null === $this->em) {
-            $this->em = $this->getServiceLocator()->get('doctrine.entitymanager.orm_default');
-        }
-        return $this->em;
-    }
+//    public function getEntityManager()
+//    {
+//        if (null === $this->em) {
+//            $this->em = $this->getServiceLocator()->get('doctrine.entitymanager.orm_default');
+//        }
+//        return $this->em;
+//    }
 
     public function indexAction()
     {
-        var_dump("Admin accueil");
+        return new ViewModel(array(
+            'posts' => $this->getServiceLocator()->get('Application\Service\PostService')->getAll(),
+        ));
     }
 
     public function showAction()
     {
+        return new ViewModel(array(
+            'post' => $this->getServiceLocator()->get('Application\Service\PostService')->getById($this->params('id')),
+        ));
     }
 
     public function fooAction()
