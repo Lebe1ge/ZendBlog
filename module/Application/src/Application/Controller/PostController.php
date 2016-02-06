@@ -18,23 +18,11 @@ use Zend\View\Model\ViewModel;
 class PostController extends AbstractActionController
 {
 
-//    /**
-//     * @var DoctrineORMEntityManager
-//     */
-//    protected $em;
-
-//    public function getEntityManager()
-//    {
-//        if (null === $this->em) {
-//            $this->em = $this->getServiceLocator()->get('doctrine.entitymanager.orm_default');
-//        }
-//        return $this->em;
-//    }
-
-    public function indexAction()
+    public function listAction()
     {
+        $data = $this->getServiceLocator()->get('Application\Service\PostService')->getAll();
         return new ViewModel(array(
-            'posts' => $this->getServiceLocator()->get('Application\Service\PostService')->getAll(),
+            'posts' => $data,
         ));
     }
 
@@ -43,12 +31,5 @@ class PostController extends AbstractActionController
         return new ViewModel(array(
             'post' => $this->getServiceLocator()->get('Application\Service\PostService')->getById($this->params('id')),
         ));
-    }
-
-    public function fooAction()
-    {
-        // This shows the :controller and :action parameters in default route
-        // are working when you browse to /index/index/foo
-        return array();
     }
 }

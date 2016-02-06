@@ -15,40 +15,23 @@ use Doctrine\ORM\Query;
 
 use Zend\View\Model\ViewModel;
 
-class PostController extends AbstractActionController
+class CategoryController extends AbstractActionController
 {
 
-//    /**
-//     * @var DoctrineORMEntityManager
-//     */
-//    protected $em;
-
-//    public function getEntityManager()
-//    {
-//        if (null === $this->em) {
-//            $this->em = $this->getServiceLocator()->get('doctrine.entitymanager.orm_default');
-//        }
-//        return $this->em;
-//    }
-
-    public function indexAction()
+    public function listAction()
     {
+        $data = $this->getServiceLocator()->get('Application\Service\CategoryService')->getCategoryBySlug($this->params('slug'));
         return new ViewModel(array(
-            'posts' => $this->getServiceLocator()->get('Application\Service\PostService')->getAll(),
+            'category' => $data,
         ));
     }
 
     public function showAction()
     {
+        $data = $this->getServiceLocator()->get('Application\Service\CategoryService')->getById($this->params('id'));
         return new ViewModel(array(
-            'post' => $this->getServiceLocator()->get('Application\Service\PostService')->getById($this->params('id')),
+            'post' => $data,
         ));
     }
 
-    public function fooAction()
-    {
-        // This shows the :controller and :action parameters in default route
-        // are working when you browse to /index/index/foo
-        return array();
-    }
 }

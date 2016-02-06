@@ -17,11 +17,11 @@ return array(
                     'route'    => '/',
                     'defaults' => array(
                         'controller' => 'Application\Controller\Post',
-                        'action'     => 'index',
+                        'action'     => 'list',
                     ),
                 ),
             ),
-            'postBlog' => array(
+            'list_post_page' => array(
                 'type'    => 'segment',
                 'options' => array(
                     'route'    => '/post[/:action][/:id]',
@@ -31,23 +31,23 @@ return array(
                     ),
                     'defaults' => array(
                         'controller' => 'Application\Controller\Post',
-                        'action'     => 'index',
+                        'action'     => 'list',
                     ),
                 ),
             ),
-            'adminBlog' => array(
-                'type'    => 'segment',
+            'list_category_page' => array(
+                'type'    => 'Segment',
                 'options' => array(
-                    'route'    => '/admin[/:controller][/:action][/:id]',
+                    'route'    => '/category/:slug[/page/[:page]]',
                     'constraints' => array(
-                        'controller' => '[a-zA-Z]*',
-                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
-                        'id'     => '[0-9]+',
+                        'page'   => '[0-9]+',
+                        'slug'   => '[a-zA-Z][a-zA-Z_-]*'
                     ),
                     'defaults' => array(
-                        'controller' => 'Application\Controller\IndexAdmin',
-                        'action'     => 'index',
-                        'id'     => '',
+                        'module'     => 'Application',
+                        'controller' => 'Application\Controller\Category',
+                        'action'     => 'list',
+                        'page'       => 1
                     ),
                 ),
             ),
@@ -92,7 +92,7 @@ return array(
         ),
         'factories' => array(
             'Application\Service\PostService' => 'Application\Service\Factory\PostServiceFactory',
-            'Application\Service\UserService' => 'Application\Service\Factory\UserServiceFactory'
+            'Application\Service\CategoryService' => 'Application\Service\Factory\CategoryServiceFactory'
         ),
         'aliases' => array(
             'translator' => 'MvcTranslator',
@@ -112,8 +112,7 @@ return array(
         'invokables' => array(
             'Application\Controller\Index' => 'Application\Controller\IndexController',
             'Application\Controller\Post' => 'Application\Controller\PostController',
-            'Application\Controller\IndexAdmin' => 'Application\Controller\IndexAdminController',
-            'Application\Controller\PostAdmin' => 'Application\Controller\PostAdminController'
+            'Application\Controller\Category' => 'Application\Controller\CategoryController'
         ),
     ),
     'view_manager' => array(

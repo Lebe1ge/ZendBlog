@@ -10,11 +10,11 @@ use Zend\InputFilter\InputFilterInterface;
  * Représentation d'un utilisateur
  *
  * @ORM\Entity
- * @ORM\Table(name="post")
+ * @ORM\Table(name="category")
  *
  * @author
  */
-class Post implements InputFilterAwareInterface
+class Category implements InputFilterAwareInterface
 {
     /*********************************
      * ATTRIBUTS
@@ -23,29 +23,24 @@ class Post implements InputFilterAwareInterface
     protected $inputFilter;
 
     /**
-     * @var int L'identifiant utilisateur
+     * @var int L'identifiant de la categorie
      * @ORM\Id
-     * @ORM\Column(type="integer", name="post_id")
+     * @ORM\Column(type="integer", name="category_id")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
     /**
-     * @var string Le titre
-     * @ORM\Column(type="string", length=255, unique=true, nullable=true, name="title")
+     * @var string Le nom
+     * @ORM\Column(type="string", length=100, unique=true, nullable=true, name="nom")
      */
-    protected $title;
+    protected $nom;
     /**
-     * @var string Le contenu
-     * @ORM\Column(type="string", unique=true,  length=255, name="content")
+     * @var string Le slug
+     * @ORM\Column(type="string", unique=true,  length=100, name="slug")
      */
-    protected $content;
+    protected $slug;
     /**
-     * @var string L'auteur
-     * @ORM\Column(type="string", length=50, nullable=true, name="author")
-     */
-    protected $author;
-    /**
-     * @var int Statut du post
+     * @var int Statut de la categorie
      * @ORM\Column(type="integer", name="state")
      */
     protected $state;
@@ -116,9 +111,9 @@ class Post implements InputFilterAwareInterface
     public function exchangeArray ($data = array())
     {
         $this->id = $data['id'];
-        $this->title = $data['title'];
-        $this->content = $data['content'];
-        $this->author = $data['author'];
+        $this->nom = $data['nom'];
+        $this->slug = $data['slug'];
+        $this->state = $data['state'];
     }
 
     public function setInputFilter(InputFilterInterface $inputFilter)
@@ -140,7 +135,7 @@ class Post implements InputFilterAwareInterface
             ));
 
             $inputFilter->add(array(
-                'name'     => 'title',
+                'name'     => 'nom',
                 'required' => true,
                 'filters'  => array(
                     array('name' => 'StripTags'),
@@ -152,14 +147,14 @@ class Post implements InputFilterAwareInterface
                         'options' => array(
                             'encoding' => 'UTF-8',
                             'min'      => 1,
-                            'max'      => 255,
+                            'max'      => 100,
                         ),
                     ),
                 ),
             ));
 
             $inputFilter->add(array(
-                'name'     => 'content',
+                'name'     => 'slug',
                 'required' => true,
                 'filters'  => array(
                     array('name' => 'StripTags'),
@@ -171,25 +166,7 @@ class Post implements InputFilterAwareInterface
                         'options' => array(
                             'encoding' => 'UTF-8',
                             'min'      => 1,
-                        ),
-                    ),
-                ),
-            ));
-
-            $inputFilter->add(array(
-                'name'     => 'author',
-                'required' => true,
-                'filters'  => array(
-                    array('name' => 'StripTags'),
-                    array('name' => 'StringTrim'),
-                ),
-                'validators' => array(
-                    array(
-                        'name'    => 'StringLength',
-                        'options' => array(
-                            'encoding' => 'UTF-8',
-                            'min'      => 1,
-                            'max'      => 255,
+                            'max'      => 100,
                         ),
                     ),
                 ),
