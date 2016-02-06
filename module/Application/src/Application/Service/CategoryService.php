@@ -39,4 +39,38 @@ class CategoryService extends AbstractService
         return $this->getRep()->findBy(array('slug' => $slug));
     }
 
+    /**
+     * Sauvegarder une categorie
+     * @param Category category
+     */
+    public function saveCategory(Category $category)
+    {
+        $data = array(
+            'id_category' => $category->idCategory,
+            'name'  => $category->name
+        );
+
+        $id = (int)$category->id_category;
+
+        if ($id == 0) {
+            $this->insert($data);
+        } elseif ($this->getCategory($id)) {
+            $this->update(
+                $data,
+                array(
+                    'id_category' => $id,
+                )
+            );
+        }
+    }
+
+    /**
+     * Supprimer une categorie
+     * @param int id
+     */
+    public function deleteCategory($id)
+    {
+        $this->delete(array('id_category' => $id));
+    }
+
 }

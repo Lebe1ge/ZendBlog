@@ -8,7 +8,7 @@
             <div style="clear: both;">&nbsp;</div>
             <div class="entry">
                 <p><?= $entry->content ?></p>
-                <p class="links"><a href="<?= $this->url('postBlog', array('action' => 'show', 'id' =>$entry->id)); ?>">En savoir plus</a></p>
+                <p class="links"><a href="<?= $this->url('list_post_page', array('action' => 'show', 'id' =>$entry->id)); ?>">En savoir plus</a></p>
             </div>
         </div>
     <?php endforeach; ?>

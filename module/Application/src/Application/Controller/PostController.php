@@ -20,9 +20,11 @@ class PostController extends AbstractActionController
 
     public function listAction()
     {
-        $data = $this->getServiceLocator()->get('Application\Service\PostService')->getAll();
+        $category = $this->getServiceLocator()->get('Application\Service\CategoryService')->getAll();
+        $posts = $this->getServiceLocator()->get('Application\Service\PostService')->getAll();
         return new ViewModel(array(
-            'posts' => $data,
+            'category' => $category,
+            'posts' => $posts,
         ));
     }
 
