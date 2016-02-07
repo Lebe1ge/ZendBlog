@@ -1,0 +1,17 @@
+<?php
+$title = 'Ajouter un post';
+$this->headTitle($title);
+?>
+    <h1><?php echo $this->escapeHtml($title); ?></h1>
+<?php
+$form->setAttribute('action', $this->url('add_post', array('action' => 'add')));
+$form->prepare();
+
+echo $this->form()->openTag($form);
+echo $this->formHidden($form->get('post_id'));
+echo $this->formRow($form->get('title'));
+echo $this->formRow($form->get('content'));
+echo $this->formRow($form->get('author'));
+echo $this->formRow($form->get('category'));
+echo $this->formSubmit($form->get('submit'));
+echo $this->form()->closeTag();
