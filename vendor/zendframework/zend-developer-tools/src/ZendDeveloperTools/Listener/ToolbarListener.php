@@ -12,7 +12,7 @@
  * obtain it through the world-wide-web, please send an email
  * to license@zend.com so we can send you a copy immediately.
  *
- * @copyright  Copyright (c) 2005-2013 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2014 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
@@ -24,6 +24,7 @@ use Zend\View\Exception\RuntimeException;
 use ZendDeveloperTools\Options;
 use ZendDeveloperTools\Profiler;
 use ZendDeveloperTools\ProfilerEvent;
+use ZendDeveloperTools\Collector\AutoHideInterface;
 use ZendDeveloperTools\Exception\InvalidOptionException;
 use Zend\EventManager\EventManagerInterface;
 use Zend\EventManager\ListenerAggregateInterface;
@@ -32,7 +33,7 @@ use Zend\ServiceManager\ServiceLocatorInterface;
 /**
  * Developer Toolbar Listener
  *
- * @copyright  Copyright (c) 2005-2013 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2014 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class ToolbarListener implements ListenerAggregateInterface
@@ -86,7 +87,7 @@ class ToolbarListener implements ListenerAggregateInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function attach(EventManagerInterface $events)
     {
@@ -98,7 +99,7 @@ class ToolbarListener implements ListenerAggregateInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function detach(EventManagerInterface $events)
     {
@@ -158,8 +159,13 @@ class ToolbarListener implements ListenerAggregateInterface
         $toolbarCss->setTemplate('zend-developer-tools/toolbar/style');
         $style       = $this->renderer->render($toolbarCss);
 
-        $injected    = preg_replace('/<\/body>/i', $toolbar . "\n</body>", $response->getBody(), 1);
+        $toolbarJs  = new ViewModel();
+        $toolbarJs->setTemplate('zend-developer-tools/toolbar/script');
+        $script       = $this->renderer->render($toolbarJs);
+
+        $injected    = preg_replace('/<\/body>(?![\s\S]*<\/body>)/i', $toolbar . "\n</body>", $response->getBody(), 1);
         $injected    = preg_replace('/<\/head>/i', $style . "\n</head>", $injected, 1);
+        $injected    = preg_replace('/<\/body>(?![\s\S]*<\/body>)/i', $script . "\n</body>", $injected, 1);
 
         $response->setContent($injected);
     }
@@ -208,9 +214,15 @@ class ToolbarListener implements ListenerAggregateInterface
         foreach ($templates as $name => $template) {
             if (isset($collectors[$name])) {
                 try {
+                    $collectorInstance = $report->getCollector($name);
+
+                    if ($this->options->getToolbarAutoHide() && $collectorInstance instanceof AutoHideInterface && $collectorInstance->canHide()) {
+                        continue;
+                    }
+
                     $collector = new ViewModel(array(
                         'report'    => $report,
-                        'collector' => $report->getCollector($name),
+                        'collector' => $collectorInstance,
                     ));
                     $collector->setTemplate($template);
                     $entries[] = $this->renderer->render($collector);

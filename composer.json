@@ -1,11 +1,13 @@
 {
     "name": "zend/blog",
     "require": {
-        "zendframework/zendframework": "^2.5",
-        "doctrine/doctrine-orm-module": "^0.9.2",
-        "zf-commons/zfc-user": "^1.4",
-        "zendframework/zend-developer-tools": "^0.0.2",
-        "zf-commons/zfc-user-doctrine-orm": "^1.0"
+        "php" : ">=5.3.3",
+        "zendframework/zendframework" : "2.*",
+        "doctrine/doctrine-orm-module": "0.*",
+        "zendframework/zend-developer-tools": "dev-master",
+        "zf-commons/zfc-admin": "dev-master",
+        "zendframework/zftool": "v0.1.0",
+        "zendframework/zend-form": "2.6.0"
     },
     "authors": [
         {

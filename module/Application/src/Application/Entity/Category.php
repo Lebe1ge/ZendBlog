@@ -2,6 +2,7 @@
 namespace Application\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Zend\InputFilter\InputFilter;
+use Application\Filter\Slugify;
 use Zend\InputFilter\Factory as InputFactory;
 use Zend\InputFilter\InputFilterAwareInterface;
 use Zend\InputFilter\InputFilterInterface;
@@ -28,7 +29,7 @@ class Category implements InputFilterAwareInterface
      * @ORM\Column(type="integer", name="category_id")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    protected $id;
+    protected $category_id;
     /**
      * @var string Le nom
      * @ORM\Column(type="string", length=100, unique=true, nullable=true, name="nom")
@@ -110,10 +111,12 @@ class Category implements InputFilterAwareInterface
      */
     public function exchangeArray ($data = array())
     {
-        $this->id = $data['id'];
-        $this->nom = $data['nom'];
-        $this->slug = $data['slug'];
-        $this->state = $data['state'];
+        $slugifyFilter = new Slugify();
+
+        $this->category_id = (isset($data['category_id'])) ? $data['category_id'] : null;
+        $this->nom = (isset($data['nom'])) ? $data['nom'] : null;
+        $this->slug = (isset($data['slug'])) ? $data['slug'] : $slugifyFilter->filter($this->nom);
+        $this->state = (isset($data['state'])) ? $data['state'] : 1;
     }
 
     public function setInputFilter(InputFilterInterface $inputFilter)
@@ -127,50 +130,33 @@ class Category implements InputFilterAwareInterface
             $inputFilter = new InputFilter();
 
             $inputFilter->add(array(
-                'name'     => 'id',
+                'name'     => 'category_id',
                 'required' => true,
                 'filters'  => array(
                     array('name' => 'Int'),
                 ),
             ));
 
-            $inputFilter->add(array(
-                'name'     => 'nom',
-                'required' => true,
-                'filters'  => array(
-                    array('name' => 'StripTags'),
-                    array('name' => 'StringTrim'),
-                ),
-                'validators' => array(
-                    array(
-                        'name'    => 'StringLength',
-                        'options' => array(
-                            'encoding' => 'UTF-8',
-                            'min'      => 1,
-                            'max'      => 100,
+            $inputFilter->add(
+                array(
+                    'name'     => 'nom',
+                    'required' => true,
+                    'filters'  => array(
+                        array('name' => 'StripTags'),
+                        array('name' => 'StringTrim'),
+                    ),
+                    'validators' => array(
+                        array(
+                            'name'    => 'StringLength',
+                            'options' => array(
+                                'encoding' => 'UTF-8',
+                                'min'      => 1,
+                                'max'      => 100,
+                            ),
                         ),
                     ),
-                ),
-            ));
-
-            $inputFilter->add(array(
-                'name'     => 'slug',
-                'required' => true,
-                'filters'  => array(
-                    array('name' => 'StripTags'),
-                    array('name' => 'StringTrim'),
-                ),
-                'validators' => array(
-                    array(
-                        'name'    => 'StringLength',
-                        'options' => array(
-                            'encoding' => 'UTF-8',
-                            'min'      => 1,
-                            'max'      => 100,
-                        ),
-                    ),
-                ),
-            ));
+                )
+            );
 
             $this->inputFilter = $inputFilter;
         }

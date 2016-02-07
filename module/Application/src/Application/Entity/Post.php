@@ -28,7 +28,7 @@ class Post implements InputFilterAwareInterface
      * @ORM\Column(type="integer", name="post_id")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    protected $id;
+    protected $post_id;
     /**
      * @var string Le titre
      * @ORM\Column(type="string", length=255, unique=true, nullable=true, name="title")
@@ -36,9 +36,14 @@ class Post implements InputFilterAwareInterface
     protected $title;
     /**
      * @var string Le contenu
-     * @ORM\Column(type="string", unique=true,  length=255, name="content")
+     * @ORM\Column(type="text", name="content")
      */
     protected $content;
+    /**
+     * @var string La catégorie
+     * @ORM\Column(type="string", length=100, name="category")
+     */
+    protected $category;
     /**
      * @var string L'auteur
      * @ORM\Column(type="string", length=50, nullable=true, name="author")
@@ -115,10 +120,13 @@ class Post implements InputFilterAwareInterface
      */
     public function exchangeArray ($data = array())
     {
-        $this->id = $data['id'];
-        $this->title = $data['title'];
-        $this->content = $data['content'];
-        $this->author = $data['author'];
+
+        $this->post_id = (isset($data['post_id'])) ? $data['post_id'] : null;
+        $this->title = (isset($data['title'])) ? $data['title'] : null;
+        $this->content = (isset($data['content'])) ? $data['content'] : null;
+        $this->category = (isset($data['category'])) ? $data['category'] : null;
+        $this->author = (isset($data['author'])) ? $data['author'] : null;
+        $this->state = (isset($data['state'])) ? $data['state'] : 1;
     }
 
     public function setInputFilter(InputFilterInterface $inputFilter)
@@ -132,7 +140,7 @@ class Post implements InputFilterAwareInterface
             $inputFilter = new InputFilter();
 
             $inputFilter->add(array(
-                'name'     => 'id',
+                'name'     => 'post_id',
                 'required' => true,
                 'filters'  => array(
                     array('name' => 'Int'),
@@ -177,6 +185,25 @@ class Post implements InputFilterAwareInterface
             ));
 
             $inputFilter->add(array(
+                'name'     => 'category',
+                'required' => true,
+                'filters'  => array(
+                    array('name' => 'StripTags'),
+                    array('name' => 'StringTrim'),
+                ),
+                'validators' => array(
+                    array(
+                        'name'    => 'StringLength',
+                        'options' => array(
+                            'encoding' => 'UTF-8',
+                            'min'      => 1,
+                            'max'      => 100,
+                        ),
+                    ),
+                ),
+            ));
+
+            $inputFilter->add(array(
                 'name'     => 'author',
                 'required' => true,
                 'filters'  => array(
@@ -200,14 +227,6 @@ class Post implements InputFilterAwareInterface
 
         return $this->inputFilter;
     }
-
-    static public function slugify($text)
-    {
-        $text = preg_replace('/\W+/', '-', $text);
-        $text = strtolower(trim($text, '-'));
-        return $text;
-    }
-
 
     /*********** PROTECTED **********/
 

@@ -3,7 +3,7 @@
  * Zend Developer Tools for Zend Framework (http://framework.zend.com/)
  *
  * @link       http://github.com/zendframework/ZendDeveloperTools for the canonical source repository
- * @copyright  Copyright (c) 2005-2013 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2014 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd New BSD License
  */
 
@@ -18,7 +18,7 @@ use Zend\Mvc\MvcEvent;
 class MailCollector extends AbstractCollector implements AutoHideInterface
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getName()
     {
@@ -26,7 +26,7 @@ class MailCollector extends AbstractCollector implements AutoHideInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getPriority()
     {
@@ -34,7 +34,7 @@ class MailCollector extends AbstractCollector implements AutoHideInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function collect(MvcEvent $mvcEvent)
     {
@@ -42,7 +42,7 @@ class MailCollector extends AbstractCollector implements AutoHideInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function canHide()
     {

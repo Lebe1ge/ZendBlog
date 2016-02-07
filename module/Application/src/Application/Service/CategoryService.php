@@ -7,12 +7,14 @@
  */
 namespace Application\Service;
 
+use Application\Entity\Category;
+
 class CategoryService extends AbstractService
 {
 
     /**
      * Obtient toutes les categories
-     * @return Application\Model\Category
+     * @return Application\Entity\Category
      */
     public function getAll()
     {
@@ -22,7 +24,7 @@ class CategoryService extends AbstractService
     /**
      * Obtient une categorie par son id
      * @param string id
-     * @return Application\Model\Category
+     * @return Application\Entity\Category
      */
     public function getById($id)
     {
@@ -32,45 +34,21 @@ class CategoryService extends AbstractService
     /**
      * Obtient une categorie par son slug
      * @param string slug
-     * @return Application\Model\Category
+     * @return Application\Entity\Category
      */
     public function getCategoryBySlug($slug)
     {
-        return $this->getRep()->findBy(array('slug' => $slug));
+        return $this->getRep()->findOneBy(array('slug' => $slug));
     }
 
     /**
      * Sauvegarder une categorie
-     * @param Category category
+     * @param Application\Entity\Category
      */
     public function saveCategory(Category $category)
     {
-        $data = array(
-            'id_category' => $category->idCategory,
-            'name'  => $category->name
-        );
-
-        $id = (int)$category->id_category;
-
-        if ($id == 0) {
-            $this->insert($data);
-        } elseif ($this->getCategory($id)) {
-            $this->update(
-                $data,
-                array(
-                    'id_category' => $id,
-                )
-            );
-        }
-    }
-
-    /**
-     * Supprimer une categorie
-     * @param int id
-     */
-    public function deleteCategory($id)
-    {
-        $this->delete(array('id_category' => $id));
+        $this->getEm()->persist($category);
+        $this->getEm()->flush();
     }
 
 }

@@ -1,14 +1,25 @@
-<div id="content">
-    <div class="post">
-        <p class="meta">
-        <h1><?= $post->title ?> </h1>
-        <span class="posted">Posted by <a href="#"><?= $post->author ?></a></span>
-        </p>
-        <div style="clear: both;">&nbsp;</div>
-        <div class="entry">
-            <p><?= $post->content ?></p>
-        </div>
-    </div>
-    <div style="clear: both;">&nbsp;</div>
+<!-- Main -->
+<div id="main">
+    <!-- Post -->
+    <article id="<?= $post->id ?>" class="post">
+        <header>
+            <div class="title">
+                <h2><a href="#"><?= $post->title ?></a></h2>
+                <p></p>
+            </div>
+            <div class="meta">
+                <time class="published" datetime="2015-11-01">November 1, 2015</time>
+                <a href="#" class="author"><span class="name"><?= $post->author ?></span><img src="/img/avatar.jpg" alt="" /></a>
+            </div>
+        </header>
+        <a href="#" class="image featured"><img src="/img/pic01.jpg" alt="" /></a>
+        <p><?= $post->content ?></p>
+        <footer>
+            <ul class="stats">
+                <li><a href="#"><?= $post->category ?></a></li>
+                <li><a href="#" class="icon fa-heart">28</a></li>
+                <li><a href="#" class="icon fa-comment">128</a></li>
+            </ul>
+        </footer>
+    </article>
 </div>
-<!-- end #content -->

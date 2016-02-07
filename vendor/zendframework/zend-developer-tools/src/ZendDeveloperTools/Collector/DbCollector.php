@@ -3,7 +3,7 @@
  * Zend Developer Tools for Zend Framework (http://framework.zend.com/)
  *
  * @link       http://github.com/zendframework/ZendDeveloperTools for the canonical source repository
- * @copyright  Copyright (c) 2005-2013 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2014 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd New BSD License
  */
 
@@ -24,7 +24,7 @@ class DbCollector implements CollectorInterface, AutoHideInterface, \Serializabl
     protected $profiler;
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getName()
     {
@@ -32,7 +32,7 @@ class DbCollector implements CollectorInterface, AutoHideInterface, \Serializabl
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getPriority()
     {
@@ -40,7 +40,7 @@ class DbCollector implements CollectorInterface, AutoHideInterface, \Serializabl
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function collect(MvcEvent $mvcEvent)
     {
@@ -48,7 +48,7 @@ class DbCollector implements CollectorInterface, AutoHideInterface, \Serializabl
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function canHide()
     {

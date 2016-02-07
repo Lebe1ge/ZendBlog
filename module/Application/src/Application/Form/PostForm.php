@@ -2,25 +2,56 @@
 namespace Application\Form;
 use Zend\Form\Form;
 
-class CategoryForm extends Form
+class PostForm extends Form
 {
     public function __construct($name = null)
     {
         // On ne veut pas tenir compte du parametre $name,
         // On va le surcharger via le contructeur du parent
-        parent::__construct('Category');
+        parent::__construct('Post');
 
         $this->add(array(
-            'name' => 'category_id',
+            'name' => 'post_id',
             'type' => 'Hidden',
         ));
 
         $this->add(array(
-            'name' => 'nom',
+            'name' => 'title',
             'type' => 'text',
             'options' => array(
-                'label' => 'Nom',
+                'label' => 'Titre',
             ),
+        ));
+
+        $this->add(array(
+            'name' => 'content',
+            'type' => 'textarea',
+            'options' => array(
+                'label' => 'Contenue',
+            ),
+        ));
+
+        $this->add(array(
+            'name' => 'author',
+            'type' => 'text',
+            'options' => array(
+                'label' => 'Auteur',
+            ),
+        ));
+
+        $this->add(array(
+            'type' => 'Zend\Form\Element\Select',
+            'name' => 'category',
+            'options' => array(
+                'label' => 'Categorie',
+                'empty_option' => 'Selectionner une categorie',
+                'value_options' => array(
+                    '0' => 'French',
+                    '1' => 'English',
+                    '2' => 'Japanese',
+                    '3' => 'Chinese',
+                ),
+            )
         ));
 
         // Le bouton Submit

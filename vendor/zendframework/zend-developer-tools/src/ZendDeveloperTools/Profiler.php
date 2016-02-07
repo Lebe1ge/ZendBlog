@@ -3,18 +3,18 @@
  * Zend Developer Tools for Zend Framework (http://framework.zend.com/)
  *
  * @link      http://github.com/zendframework/ZendDeveloperTools for the canonical source repository
- * @copyright Copyright (c) 2005-2013 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright Copyright (c) 2005-2014 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  * @package   ZendDeveloperTools
  */
 
 namespace ZendDeveloperTools;
 
+use Zend\EventManager\EventInterface;
+use Zend\EventManager\EventManagerAwareInterface;
+use Zend\EventManager\EventManagerInterface;
 use Zend\Mvc\MvcEvent;
 use Zend\Stdlib\PriorityQueue;
-use Zend\EventManager\EventInterface;
-use Zend\EventManager\EventManagerInterface;
-use Zend\EventManager\EventManagerAwareInterface;
 
 class Profiler implements EventManagerAwareInterface
 {
@@ -209,8 +209,7 @@ class Profiler implements EventManagerAwareInterface
         if (isset($this->collectors)) {
             foreach ($this->collectors as $collector) {
                 $collector->collect($mvcEvent);
-
-                $this->report->addCollector(unserialize(serialize($collector)));
+                $this->report->addCollector($collector);
             }
 
             $this->eventManager->trigger(ProfilerEvent::EVENT_COLLECTED, $this->getEvent());

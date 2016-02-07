@@ -1,17 +1,35 @@
-<div id="content">
-    <?php foreach ($posts as $entry): ?>
-        <div id="<?= $entry->id ?>" class="post">
-            <p class="meta">
-            <h1><?= $entry->title ?></h1>
-            <span class="posted">Posted by <a href="#"><?= $entry->author ?></a></span>
-            </p>
-            <div style="clear: both;">&nbsp;</div>
-            <div class="entry">
-                <p><?= $entry->content ?></p>
-                <p class="links"><a href="<?= $this->url('list_post_page', array('action' => 'show', 'id' =>$entry->id)); ?>">En savoir plus</a></p>
-            </div>
-        </div>
+<!-- Main -->
+<div id="main">
+    <?php foreach ($posts as $post): ?>
+        <!-- Post -->
+        <article id="<?= $post->post_id ?>" class="post">
+            <header>
+                <div class="title">
+                    <h2><a href="#"><?= $post->title ?></a></h2>
+                    <p></p>
+                </div>
+                <div class="meta">
+                    <time class="published" datetime="2015-11-01">November 1, 2015</time>
+                    <a href="#" class="author"><span class="name"><?= $post->author ?></span><img src="/img/avatar.jpg" alt="" /></a>
+                </div>
+            </header>
+            <a href="#" class="image featured"><img src="/img/pic01.jpg" alt="" /></a>
+            <p><?= $post->content ?></p>
+            <footer>
+                <ul class="actions">
+                    <li><a href="<?= $this->url('list_post_page', array('action' => 'show', 'id' =>$post->post_id)); ?>" class="button big">En savoir plus</a></li>
+                </ul>
+                <ul class="stats">
+                    <li><a href="#"><?= $post->category ?></a></li>
+                    <li><a href="#" class="icon fa-heart">28</a></li>
+                    <li><a href="#" class="icon fa-comment">128</a></li>
+                </ul>
+            </footer>
+        </article>
     <?php endforeach; ?>
-    <div style="clear: both;">&nbsp;</div>
+    <!-- Pagination -->
+    <ul class="actions pagination">
+        <li><a href="" class="disabled button big previous">Previous Page</a></li>
+        <li><a href="#" class="button big next">Next Page</a></li>
+    </ul>
 </div>
-<!-- end #content -->

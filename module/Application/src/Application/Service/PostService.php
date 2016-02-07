@@ -7,6 +7,7 @@
  */
 namespace Application\Service;
 
+use Application\Entity\Post;
 class PostService extends AbstractService
 {
 
@@ -30,28 +31,23 @@ class PostService extends AbstractService
     }
 
     /**
+     * Obtient un post par son id
+     * @param string category
+     * @return Application\Model\Post
+     */
+    public function getPostByCategory($category)
+    {
+        return $this->getRep()->findBy(array("category" => $category));
+    }
+
+    /**
      * Sauvegarder une categorie
-     * @param Post post
+     * @param Application\Entity\Post
      */
     public function savePost(Post $post)
     {
-        $data = array(
-            'id_post' => $post->idPost,
-            'name'  => $post->name
-        );
-
-        $id = (int)$post->id_post;
-
-        if ($id == 0) {
-            $this->insert($data);
-        } elseif ($this->getPost($id)) {
-            $this->update(
-                $data,
-                array(
-                    'id_post' => $id,
-                )
-            );
-        }
+        $this->getEm()->persist($post);
+        $this->getEm()->flush();
     }
 
     /**

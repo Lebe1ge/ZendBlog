@@ -6,7 +6,7 @@
  */
 namespace Application\Model;
 use Doctrine\ORM\Mapping as ORM;
-use ZfcUser\Entity\UserInterface;
+//use ZfcUser\Entity\UserInterface;
 
 /**
  * Représentation d'un utilisateur
@@ -16,7 +16,7 @@ use ZfcUser\Entity\UserInterface;
  *
  * @author
  */
-class User implements UserInterface
+class User
 {
     /*********************************
      * ATTRIBUTS

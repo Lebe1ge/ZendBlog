@@ -51,6 +51,28 @@ return array(
                     ),
                 ),
             ),
+            'add_post' => array(
+                'type'    => 'Segment',
+                'options' => array(
+                    'route'    => '/add/post[/]',
+                    'defaults' => array(
+                        'module'     => 'Application',
+                        'controller' => 'Application\Controller\Post',
+                        'action'     => 'add',
+                    ),
+                ),
+            ),
+            'add_category' => array(
+                'type'    => 'Segment',
+                'options' => array(
+                    'route'    => '/add/category[/]',
+                    'defaults' => array(
+                        'module'     => 'Application',
+                        'controller' => 'Application\Controller\Category',
+                        'action'     => 'add',
+                    ),
+                ),
+            ),
             // The following is a route to simplify getting started creating
             // new controllers and actions without needing to create a new
             // module. Simply drop new controllers in, and you can access them

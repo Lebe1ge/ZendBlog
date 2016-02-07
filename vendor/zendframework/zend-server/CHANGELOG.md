@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file, in reverse chronological order by release.
 
+## 2.6.1 - 2016-02-04
+
+### Added
+
+- Nothing.
+
+### Deprecated
+
+- Nothing.
+
+### Removed
+
+- Nothing.
+
+### Fixed
+
+- [#11](https://github.com/zendframework/zend-server/pull/11) updates the
+  dependencies to use zend-stdlib `^2.5 || ^3.0`.
+
 ## 2.6.0 - 2015-12-17
 
 ### Added
