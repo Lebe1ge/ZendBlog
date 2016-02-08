@@ -445,7 +445,7 @@ class PhpRenderer implements Renderer, TreeRendererInterface
             $nameOrModel = $model->getTemplate();
             if (empty($nameOrModel)) {
                 throw new Exception\DomainException(sprintf(
-                    '%s: received View Service argument, but template is empty',
+                    '%s: received View Model argument, but template is empty',
                     __METHOD__
                 ));
             }

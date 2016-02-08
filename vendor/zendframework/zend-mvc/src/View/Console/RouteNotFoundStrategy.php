@@ -116,7 +116,7 @@ class RouteNotFoundStrategy extends AbstractListenerAggregate
             return;
         }
 
-        // Prepare Console View Service
+        // Prepare Console View Model
         $model = new ConsoleModel();
         $model->setErrorLevel(1);
 

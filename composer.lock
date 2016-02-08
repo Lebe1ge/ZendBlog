@@ -2767,16 +2767,16 @@
         },
         {
             "name": "zendframework/zend-filter",
-            "version": "2.6.0",
+            "version": "2.6.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/zend-filter.git",
-                "reference": "8682c12e9870c431cf29cbb7010627f3fa88dec8"
+                "reference": "202014ee64e2aae23140a1719f6d362a602713ed"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/zend-filter/zipball/8682c12e9870c431cf29cbb7010627f3fa88dec8",
-                "reference": "8682c12e9870c431cf29cbb7010627f3fa88dec8",
+                "url": "https://api.github.com/repos/zendframework/zend-filter/zipball/202014ee64e2aae23140a1719f6d362a602713ed",
+                "reference": "202014ee64e2aae23140a1719f6d362a602713ed",
                 "shasum": ""
             },
             "require": {
@@ -2819,7 +2819,7 @@
                 "filter",
                 "zf2"
             ],
-            "time": "2016-02-04 19:52:41"
+            "time": "2016-02-08 18:02:37"
         },
         {
             "name": "zendframework/zend-form",

@@ -145,7 +145,7 @@ $settings = array(
     //'user_login_widget_view_template' => 'zfc-user/user/login.phtml',
 
     /**
-     * Login Redirect Route
+     * Login Redirect wRoute
      *
      * Upon successful login the user will be redirected to the entered route
      *

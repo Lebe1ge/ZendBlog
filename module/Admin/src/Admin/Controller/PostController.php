@@ -5,8 +5,8 @@ use Zend\Mvc\Controller\AbstractActionController;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Query;
 use Zend\View\Model\ViewModel;
-use Application\Form\CategoryForm;
-use Application\Entity\Category;
+use Application\Form\PostForm;
+use Application\Entity\Post;
 
 class PostController extends AbstractActionController
 {
@@ -41,9 +41,9 @@ class PostController extends AbstractActionController
 
                 // On enregistre ces données dans la table Post
                 $this->getServiceLocator()->get('Application\Service\PostService')->savePost($post);
-
+                $this->flashMessenger()->addMessage(array('success' => "Category '{$post->name}' was added successfully"));
                 // Puis on redirige sur la page d'accueil.
-                return $this->redirect()->toUrl('/');
+                return $this->redirect()->toUrl('zfc    admin/post');
             }
             // Si le formulaire n'est pas valide, on reste sur la page et les erreurs apparaissent
         }
@@ -53,5 +53,18 @@ class PostController extends AbstractActionController
                 'form' => $formPost
             )
         );
+    }
+
+    public function deleteAction()
+    {
+        die("DELETE");
+        $this->getServiceLocator()->get('Application\Service\PostService')->deletePost($this->params('id'));
+        return new viewModel("posts");
+
+    }
+
+    public function editAction(){
+
+        die("LOL");
     }
 }

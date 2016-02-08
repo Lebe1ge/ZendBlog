@@ -1,5 +1,5 @@
 <div class="container">
-    <a href="<?= $this->url('zfcadmin', array('action' => 'add')) ?>"><i class="fam-add"></i>Nouvelle article</a>
+    <a href="<?= $this->url('zfcadmin/post', array('action' => 'add'),null, false);?>"><i class="fam-add"></i>Nouvelle article</a>
     <table class="table table-hover">
         <thead>
         <tr>
@@ -21,8 +21,8 @@
                 <td><?php echo $post->category; ?></td>
                 <td>
                     <?php
-                    $urlEdit = $this->url('zfcadmin', array('action' => 'edit', 'id' =>$post->post_id));
-                    $urlDelete = $this->url('zfcadmin', array('action' => 'delete', 'id' =>$post->post_id));
+                    $urlEdit = $this->url('zfcadmin/post', array('action' => 'edit', 'id' => $post->post_id), null, false);
+                    $urlDelete = $this->url('zfcadmin/post', array('action' => 'delete', 'id' => $post->post_id), null, false);
                     ?>
                     <a href="<?php echo $urlEdit;?>"><i class="fam-pencil"></i></a>
                     <a href="<?php echo $urlDelete;?>"><i class="fam-delete"></i></a>

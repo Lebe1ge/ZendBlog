@@ -87,7 +87,7 @@ class Subscriber
     protected $asyncHubs = [];
 
     /**
-     * An instance of Zend\Feed\Pubsubhubbub\Service\SubscriptionPersistence used to background
+     * An instance of Zend\Feed\Pubsubhubbub\Model\SubscriptionPersistence used to background
      * save any verification tokens associated with a subscription or other.
      *
      * @var \Zend\Feed\PubSubHubbub\Model\SubscriptionPersistenceInterface
@@ -505,7 +505,7 @@ class Subscriber
     }
 
     /**
-     * Sets an instance of Zend\Feed\Pubsubhubbub\Service\SubscriptionPersistence used to background
+     * Sets an instance of Zend\Feed\Pubsubhubbub\Model\SubscriptionPersistence used to background
      * save any verification tokens associated with a subscription or other.
      *
      * @param  Model\SubscriptionPersistenceInterface $storage

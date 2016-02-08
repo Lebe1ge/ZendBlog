@@ -10,7 +10,7 @@
 namespace Zend\View\Model;
 
 /**
- * Interface describing a Retrievable Child Service
+ * Interface describing a Retrievable Child Model
  *
  * Models implementing this interface provide a way to get there children by capture
  */

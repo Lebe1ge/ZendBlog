@@ -18,7 +18,7 @@ use Zend\Mvc\Exception\InvalidArgumentException;
 use Zend\View\Model\ModelInterface;
 
 /**
- * Controller Plugin to assist in selecting an appropriate View Service type based on the
+ * Controller Plugin to assist in selecting an appropriate View Model type based on the
  * User Agent's accept header.
  */
 class AcceptableViewModelSelector extends AbstractPlugin
@@ -60,7 +60,7 @@ class AcceptableViewModelSelector extends AbstractPlugin
      * @param array $matchAgainst (optional) The Array to match against
      * @param bool $returnDefault (optional) If no match is available. Return default instead
      * @param AbstractFieldValuePart|null $resultReference (optional) The object that was matched
-     * @throws InvalidArgumentException If the supplied and matched View Service could not be found
+     * @throws InvalidArgumentException If the supplied and matched View Model could not be found
      * @return ModelInterface|null
      */
     public function __invoke(
@@ -77,7 +77,7 @@ class AcceptableViewModelSelector extends AbstractPlugin
      * @param array $matchAgainst (optional) The Array to match against
      * @param bool $returnDefault (optional) If no match is available. Return default instead
      * @param AbstractFieldValuePart|null $resultReference (optional) The object that was matched
-     * @throws InvalidArgumentException If the supplied and matched View Service could not be found
+     * @throws InvalidArgumentException If the supplied and matched View Model could not be found
      * @return ModelInterface|null
      */
     public function getViewModel(
@@ -92,7 +92,7 @@ class AcceptableViewModelSelector extends AbstractPlugin
         }
 
         if (!class_exists($name)) {
-            throw new InvalidArgumentException('The supplied View Service could not be found');
+            throw new InvalidArgumentException('The supplied View Model could not be found');
         }
 
         return new $name();
@@ -158,8 +158,8 @@ class AcceptableViewModelSelector extends AbstractPlugin
     }
 
     /**
-     * Set the default View Service (name) to return if no match could be made
-     * @param string $defaultViewModelName The default View Service name
+     * Set the default View Model (name) to return if no match could be made
+     * @param string $defaultViewModelName The default View Model name
      * @return AcceptableViewModelSelector provides fluent interface
      */
     public function setDefaultViewModelName($defaultViewModelName)
@@ -169,7 +169,7 @@ class AcceptableViewModelSelector extends AbstractPlugin
     }
 
     /**
-     * Set the default View Service (name) to return if no match could be made
+     * Set the default View Model (name) to return if no match could be made
      * @return string
      */
     public function getDefaultViewModelName()
@@ -178,7 +178,7 @@ class AcceptableViewModelSelector extends AbstractPlugin
     }
 
     /**
-     * Set the default Accept Types and View Service combinations to match against if none are specified.
+     * Set the default Accept Types and View Model combinations to match against if none are specified.
      *
      * @param array $matchAgainst (optional) The Array to match against
      * @return AcceptableViewModelSelector provides fluent interface
@@ -190,7 +190,7 @@ class AcceptableViewModelSelector extends AbstractPlugin
     }
 
     /**
-     * Get the default Accept Types and View Service combinations to match against if none are specified.
+     * Get the default Accept Types and View Model combinations to match against if none are specified.
      *
      * @return array|null
      */

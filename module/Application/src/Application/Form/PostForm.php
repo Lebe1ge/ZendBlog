@@ -15,6 +15,18 @@ class PostForm extends Form
             'type' => 'Hidden',
         ));
 
+        $this->add(
+            array(
+                'name' => 'csrf',
+                'type' => 'Csrf',
+                'options' => array(
+                    'csrf_options' => array(
+                        'timeout' => 600
+                    )
+                )
+            )
+        );
+
         $this->add(array(
             'name' => 'title',
             'type' => 'text',
