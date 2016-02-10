@@ -8,7 +8,7 @@ $this->headTitle($title);
 <?php
 
 $form = $this->form;
-$form->setAttribute('action', $this->url('zfcadmin/post', array('action' => 'add')));
+$form->setAttribute('action', $this->url('zfcadmin/post/action', array('action' => 'edit', 'id' => $form->get('post_id')->getValue())));
 $form->setAttribute('class', 'form-horizontal');
 $form->prepare();
 echo $this->form()->openTag($form);

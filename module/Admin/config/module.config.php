@@ -95,6 +95,11 @@ return array(
                                 'label' => 'Edit category',
                                 'route' => 'zfcadmin/category/action',
                                 'params' => array('action' => 'edit')
+                            ),
+                            'delete_category' => array(
+                                'label' => 'Edit category',
+                                'route' => 'zfcadmin/category/action',
+                                'params' => array('action' => 'delete')
                             )
                         )
                     ),
@@ -112,6 +117,11 @@ return array(
                                 'label' => 'Edit post',
                                 'route' => 'zfcadmin/post/action',
                                 'params' => array('action' => 'edit')
+                            ),
+                            'delete_post' => array(
+                                'label' => 'Edit post',
+                                'route' => 'zfcadmin/post/action',
+                                'params' => array('action' => 'delete')
                             )
                         )
                     ),

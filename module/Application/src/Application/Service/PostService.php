@@ -56,7 +56,9 @@ class PostService extends AbstractService
      */
     public function deletePost($id)
     {
-        $this->delete(array('id_post' => $id));
+        $post = $this->getById($id);
+        $this->getEm()->remove($post);
+        $this->getEm()->flush();
     }
 
 }
