@@ -19,10 +19,24 @@ use \Application\Service\AbstractService;
 class UserService extends AbstractService
 {
     /**
+     * Obtient tous les utilisateurs
+     * @param string email
+     * @return Application\Entity\User
+     *
+     */
+
+    public function getAll(){
+
+        return $this->getRep()->findAll();
+    }
+
+    /**
      * Obtient un utilisateur par son email
      * @param string email
-     * @return Application\Model\User
+     * @return Application\Entity\User
+     *
      */
+
     public function getByEmail($email)
     {
         $qb = $this->getEm()->createQueryBuilder();

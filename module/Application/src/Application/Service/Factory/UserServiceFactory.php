@@ -15,7 +15,7 @@ class UserServiceFactory implements FactoryInterface
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
         $entityManager = $serviceLocator->get('Doctrine\ORM\EntityManager');
-        $userRepository = $entityManager->getRepository('Application\Model\User');
+        $userRepository = $entityManager->getRepository('Application\Entity\User');
 
         return new UserService($entityManager, $userRepository);
     }

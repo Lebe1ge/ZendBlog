@@ -15,7 +15,7 @@ class TagServiceFactory implements FactoryInterface
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
         $entityManager = $serviceLocator->get('Doctrine\ORM\EntityManager');
-        $userRepository = $entityManager->getRepository('Application\Model\Tag');
+        $userRepository = $entityManager->getRepository('Application\Entity\Tag');
 
         return new UserService($entityManager, $userRepository);
     }

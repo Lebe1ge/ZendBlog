@@ -15,7 +15,7 @@ class CommentServiceFactory implements FactoryInterface
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
         $entityManager = $serviceLocator->get('Doctrine\ORM\EntityManager');
-        $userRepository = $entityManager->getRepository('Application\Model\Comment');
+        $userRepository = $entityManager->getRepository('Application\Entity\Comment');
 
         return new UserService($entityManager, $userRepository);
     }

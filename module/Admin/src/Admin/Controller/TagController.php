@@ -81,9 +81,9 @@ class TagController extends AbstractActionController
 
     public function editAction()
     {
-        $idPost = $this->params('id');
+        $idTag = $this->params('id');
         $formPost = new PostForm();
-        $postData = $this->getServiceLocator()->get('Application\Service\PostService')->getById($idPost);
+        $postData = $this->getServiceLocator()->get('Application\Service\PostService')->getById($idTag);
         $formPost->bind($postData);
         // On récupère l'objet Request
         $request = $this->getRequest();
@@ -91,7 +91,7 @@ class TagController extends AbstractActionController
         // On vérifie si le formulaire a été posté
         if ($request->isPost()) {
             // On instancie notre modèle Post
-            $post= new Tag();
+            $tag= new Tag();
 
             // Et on passe l'InputFilter de Post au formulaire
             $formPost->setInputFilter($post->getInputFilter());
@@ -102,10 +102,10 @@ class TagController extends AbstractActionController
 
                 try{
                     // On prend les données du formulaire qui sont converti pour correspondre à notre modèle Post
-                    $post->exchangeArray($formPost->getData());
+                    $tag->exchangeArray($formPost->getData());
 
                     // On enregistre ces données dans la table Post
-                    $this->getServiceLocator()->get('Application\Service\PostService')->savePost($post);
+                    $this->getServiceLocator()->get('Application\Service\TagService')->savePost($tag);
                     //$this->flashMessenger()->addMessage(array('success' => "Category '{$post->name}' was added successfully"));
                     // Puis on redirige sur la page d'accueil.
                     return $this->redirect()->toRoute('zfcadmin/post');
@@ -125,7 +125,7 @@ class TagController extends AbstractActionController
         return new ViewModel(
             array(
                 'form' => $formPost,
-                'id'   => $idPost
+                'id'   => $idTag
             )
         );
     }

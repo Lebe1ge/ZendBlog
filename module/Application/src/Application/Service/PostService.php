@@ -6,14 +6,14 @@
  *
  */
 namespace Application\Service;
-
 use Application\Entity\Post;
+
 class PostService extends AbstractService
 {
 
     /**
      * Obtient tous les posts
-     * @return Application\Model\Post
+     * @return Application\Entity\Post
      */
     public function getAll()
     {
@@ -23,7 +23,7 @@ class PostService extends AbstractService
     /**
      * Obtient un post par son id
      * @param string id
-     * @return Application\Model\Post
+     * @return Application\Entity\Post
      */
     public function getById($id)
     {
@@ -33,7 +33,7 @@ class PostService extends AbstractService
     /**
      * Obtient un post par son id
      * @param string category
-     * @return Application\Model\Post
+     * @return Application\Entity\Post
      */
     public function getPostByCategory($category)
     {
@@ -43,6 +43,7 @@ class PostService extends AbstractService
     /**
      * Sauvegarder une categorie
      * @param Application\Entity\Post
+     * @return Application\Entity\Post
      */
     public function savePost(Post $post)
     {
