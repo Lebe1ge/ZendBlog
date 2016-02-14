@@ -5,9 +5,9 @@ use Zend\Mvc\Controller\AbstractActionController;
 use Doctrine\ORM\Query;
 use Zend\View\Model\ViewModel;
 use Application\Form\PostForm;
-use Application\Entity\Post;
+use Application\Entity\Comment;
 
-class PostController extends AbstractActionController
+class CommentController extends AbstractActionController
 {
     public function indexAction()
     {
@@ -28,7 +28,7 @@ class PostController extends AbstractActionController
         if ($request->isPost()) {
 
             // On instancie notre modèle Post
-            $post= new Post();
+            $post= new Comment();
 
             // Et on passe l'InputFilter de Post au formulaire
             $postInput = $post->getInputFilter();
@@ -91,7 +91,7 @@ class PostController extends AbstractActionController
         // On vérifie si le formulaire a été posté
         if ($request->isPost()) {
             // On instancie notre modèle Post
-            $post= new Post();
+            $post= new Comment();
 
             // Et on passe l'InputFilter de Post au formulaire
             $formPost->setInputFilter($post->getInputFilter());

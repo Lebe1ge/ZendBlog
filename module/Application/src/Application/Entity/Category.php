@@ -31,10 +31,10 @@ class Category implements InputFilterAwareInterface
      */
     protected $category_id;
     /**
-     * @var string Le nom
-     * @ORM\Column(type="string", length=100, unique=true, nullable=true, name="nom")
+     * @var string Le nom de la catégorie
+     * @ORM\Column(type="string", length=100, unique=true, nullable=true, name="name")
      */
-    protected $nom;
+    protected $name;
     /**
      * @var string Le slug
      * @ORM\Column(type="string", unique=true,  length=100, name="slug")
@@ -45,6 +45,11 @@ class Category implements InputFilterAwareInterface
      * @ORM\Column(type="integer", name="state")
      */
     protected $state;
+    /**
+     * @var int Id de l'user
+     * @ORM\Column(type="integer", name="user_id")
+     */
+    protected $user_id;
 
     /*********************************
      * ACCESSEURS
@@ -117,6 +122,7 @@ class Category implements InputFilterAwareInterface
         $this->nom = (isset($data['nom'])) ? $data['nom'] : null;
         $this->slug = (isset($data['slug'])) ? $data['slug'] : $slugifyFilter->filter($this->nom);
         $this->state = (isset($data['state'])) ? $data['state'] : 1;
+        $this->user_id = (isset($data['user_id'])) ? $data['user_id'] : null;
     }
 
     public function setInputFilter(InputFilterInterface $inputFilter)

@@ -4,9 +4,12 @@
  * @author Julien
  *
  */
-namespace Application\Model;
+namespace Application\Entity;
 use Doctrine\ORM\Mapping as ORM;
-//use ZfcUser\Entity\UserInterface;
+use Zend\InputFilter\InputFilter;
+use Zend\InputFilter\Factory as InputFactory;
+use Zend\InputFilter\InputFilterAwareInterface;
+use Zend\InputFilter\InputFilterInterface;
 
 /**
  * Représentation d'un utilisateur
@@ -28,33 +31,47 @@ class User
      * @ORM\Column(type="integer", name="user_id")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    protected $_id;
+    protected $user_id;
     /**
      * @var string Le login
      * @ORM\Column(type="string", length=255, unique=true, nullable=true, name="username")
      */
-    protected $_username;
+    protected $username;
     /**
      * @var string L'email
      * @ORM\Column(type="string", unique=true,  length=255, name="email")
      */
-    protected $_email;
+    protected $email;
     /**
-     * @var string Le nom affiché
-     * @ORM\Column(type="string", length=50, nullable=true, name="display_name")
+     * @var string Le prenom
+     * @ORM\Column(type="string", length=100, nullable=true, name="name")
      */
-    protected $_displayName;
+    protected $name;
+    /**
+     * @var string Le nom
+     * @ORM\Column(type="string", length=100, nullable=true, name="lastname")
+     */
+    protected $lastname;
     /**
      * @var string Le mot de passe
      * @ORM\Column(type="string", length=128, name="password")
      */
-    protected $_password;
+    protected $password;
     /**
-     * @var int Statut du compte
+     * @var int Statut de l'utilisateur
      * @ORM\Column(type="integer", name="state")
      */
-    protected $_state;
-
+    protected $state;
+    /**
+     * @var int type d'utilisateur
+     * @ORM\Column(type="integer", name="type")
+     */
+    protected $type;
+    /**
+     * @var date Date inscription
+     * @ORM\Column(type="datetime", nullable=true, name="date_inscription")
+     */
+    protected $date_inscription;
     /*********************************
      * ACCESSEURS
      *********************************/
@@ -62,126 +79,28 @@ class User
     /*********** GETTERS ************/
 
     /**
-     * Obtient l'identifiant utilisateur
-     * @return int
+     * Magic getter to expose protected properties.
+     *
+     * @param string $property
+     * @return mixed
      */
-    public function getId()
+    public function __get($property)
     {
-        return $this->_id;
-    }
-
-    /**
-     * Obtient le login
-     * @return string
-     */
-    public function getUsername()
-    {
-        return $this->_username;
-    }
-
-    /**
-     * Obtient l'email
-     * @return string
-     */
-    public function getEmail()
-    {
-        return $this->_email;
-    }
-
-    /**
-     * Obtient le nom affiché
-     * @return string
-     */
-    public function getDisplayName()
-    {
-        return $this->_displayName;
-    }
-
-    /**
-     * Obtient le mot de passe
-     * @return string
-     */
-    public function getPassword()
-    {
-        return $this->_password;
-    }
-
-    /**
-     * Obtient le statut du compte
-     * @return int
-     */
-    public function getState()
-    {
-        return $this->_state;
+        return $this->$property;
     }
 
 
     /*********** SETTERS ************/
 
     /**
-     * Définit l'id utilisateur
-     * @param int $id L'identifiant
-     * @return User
+     * Magic setter to save protected properties.
+     *
+     * @param string $property
+     * @param mixed $value
      */
-    public function setId($id)
+    public function __set($property, $value)
     {
-        $this->_id = (int) $id;
-        return $this;
-    }
-
-    /**
-     * Définit le login
-     * @param string $username Le login
-     * @return User
-     */
-    public function setUsername($username)
-    {
-        $this->_username = $username;
-        return $this;
-    }
-
-    /**
-     * Définit l'email
-     * @param string $email L'email
-     * @return User
-     */
-    public function setEmail($email)
-    {
-        $this->_email = $email;
-        return $this;
-    }
-
-    /**
-     * Définit le nom complet
-     * @param string $displayName Le nom complet
-     * @return User
-     */
-    public function setDisplayName($displayName)
-    {
-        $this->_displayName = $displayName;
-        return $this;
-    }
-
-    /**
-     * Définit le mot de passe
-     * @param string $password Le mot de passe
-     * @return User
-     */
-    public function setPassword($password)
-    {
-        $this->_password = $password;
-        return $this;
-    }
-
-    /**
-     * Définit l'état
-     * @param int $state L'etat
-     * @return User
-     */
-    public function setState($state)
-    {
-        $this->_state = $state;
-        return $this;
+        $this->$property = $value;
     }
 
     /*********************************
@@ -201,6 +120,77 @@ class User
      *********************************/
 
     /************ PUBLIC ************/
+    /**
+     * Convert the object to an array.
+     *
+     * @return array
+     */
+    public function getArrayCopy()
+    {
+        return get_object_vars($this);
+    }
+
+    /**
+     * Populate from an array.
+     *
+     * @param array $data
+     */
+    public function exchangeArray ($data = array())
+    {
+        $this->user_id = (isset($data['user_id'])) ? $data['user_id'] : null;
+        $this->username = (isset($data['username'])) ? $data['username'] : null;
+        $this->name = (isset($data['name'])) ? $data['name'] : null;
+        $this->username = (isset($data['username'])) ? $data['username'] : null;
+        $this->state = (isset($data['state'])) ? $data['state'] : 1;
+        $this->type = (isset($data['type'])) ? $data['type'] : null;
+        $this->date_inscription = (isset($data['date_inscription'])) ? $data['date_inscription'] : null;
+    }
+
+    public function setInputFilter(InputFilterInterface $inputFilter)
+    {
+        throw new \Exception("Not used");
+    }
+
+    public function getInputFilter()
+    {
+        if (!$this->inputFilter) {
+            $inputFilter = new InputFilter();
+
+            $inputFilter->add(array(
+                'name'     => 'category_id',
+                'required' => true,
+                'filters'  => array(
+                    array('name' => 'Int'),
+                ),
+            ));
+
+            $inputFilter->add(
+                array(
+                    'name'     => 'nom',
+                    'required' => true,
+                    'filters'  => array(
+                        array('name' => 'StripTags'),
+                        array('name' => 'StringTrim'),
+                    ),
+                    'validators' => array(
+                        array(
+                            'name'    => 'StringLength',
+                            'options' => array(
+                                'encoding' => 'UTF-8',
+                                'min'      => 1,
+                                'max'      => 100,
+                            ),
+                        ),
+                    ),
+                )
+            );
+
+            $this->inputFilter = $inputFilter;
+        }
+
+        return $this->inputFilter;
+    }
+
 
     /*********** PROTECTED **********/
 

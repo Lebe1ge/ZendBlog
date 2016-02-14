@@ -10,11 +10,11 @@ use Zend\InputFilter\InputFilterInterface;
  * Représentation d'un utilisateur
  *
  * @ORM\Entity
- * @ORM\Table(name="post")
+ * @ORM\Table(name="comment")
  *
  * @author
  */
-class Post implements InputFilterAwareInterface
+class Comment implements InputFilterAwareInterface
 {
     /*********************************
      * ATTRIBUTS
@@ -23,49 +23,38 @@ class Post implements InputFilterAwareInterface
     protected $inputFilter;
 
     /**
-     * @var int L'identifiant utilisateur
+     * @var int L'identifiant du commentaire
      * @ORM\Id
-     * @ORM\Column(type="integer", name="post_id")
+     * @ORM\Column(type="integer", name="comment_id")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    protected $post_id;
+    protected $comment_id;
     /**
-     * @var string Le titre
-     * @ORM\Column(type="string", length=255, unique=true, nullable=true, name="title")
-     */
-    protected $title;
-    /**
-     * @var string Le contenu
+     * @var text contenu du commentaire
      * @ORM\Column(type="text", name="content")
      */
     protected $content;
     /**
-     * @var int Id de la catégorie
-     * @ORM\Column(type="integer", name="category_id", nullable=true)
-     */
-    protected $category_id;
-    /**
-     * @var int Id de l'auteur
-     * @ORM\Column(type="integer", name="user_id", nullable=true)
+     * @var string Id user du commentaire
+     * @ORM\Column(type="string", length=100, name="user_id")
      */
     protected $user_id;
     /**
-     * @var int Statut du post
-     * @ORM\Column(type="integer", name="state")
+     * @var int Statut du commentaire
+     * @ORM\Column(type="integer", name="state", nullable = true)
      */
     protected $state;
-
     /**
      * @var date Date création de l'article
-     * @ORM\Column(type="datetime", nullable=true)
+     * @ORM\Column(type="datetime", name="date_create")
      */
     protected $date_create;
 
     /**
-     * @var string Chemin vers l'image
-     * @ORM\Column(type="string", length=255, nullable=true, name="path_picture")
+     * @var integer Id de l'article
+     * @ORM\Column(type="string", name="post_id", nullable = true)
      */
-    protected $path_picture;
+    protected $post_id;
 
     /*********************************
      * ACCESSEURS
@@ -133,14 +122,12 @@ class Post implements InputFilterAwareInterface
     public function exchangeArray ($data = array())
     {
 
-        $this->post_id = (isset($data['post_id'])) ? $data['post_id'] : null;
-        $this->title = (isset($data['title'])) ? $data['title'] : null;
+        $this->comment_id = (isset($data['comment_id'])) ? $data['comment_id'] : null;
         $this->content = (isset($data['content'])) ? $data['content'] : null;
-        $this->category_id = (isset($data['category_id'])) ? $data['category_id'] : null;
         $this->user_id = (isset($data['user_id'])) ? $data['user_id'] : null;
-        $this->state = (isset($data['path_picture'])) ? $data['path_picture'] : 1;
+        $this->state = (isset($data['state'])) ? $data['state'] : 1;
         $this->date_create = (isset($data['date_create'])) ? $data['date_create'] : null;
-        $this->path_picture = (isset($data['path_picture'])) ? $data['path_picture'] : null;
+        $this->post_id = (isset($data['post_id'])) ? $data['post_id'] : null;
     }
 
     public function setInputFilter(InputFilterInterface $inputFilter)
@@ -154,29 +141,10 @@ class Post implements InputFilterAwareInterface
             $inputFilter = new InputFilter();
 
             $inputFilter->add(array(
-                'name'     => 'post_id',
+                'name'     => 'comment_id',
                 'required' => true,
                 'filters'  => array(
                     array('name' => 'Int'),
-                ),
-            ));
-
-            $inputFilter->add(array(
-                'name'     => 'title',
-                'required' => true,
-                'filters'  => array(
-                    array('name' => 'StripTags'),
-                    array('name' => 'StringTrim'),
-                ),
-                'validators' => array(
-                    array(
-                        'name'    => 'StringLength',
-                        'options' => array(
-                            'encoding' => 'UTF-8',
-                            'min'      => 1,
-                            'max'      => 255,
-                        ),
-                    ),
                 ),
             ));
 
@@ -199,7 +167,15 @@ class Post implements InputFilterAwareInterface
             ));
 
             $inputFilter->add(array(
-                'name'     => 'category_id',
+                'name'     => 'user_id',
+                'required' => true,
+                'filters'  => array(
+                    array('name' => 'Int'),
+                ),
+            ));
+
+            $inputFilter->add(array(
+                'name'     => 'post_id',
                 'required' => true,
                 'filters'  => array(
                     array('name' => 'Int'),
@@ -215,19 +191,12 @@ class Post implements InputFilterAwareInterface
             ));
 
             $inputFilter->add(array(
-                'name'     => 'state',
-                'filters'  => array(
-                    array('name' => 'Int'),
-                ),
-            ));
-
-            $inputFilter->add(array(
                 'name' => 'date_create',
                 'type' => 'Zend\Form\Element\DateSelect',
                 'options' => array(
                     'create_empty_option' => true,
                     'min_year' => date('Y') - 70,
-                    'max_year' => date('Y') - 30,
+                    'max_year' => date('Y') - 16,
                     'day_attributes' => array(
                         'class' => 'input-small',
                         'style' => 'width: 22%',
@@ -243,23 +212,7 @@ class Post implements InputFilterAwareInterface
                 ),
             ));
 
-            $inputFilter->add(array(
-                'name'     => 'path_picture',
-                'required' => true,
-                'filters'  => array(
-                    array('name' => 'StripTags'),
-                    array('name' => 'StringTrim'),
-                ),
-                'validators' => array(
-                    array(
-                        'name'    => 'StringLength',
-                        'options' => array(
-                            'encoding' => 'UTF-8',
-                            'min'      => 1,
-                        ),
-                    ),
-                ),
-            ));
+
 
             $this->inputFilter = $inputFilter;
         }

@@ -5,15 +5,15 @@ use Zend\Mvc\Controller\AbstractActionController;
 use Doctrine\ORM\Query;
 use Zend\View\Model\ViewModel;
 use Application\Form\PostForm;
-use Application\Entity\Post;
+use Application\Entity\User;
 
-class PostController extends AbstractActionController
+class UserController extends AbstractActionController
 {
     public function indexAction()
     {
-        $posts = $this->getServiceLocator()->get('Application\Service\PostService')->getAll();
+        $users = $this->getServiceLocator()->get('Application\Service\UserService')->getAll();
         return new ViewModel(array(
-            'posts' => $posts,
+            'users' => $users,
         ));
     }
 
@@ -28,7 +28,7 @@ class PostController extends AbstractActionController
         if ($request->isPost()) {
 
             // On instancie notre modèle Post
-            $post= new Post();
+            $post= new User();
 
             // Et on passe l'InputFilter de Post au formulaire
             $postInput = $post->getInputFilter();
@@ -91,7 +91,7 @@ class PostController extends AbstractActionController
         // On vérifie si le formulaire a été posté
         if ($request->isPost()) {
             // On instancie notre modèle Post
-            $post= new Post();
+            $post= new User();
 
             // Et on passe l'InputFilter de Post au formulaire
             $formPost->setInputFilter($post->getInputFilter());

@@ -5,15 +5,15 @@ use Zend\Mvc\Controller\AbstractActionController;
 use Doctrine\ORM\Query;
 use Zend\View\Model\ViewModel;
 use Application\Form\PostForm;
-use Application\Entity\Post;
+use Application\Entity\Tag;
 
-class PostController extends AbstractActionController
+class TagController extends AbstractActionController
 {
     public function indexAction()
     {
-        $posts = $this->getServiceLocator()->get('Application\Service\PostService')->getAll();
+        $tags = $this->getServiceLocator()->get('Application\Service\TagService')->getAll();
         return new ViewModel(array(
-            'posts' => $posts,
+            'tags' => $tags,
         ));
     }
 
@@ -28,10 +28,10 @@ class PostController extends AbstractActionController
         if ($request->isPost()) {
 
             // On instancie notre modèle Post
-            $post= new Post();
+            $tag = new Tag();
 
             // Et on passe l'InputFilter de Post au formulaire
-            $postInput = $post->getInputFilter();
+            $postInput = $tag->getInputFilter();
             $formPost->setInputFilter($postInput);
             $formPost->setData($request->getPost());
             // Si le formulaire est valide
@@ -39,11 +39,11 @@ class PostController extends AbstractActionController
 
                 try{
                     // On prend les données du formulaire qui sont converti pour correspondre à notre modèle Post
-                    $post->exchangeArray($formPost->getData());
+                    $tag->exchangeArray($formPost->getData());
 
                     // On enregistre ces données dans la table Post
-                    $this->getServiceLocator()->get('Application\Service\PostService')->savePost($post);
-                    $this->flashMessenger()->addMessage(array('success' => "Article '{$post->post_id}' posté avec succès"));
+                    $this->getServiceLocator()->get('Application\Service\TagService')->savePost($tag);
+                    $this->flashMessenger()->addMessage(array('success' => "Article '{$tag->tag_id}' posté avec succès"));
                     // Puis on redirige sur la page d'accueil.
                     return $this->redirect()->toRoute('zfcadmin/post');
                 }catch(\Exception $e){
@@ -91,7 +91,7 @@ class PostController extends AbstractActionController
         // On vérifie si le formulaire a été posté
         if ($request->isPost()) {
             // On instancie notre modèle Post
-            $post= new Post();
+            $post= new Tag();
 
             // Et on passe l'InputFilter de Post au formulaire
             $formPost->setInputFilter($post->getInputFilter());

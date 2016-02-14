@@ -1,5 +1,5 @@
 <div class="container">
-    <a href="<?= $this->url('zfcadmin/post', array('action' => 'add'),null, false);?>"><i class="fam-add"></i>Nouvelle article</a>
+    <a href="<?= $this->url('zfcadmin/tag', array('action' => 'add'),null, false);?>"><i class="fam-add"></i>Nouvelle article</a>
     <table class="table table-hover">
         <thead>
         <tr>
@@ -10,15 +10,14 @@
         </tr>
         </thead>
         <tbody>
-        <?php foreach ($posts as $post):?>
+        <?php foreach ($tags as $tag):?>
             <tr>
-                <td><?php echo $post->post_id; ?></td>
-                <td><?php echo $post->title; ?></td>
-                <td><?php echo $post->content; ?></td>
+                <td><?php echo $tag->tag_id; ?></td>
+                <td><?php echo $tag->name; ?></td>
                 <td>
                     <?php
-                    $urlEdit = $this->url('zfcadmin/post', array('action' => 'edit', 'id' => $post->post_id), null, false);
-                    $urlDelete = $this->url('zfcadmin/post', array('action' => 'delete', 'id' => $post->post_id), null, false);
+                    $urlEdit = $this->url('zfcadmin/tag', array('action' => 'edit', 'id' => $tag->tag_id), null, false);
+                    $urlDelete = $this->url('zfcadmin/tag', array('action' => 'delete', 'id' => $tag->tag_id), null, false);
                     ?>
                     <a href="<?php echo $urlEdit;?>"><i class="fam-pencil"></i></a>
                     <a href="<?php echo $urlDelete;?>"><i class="fam-delete"></i></a>
