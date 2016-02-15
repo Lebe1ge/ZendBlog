@@ -6,8 +6,7 @@
  *
  */
 namespace Application\Service;
-
-use \Application\Service\AbstractService;
+use Application\Entity\User;
 
 /**
  * Service

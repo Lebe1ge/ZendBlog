@@ -1,7 +1,7 @@
 <?php
 namespace Application\Service\Factory;
 
-use Application\Service\UserService;
+use Application\Service\TagService;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
@@ -17,6 +17,6 @@ class TagServiceFactory implements FactoryInterface
         $entityManager = $serviceLocator->get('Doctrine\ORM\EntityManager');
         $userRepository = $entityManager->getRepository('Application\Entity\Tag');
 
-        return new UserService($entityManager, $userRepository);
+        return new TagService($entityManager, $userRepository);
     }
 }
