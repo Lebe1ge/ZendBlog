@@ -37,6 +37,7 @@ class TagController extends AbstractActionController
             if ($tagPost->isValid()) {
 
                 try{
+
                     // On prend les données du formulaire qui sont converti pour correspondre à notre modèle Post
                     $tag->exchangeArray($tagPost->getData());
                     // On enregistre ces données dans la table Post
@@ -100,7 +101,7 @@ class TagController extends AbstractActionController
 
                 try{
                     // On prend les données du formulaire qui sont converti pour correspondre à notre modèle Post
-                    $tag->exchangeArray($tagFormt->getData());
+                    $tag->exchangeArray($tagForm->getData());
 
                     // On enregistre ces données dans la table Post
                     $this->getServiceLocator()->get('Application\Service\TagService')->saveTag($tag);

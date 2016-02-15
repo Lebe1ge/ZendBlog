@@ -15,7 +15,7 @@ return array(
         'ZfcBase',
         'ZfcUser',
         'ZfcUserDoctrineORM',
-        'BjyAuthorize',
+        //'BjyAuthorize',
         'Admin',
     ),
     'module_listener_options' => array(
