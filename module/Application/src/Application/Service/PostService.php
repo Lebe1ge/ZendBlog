@@ -11,6 +11,10 @@ use Application\Entity\Post;
 class PostService extends AbstractService
 {
 
+    public function getActivePostForPagination($idCategory, $nbDays){
+
+    }
+
     /**
      * Obtient tous les posts
      * @return Application\Entity\Post
@@ -37,13 +41,14 @@ class PostService extends AbstractService
      */
     public function getPostByCategory($category)
     {
-        return $this->getRep()->findBy(array("category" => $category));
+        return $this->getRep()->findBy(array("category_id" => $category));
     }
 
     /**
      * Sauvegarder une categorie
-     * @param Application\Entity\Post
+     * @param Post $post
      * @return Application\Entity\Post
+     * @internal param $ Application\Entity\Post
      */
     public function savePost(Post $post)
     {

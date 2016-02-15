@@ -145,7 +145,7 @@ class PHPUnit_Extensions_PhptTestCase implements PHPUnit_Framework_Test, PHPUnit
         $this->phpUtil->setUseStderrRedirection(true);
 
         if (isset($sections['SKIPIF'])) {
-            $jobResult = $this->phpUtil->runJob($sections['SKIPIF'], $settings);
+            $jobResult = $this->phpUtil->runPost($sections['SKIPIF'], $settings);
 
             if (!strncasecmp('skip', ltrim($jobResult['stdout']), 4)) {
                 if (preg_match('/^\s*skip\s*(.+)\s*/i', $jobResult['stdout'], $message)) {
@@ -163,7 +163,7 @@ class PHPUnit_Extensions_PhptTestCase implements PHPUnit_Framework_Test, PHPUnit
         if (!$skip) {
             PHP_Timer::start();
 
-            $jobResult = $this->phpUtil->runJob($code, $settings);
+            $jobResult = $this->phpUtil->runPost($code, $settings);
             $time      = PHP_Timer::stop();
 
             try {
@@ -179,7 +179,7 @@ class PHPUnit_Extensions_PhptTestCase implements PHPUnit_Framework_Test, PHPUnit
             if (isset($sections['CLEAN'])) {
                 $cleanCode = $this->render($sections['CLEAN']);
 
-                $this->phpUtil->runJob($cleanCode, $this->settings);
+                $this->phpUtil->runPost($cleanCode, $this->settings);
             }
         }
 

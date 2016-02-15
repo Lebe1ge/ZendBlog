@@ -82,7 +82,7 @@ EOF;
 
         $this->phpUtil
             ->expects($this->once())
-            ->method('runJob')
+            ->method('runPost')
             ->with($fileSection)
             ->will($this->returnValue(['stdout' => '', 'stderr' => '']));
 
@@ -101,7 +101,7 @@ EOF;
 
         $this->phpUtil
             ->expects($this->at(0))
-            ->method('runJob')
+            ->method('runPost')
             ->with($skipifSection)
             ->will($this->returnValue(['stdout' => '', 'stderr' => '']));
 
@@ -120,7 +120,7 @@ EOF;
 
         $this->phpUtil
             ->expects($this->once())
-            ->method('runJob')
+            ->method('runPost')
             ->with($skipifSection)
             ->will($this->returnValue(['stdout' => 'skip: Reason', 'stderr' => '']));
 
@@ -139,7 +139,7 @@ EOF;
 
         $this->phpUtil
             ->expects($this->at(1))
-            ->method('runJob')
+            ->method('runPost')
             ->with($cleanSection);
 
         $this->testCase->run();
@@ -198,7 +198,7 @@ EOF
 
         $this->phpUtil
             ->expects($this->once())
-            ->method('runJob')
+            ->method('runPost')
             ->with(self::FILE_SECTION)
             ->will($this->returnValue(['stdout' => 'Hello PHPUnit!', 'stderr' => '']));
 
@@ -213,7 +213,7 @@ EOF
 
         $this->phpUtil
             ->expects($this->once())
-            ->method('runJob')
+            ->method('runPost')
             ->with(self::FILE_SECTION)
             ->will($this->returnValue(['stdout' => 'Hello PHPUnit!', 'stderr' => '']));
 
@@ -228,7 +228,7 @@ EOF
 
         $this->phpUtil
             ->expects($this->once())
-            ->method('runJob')
+            ->method('runPost')
             ->with(self::FILE_SECTION)
             ->will($this->returnValue(['stdout' => 'Hello PHPUnit!', 'stderr' => '']));
 

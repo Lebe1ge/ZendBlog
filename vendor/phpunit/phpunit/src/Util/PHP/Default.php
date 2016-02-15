@@ -25,7 +25,7 @@ class PHPUnit_Util_PHP_Default extends PHPUnit_Util_PHP
      *
      * @throws PHPUnit_Framework_Exception
      */
-    public function runJob($job, array $settings = [])
+    public function runPost($job, array $settings = [])
     {
         $process = proc_open(
             $this->getCommand($settings),

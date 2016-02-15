@@ -1,198 +1,233 @@
 <?php
 /**
- * User
- * @author Julien
+ * BjyAuthorize Module (https://github.com/bjyoungblood/BjyAuthorize)
  *
+ * @link https://github.com/bjyoungblood/BjyAuthorize for the canonical source repository
+ * @license http://framework.zend.com/license/new-bsd New BSD License
  */
+
 namespace Application\Entity;
+
+use BjyAuthorize\Provider\Role\ProviderInterface;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use Zend\InputFilter\InputFilter;
-use Zend\InputFilter\Factory as InputFactory;
-use Zend\InputFilter\InputFilterAwareInterface;
-use Zend\InputFilter\InputFilterInterface;
+use ZfcUser\Entity\UserInterface;
 
 /**
- * Représentation d'un utilisateur
+ * An example of how to implement a role aware user entity.
  *
  * @ORM\Entity
- * @ORM\Table(name="user")
+ * @ORM\Table(name="users")
  *
- * @author
  */
-class User
+class User implements UserInterface, ProviderInterface
 {
-    /*********************************
-     * ATTRIBUTS
-     *********************************/
-
     /**
-     * @var int L'identifiant utilisateur
+     * @var int
      * @ORM\Id
-     * @ORM\Column(type="integer", name="user_id")
+     * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    protected $user_id;
+    protected $id;
+
     /**
-     * @var string Le login
-     * @ORM\Column(type="string", length=255, unique=true, nullable=true, name="username")
+     * @var string
+     * @ORM\Column(type="string", length=255, unique=true, nullable=true)
      */
     protected $username;
+
     /**
-     * @var string L'email
-     * @ORM\Column(type="string", unique=true,  length=255, name="email")
+     * @var string
+     * @ORM\Column(type="string", unique=true,  length=255)
      */
     protected $email;
+
     /**
-     * @var string Le prenom
-     * @ORM\Column(type="string", length=100, nullable=true, name="name")
+     * @var string
+     * @ORM\Column(type="string", length=50, nullable=true)
      */
-    protected $name;
+    protected $displayName;
+
     /**
-     * @var string Le nom
-     * @ORM\Column(type="string", length=100, nullable=true, name="lastname")
-     */
-    protected $lastname;
-    /**
-     * @var string Le mot de passe
-     * @ORM\Column(type="string", length=128, name="password")
+     * @var string
+     * @ORM\Column(type="string", length=128)
      */
     protected $password;
+
     /**
-     * @var int Statut de l'utilisateur
-     * @ORM\Column(type="integer", name="state")
+     * @var int
      */
     protected $state;
+
     /**
-     * @var int type d'utilisateur
-     * @ORM\Column(type="integer", name="type")
+     * @var \Doctrine\Common\Collections\Collection
+     * @ORM\ManyToMany(targetEntity="Application\Entity\Role")
+     * @ORM\JoinTable(name="user_role_linker",
+     *      joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="role_id", referencedColumnName="id")}
+     * )
      */
-    protected $type;
-    /**
-     * @var date Date inscription
-     * @ORM\Column(type="datetime", nullable=true, name="date_inscription")
-     */
-    protected $date_inscription;
-    /*********************************
-     * ACCESSEURS
-     *********************************/
-
-    /*********** GETTERS ************/
+    protected $roles;
 
     /**
-     * Magic getter to expose protected properties.
-     *
-     * @param string $property
-     * @return mixed
-     */
-    public function __get($property)
-    {
-        return $this->$property;
-    }
-
-
-    /*********** SETTERS ************/
-
-    /**
-     * Magic setter to save protected properties.
-     *
-     * @param string $property
-     * @param mixed $value
-     */
-    public function __set($property, $value)
-    {
-        $this->$property = $value;
-    }
-
-    /*********************************
-     * CONSTRUCTEUR / DESTRUCTEUR
-     *********************************/
-
-    /**
-     * Constructeur
+     * Initialies the roles variable.
      */
     public function __construct()
     {
-
+        $this->roles = new ArrayCollection();
     }
 
-    /*********************************
-     * METHODES
-     *********************************/
-
-    /************ PUBLIC ************/
     /**
-     * Convert the object to an array.
+     * Get id.
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set id.
+     *
+     * @param int $id
+     *
+     * @return void
+     */
+    public function setId($id)
+    {
+        $this->id = (int) $id;
+    }
+
+    /**
+     * Get username.
+     *
+     * @return string
+     */
+    public function getUsername()
+    {
+        return $this->username;
+    }
+
+    /**
+     * Set username.
+     *
+     * @param string $username
+     *
+     * @return void
+     */
+    public function setUsername($username)
+    {
+        $this->username = $username;
+    }
+
+    /**
+     * Get email.
+     *
+     * @return string
+     */
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    /**
+     * Set email.
+     *
+     * @param string $email
+     *
+     * @return void
+     */
+    public function setEmail($email)
+    {
+        $this->email = $email;
+    }
+
+    /**
+     * Get displayName.
+     *
+     * @return string
+     */
+    public function getDisplayName()
+    {
+        return $this->displayName;
+    }
+
+    /**
+     * Set displayName.
+     *
+     * @param string $displayName
+     *
+     * @return void
+     */
+    public function setDisplayName($displayName)
+    {
+        $this->displayName = $displayName;
+    }
+
+    /**
+     * Get password.
+     *
+     * @return string
+     */
+    public function getPassword()
+    {
+        return $this->password;
+    }
+
+    /**
+     * Set password.
+     *
+     * @param string $password
+     *
+     * @return void
+     */
+    public function setPassword($password)
+    {
+        $this->password = $password;
+    }
+
+    /**
+     * Get state.
+     *
+     * @return int
+     */
+    public function getState()
+    {
+        return $this->state;
+    }
+
+    /**
+     * Set state.
+     *
+     * @param int $state
+     *
+     * @return void
+     */
+    public function setState($state)
+    {
+        $this->state = $state;
+    }
+
+    /**
+     * Get role.
      *
      * @return array
      */
-    public function getArrayCopy()
+    public function getRoles()
     {
-        return get_object_vars($this);
+        return $this->roles->getValues();
     }
 
     /**
-     * Populate from an array.
+     * Add a role to the user.
      *
-     * @param array $data
+     * @param Role $role
+     *
+     * @return void
      */
-    public function exchangeArray ($data = array())
+    public function addRole($role)
     {
-        $this->user_id = (isset($data['user_id'])) ? $data['user_id'] : null;
-        $this->username = (isset($data['username'])) ? $data['username'] : null;
-        $this->name = (isset($data['name'])) ? $data['name'] : null;
-        $this->username = (isset($data['username'])) ? $data['username'] : null;
-        $this->state = (isset($data['state'])) ? $data['state'] : 1;
-        $this->type = (isset($data['type'])) ? $data['type'] : null;
-        $this->date_inscription = (isset($data['date_inscription'])) ? $data['date_inscription'] : null;
+        $this->roles[] = $role;
     }
-
-    public function setInputFilter(InputFilterInterface $inputFilter)
-    {
-        throw new \Exception("Not used");
-    }
-
-    public function getInputFilter()
-    {
-        if (!$this->inputFilter) {
-            $inputFilter = new InputFilter();
-
-            $inputFilter->add(array(
-                'name'     => 'category_id',
-                'required' => true,
-                'filters'  => array(
-                    array('name' => 'Int'),
-                ),
-            ));
-
-            $inputFilter->add(
-                array(
-                    'name'     => 'nom',
-                    'required' => true,
-                    'filters'  => array(
-                        array('name' => 'StripTags'),
-                        array('name' => 'StringTrim'),
-                    ),
-                    'validators' => array(
-                        array(
-                            'name'    => 'StringLength',
-                            'options' => array(
-                                'encoding' => 'UTF-8',
-                                'min'      => 1,
-                                'max'      => 100,
-                            ),
-                        ),
-                    ),
-                )
-            );
-
-            $this->inputFilter = $inputFilter;
-        }
-
-        return $this->inputFilter;
-    }
-
-
-    /*********** PROTECTED **********/
-
-    /************ PRIVATE ***********/
 }

@@ -28,7 +28,7 @@ class PHPUnit_Util_PHP_Windows extends PHPUnit_Util_PHP_Default
      *
      * @see https://bugs.php.net/bug.php?id=51800
      */
-    public function runJob($job, array $settings = [])
+    public function runPost($job, array $settings = [])
     {
         if (false === $stdout_handle = tmpfile()) {
             throw new PHPUnit_Framework_Exception(

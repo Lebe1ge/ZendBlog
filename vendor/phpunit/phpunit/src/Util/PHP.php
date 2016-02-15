@@ -86,11 +86,11 @@ abstract class PHPUnit_Util_PHP
      *
      * @throws PHPUnit_Framework_Exception
      */
-    public function runTestJob($job, PHPUnit_Framework_Test $test, PHPUnit_Framework_TestResult $result)
+    public function runTestPost($job, PHPUnit_Framework_Test $test, PHPUnit_Framework_TestResult $result)
     {
         $result->startTest($test);
 
-        $_result = $this->runJob($job);
+        $_result = $this->runPost($job);
 
         $this->processChildResult(
             $test,
@@ -132,7 +132,7 @@ abstract class PHPUnit_Util_PHP
      *
      * @throws PHPUnit_Framework_Exception
      */
-    abstract public function runJob($job, array $settings = []);
+    abstract public function runPost($job, array $settings = []);
 
     /**
      * @param array $settings

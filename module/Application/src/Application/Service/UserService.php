@@ -6,8 +6,7 @@
  *
  */
 namespace Application\Service;
-
-use \Application\Service\AbstractService;
+use Application\Entity\User;
 
 /**
  * Service
@@ -31,26 +30,36 @@ class UserService extends AbstractService
     }
 
     /**
-     * Obtient un utilisateur par son email
-     * @param string email
+     * Obtient une utilisateur par son id
+     * @param string id
      * @return Application\Entity\User
-     *
      */
-
-    public function getByEmail($email)
+    public function getById($id)
     {
-        $qb = $this->getEm()->createQueryBuilder();
+        return $this->getRep()->find($id);
+    }
 
-        $qb->select(array('u'))
-            ->from('Application\Model\User', 'u')
-            ->where(
-                $qb->expr()->eq('u._email', '?1')
-            )
-            ->setParameters(array(1 => $email))
-        ;
 
-        $query = $qb->getQuery();
+    /**
+     * Sauvegarder une categorie
+     * @param User $user
+     * @return Application\Entity\Post
+     * @internal param $ Application\Entity\User
+     */
+    public function savePost(User $user)
+    {
+        $this->getEm()->persist($user);
+        $this->getEm()->flush();
+    }
 
-        return $query->getSingleResult();
+    /**
+     * Supprimer une categorie
+     * @param int id
+     */
+    public function deletePost($id)
+    {
+        $user = $this->getById($id);
+        $this->getEm()->remove($user);
+        $this->getEm()->flush();
     }
 }

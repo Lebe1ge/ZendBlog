@@ -7,11 +7,15 @@
  */
 return array(
     'modules' => array(
+        'ZendDeveloperTools',
         'Application',
         'DoctrineModule',
         'DoctrineORMModule',
-        'ZendDeveloperTools',
         'ZfcAdmin',
+        'ZfcBase',
+        'ZfcUser',
+        'ZfcUserDoctrineORM',
+        'BjyAuthorize',
         'Admin',
     ),
     'module_listener_options' => array(

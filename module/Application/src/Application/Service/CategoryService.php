@@ -43,7 +43,8 @@ class CategoryService extends AbstractService
 
     /**
      * Sauvegarder une categorie
-     * @param Application\Entity\Category
+     * @param Category $category
+     * @internal param $ Application\Entity\Category
      */
     public function saveCategory(Category $category)
     {

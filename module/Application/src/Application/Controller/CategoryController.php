@@ -22,7 +22,11 @@ class CategoryController extends AbstractActionController
     public function listAction()
     {
         $category = $this->getServiceLocator()->get('Application\Service\CategoryService')->getCategoryBySlug($this->params('slug'));
-        $posts = $this->getServiceLocator()->get('Application\Service\PostService')->getPostByCategory($category->nom);
+        $posts = $this->getServiceLocator()->get('Application\Service\PostService')->getPostByCategory($category->category_id);
+        foreach($posts as $post){
+            $post->category = $this->getServiceLocator()->get('Application\Service\CategoryService')->getById($post->category_id);
+            $post->author = $this->getServiceLocator()->get('Application\Service\UserService')->getById($post->author);
+        }
         return new ViewModel(array(
             'posts' => $posts,
         ));

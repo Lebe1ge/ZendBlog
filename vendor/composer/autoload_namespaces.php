@@ -7,6 +7,9 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'phpDocumentor' => array($vendorDir . '/phpdocumentor/reflection-docblock/src'),
+    'ZfcUserDoctrineORM' => array($vendorDir . '/zf-commons/zfc-user-doctrine-orm/src'),
+    'ZfcUser' => array($vendorDir . '/zf-commons/zfc-user/src'),
+    'ZfcBase' => array($vendorDir . '/zf-commons/zfc-base/src'),
     'ZfcAdmin' => array($vendorDir . '/zf-commons/zfc-admin/src'),
     'ZendXml\\' => array($vendorDir . '/zendframework/zendxml/library'),
     'ZendDiagnostics\\' => array($vendorDir . '/zendframework/zenddiagnostics/src'),
@@ -24,4 +27,5 @@ return array(
     'Doctrine\\Common\\' => array($vendorDir . '/doctrine/common/lib'),
     'DoctrineORMModule\\' => array($vendorDir . '/doctrine/doctrine-orm-module/src'),
     'DoctrineModule\\' => array($vendorDir . '/doctrine/doctrine-module/src'),
+    'BjyAuthorize\\' => array($vendorDir . '/bjyoungblood/bjy-authorize/src'),
 );
