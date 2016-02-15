@@ -17,8 +17,8 @@
                 <td><?php echo $cat->slug; ?></td>
                 <td>
                     <?php
-                    $urlEdit = $this->url('zfcadmin', array('action' => 'edit', 'id' =>$cat->category_id));
-                    $urlDelete = $this->url('zfcadmin', array('action' => 'delete', 'id' =>$cat->category_id));
+                    $urlEdit = $this->url('zfcadmin/category', array('action' => 'edit', 'id' =>$cat->category_id));
+                    $urlDelete = $this->url('zfcadmin/category', array('action' => 'delete', 'id' =>$cat->category_id));
                     ?>
                     <a href="<?php echo $urlEdit;?>"><i class="fam-pencil"></i></a>
                     <a href="<?php echo $urlDelete;?>"><i class="fam-delete"></i></a>

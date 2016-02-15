@@ -5,7 +5,6 @@ use Zend\InputFilter\InputFilter;
 use Zend\InputFilter\Factory as InputFactory;
 use Zend\InputFilter\InputFilterAwareInterface;
 use Zend\InputFilter\InputFilterInterface;
-
 /**
  * Représentation d'un utilisateur
  *
@@ -19,9 +18,7 @@ class Post implements InputFilterAwareInterface
     /*********************************
      * ATTRIBUTS
      *********************************/
-
     protected $inputFilter;
-
     /**
      * @var int L'identifiant utilisateur
      * @ORM\Id
@@ -46,33 +43,28 @@ class Post implements InputFilterAwareInterface
     protected $category_id;
     /**
      * @var int Id de l'auteur
-     * @ORM\Column(type="integer", name="user_id", nullable=true)
+     * @ORM\Column(type="integer", name="author", nullable=true)
      */
-    protected $user_id;
+    protected $author;
     /**
      * @var int Statut du post
      * @ORM\Column(type="integer", name="state")
      */
     protected $state;
-
     /**
      * @var date Date création de l'article
      * @ORM\Column(type="datetime", nullable=true)
      */
     protected $date_create;
-
     /**
      * @var string Chemin vers l'image
      * @ORM\Column(type="string", length=255, nullable=true, name="path_picture")
      */
     protected $path_picture;
-
     /*********************************
      * ACCESSEURS
      *********************************/
-
     /*********** GETTERS ************/
-
     /**
      * Magic getter to expose protected properties.
      *
@@ -83,10 +75,7 @@ class Post implements InputFilterAwareInterface
     {
         return $this->$property;
     }
-
-
     /*********** SETTERS ************/
-
     /**
      * Magic setter to save protected properties.
      *
@@ -97,23 +86,18 @@ class Post implements InputFilterAwareInterface
     {
         $this->$property = $value;
     }
-
     /*********************************
      * CONSTRUCTEUR / DESTRUCTEUR
      *********************************/
-
     /**
      * Constructeur
      */
     public function __construct()
     {
-
     }
-
     /*********************************
      * METHODES
      *********************************/
-
     /************ PUBLIC ************/
     /**
      * Convert the object to an array.
@@ -124,7 +108,6 @@ class Post implements InputFilterAwareInterface
     {
         return get_object_vars($this);
     }
-
     /**
      * Populate from an array.
      *
@@ -132,27 +115,23 @@ class Post implements InputFilterAwareInterface
      */
     public function exchangeArray ($data = array())
     {
-
         $this->post_id = (isset($data['post_id'])) ? $data['post_id'] : null;
         $this->title = (isset($data['title'])) ? $data['title'] : null;
         $this->content = (isset($data['content'])) ? $data['content'] : null;
         $this->category_id = (isset($data['category_id'])) ? $data['category_id'] : null;
-        $this->user_id = (isset($data['user_id'])) ? $data['user_id'] : null;
+        $this->author = (isset($data['author'])) ? $data['author'] : null;
         $this->state = (isset($data['path_picture'])) ? $data['path_picture'] : 1;
         $this->date_create = (isset($data['date_create'])) ? $data['date_create'] : null;
         $this->path_picture = (isset($data['path_picture'])) ? $data['path_picture'] : null;
     }
-
     public function setInputFilter(InputFilterInterface $inputFilter)
     {
         throw new \Exception("Not used");
     }
-
     public function getInputFilter()
     {
         if (!$this->inputFilter) {
             $inputFilter = new InputFilter();
-
             $inputFilter->add(array(
                 'name'     => 'post_id',
                 'required' => true,
@@ -160,7 +139,6 @@ class Post implements InputFilterAwareInterface
                     array('name' => 'Int'),
                 ),
             ));
-
             $inputFilter->add(array(
                 'name'     => 'title',
                 'required' => true,
@@ -179,7 +157,6 @@ class Post implements InputFilterAwareInterface
                     ),
                 ),
             ));
-
             $inputFilter->add(array(
                 'name'     => 'content',
                 'required' => true,
@@ -197,7 +174,6 @@ class Post implements InputFilterAwareInterface
                     ),
                 ),
             ));
-
             $inputFilter->add(array(
                 'name'     => 'category_id',
                 'required' => true,
@@ -205,22 +181,19 @@ class Post implements InputFilterAwareInterface
                     array('name' => 'Int'),
                 ),
             ));
-
             $inputFilter->add(array(
-                'name'     => 'user_id',
+                'name'     => 'author',
                 'required' => true,
                 'filters'  => array(
                     array('name' => 'Int'),
                 ),
             ));
-
             $inputFilter->add(array(
                 'name'     => 'state',
                 'filters'  => array(
                     array('name' => 'Int'),
                 ),
             ));
-
             $inputFilter->add(array(
                 'name' => 'date_create',
                 'type' => 'Zend\Form\Element\DateSelect',
@@ -242,7 +215,6 @@ class Post implements InputFilterAwareInterface
                     )
                 ),
             ));
-
             $inputFilter->add(array(
                 'name'     => 'path_picture',
                 'required' => true,
@@ -260,14 +232,10 @@ class Post implements InputFilterAwareInterface
                     ),
                 ),
             ));
-
             $this->inputFilter = $inputFilter;
         }
-
         return $this->inputFilter;
     }
-
     /*********** PROTECTED **********/
-
     /************ PRIVATE ***********/
 }

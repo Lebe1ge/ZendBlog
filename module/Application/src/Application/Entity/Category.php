@@ -45,11 +45,6 @@ class Category implements InputFilterAwareInterface
      * @ORM\Column(type="integer", name="state")
      */
     protected $state;
-    /**
-     * @var int Id de l'user
-     * @ORM\Column(type="integer", name="user_id")
-     */
-    protected $user_id;
 
     /*********************************
      * ACCESSEURS
