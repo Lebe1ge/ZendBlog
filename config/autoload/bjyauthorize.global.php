@@ -28,16 +28,14 @@ return array(
             'BjyAuthorize\Guard\Route' => array(
                 array('route' => 'zfcadmin', 'roles' => array('admin')),
                 array('route' => 'zfcadmin/logout', 'roles' => array('user', 'admin')),
-                array('route' => 'zfcadmin/login', 'roles' => array('guest', 'user', 'admin')),
-                array('route' => 'zfcadmin/authenticate', 'roles' => array( 'guest', 'user', 'admin')),
-                array('route' => 'zfcadmin/register', 'roles' => array('guest')),
-                array('route' => 'zfcadmin/category', 'roles' => array('admin')),
-                array('route' => 'zfcadmin/category/action', 'roles' => array('admin')),
-                array('route' => 'zfcadmin/job', 'roles' => array('admin')),
-                array('route' => 'zfcadmin/job/action', 'roles' => array('admin')),
+                array('route' => 'login', 'roles' => array('guest', 'user', 'admin')),
                 array('route' => 'home', 'roles' => array('guest', 'user', 'admin')),
                 array('route' => 'list_post_page', 'roles' => array('guest', 'user', 'admin')),
-                array('route' => 'list_category_page', 'roles' => array('guest', 'user', 'admin'))
+                array('route' => 'list_category_page', 'roles' => array('guest', 'user', 'admin')),
+                array('route' => 'zfcuser-login', 'roles' => array('guest', 'user', 'admin')),
+                array('route' => 'zfcuser/register', 'roles' => array('guest', 'user', 'admin')),
+                array('route' => 'zfcuser-authenticate', 'roles' => array('guest', 'user', 'admin')),
+                array('route' => 'zfcuser-register', 'roles' => array('guest', 'user', 'admin'))
             )
         )
     )
