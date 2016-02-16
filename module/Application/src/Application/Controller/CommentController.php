@@ -71,7 +71,6 @@ class CommentController extends AbstractActionController
                 // Si le formulaire n'est pas valide, on reste sur la page et les erreurs apparaissent
                 foreach ($formComment->getMessages() as $messageId => $messages) {
                     foreach ($messages as $message) {
-                        var_dump(array('error' => "Validation failure '$messageId': $message"));
                         $this->flashMessenger()->addMessage(array('error' => "Validation failure '$messageId': $message"));
                     }
                 }

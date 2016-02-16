@@ -111,7 +111,6 @@ class Category implements InputFilterAwareInterface
      */
     public function exchangeArray ($data = array())
     {
-        var_dump($data);
         $slugifyFilter = new Slugify();
         $this->category_id = (isset($data['category_id'])) ? $data['category_id'] : null;
         $this->name = (isset($data['name'])) ? $data['name'] : null;
