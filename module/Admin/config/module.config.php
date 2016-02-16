@@ -233,11 +233,11 @@ return array(
                     ),
                     // Profondeur 1
                     'user' => array(
-                        'label' => 'User',
+                        'label' => 'Utilisateur',
                         'route' => 'zfcadmin/user',
                         'pages' => array(
                             'edit_user' => array(
-                                'label' => 'Edit user',
+                                'label' => 'Editer utilisateur',
                                 'route' => 'zfcadmin/user/action',
                                 'params' => array('action' => 'edit')
                             ),

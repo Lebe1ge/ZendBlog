@@ -17,7 +17,7 @@ return array(
         // Keys are the provider service names, values are the options to be passed to the provider
         'role_providers' => array(
             'BjyAuthorize\Provider\Role\ObjectRepositoryProvider' => array(
-                'table' => 'user_role',
+                'table' => 'user_role_linker',
                 'role_id_field' => 'role_id',
                 'parent_role_field' => 'parent'
             )
@@ -26,16 +26,20 @@ return array(
         // Guard listeners to be attached to the application event manager
         'guards' => array(
             'BjyAuthorize\Guard\Route' => array(
-                array('route' => 'zfcadmin', 'roles' => array('admin')),
-                array('route' => 'zfcadmin/logout', 'roles' => array('user', 'admin')),
-                array('route' => 'login', 'roles' => array('guest', 'user', 'admin')),
                 array('route' => 'home', 'roles' => array('guest', 'user', 'admin')),
                 array('route' => 'list_post_page', 'roles' => array('guest', 'user', 'admin')),
                 array('route' => 'list_category_page', 'roles' => array('guest', 'user', 'admin')),
-                array('route' => 'zfcuser-login', 'roles' => array('guest', 'user', 'admin')),
+                array('route' => 'zfcadmin', 'roles' => array('admin')),
+                array('route' => 'zfcadmin/logout', 'roles' => array('user', 'admin')),
+                array('route' => 'zfcuser', 'roles' => array('guest', 'user', 'admin')),
+                array('route' => 'zfcuser/login', 'roles' => array('guest', 'user', 'admin')),
+//                array('route' => 'zfcuser-login', 'roles' => array('guest', 'user', 'admin')),
+//                array('route' => 'zfcuser-authenticate', 'roles' => array('guest', 'user', 'admin')),
+//                array('route' => 'zfcuser-logout', 'roles' => array('guest', 'user', 'admin')),
                 array('route' => 'zfcuser/register', 'roles' => array('guest', 'user', 'admin')),
-                array('route' => 'zfcuser-authenticate', 'roles' => array('guest', 'user', 'admin')),
-                array('route' => 'zfcuser-register', 'roles' => array('guest', 'user', 'admin'))
+//                array('route' => 'zfcuser-register', 'roles' => array('guest', 'user', 'admin')),
+//                array('route' => 'zfcuser-changepassword', 'roles' => array('guest', 'user', 'admin')),
+//                array('route' => 'zfcuser-changeemail', 'roles' => array('guest', 'user', 'admin'))
             )
         )
     )

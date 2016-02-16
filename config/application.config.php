@@ -8,14 +8,14 @@
 return array(
     'modules' => array(
         'ZendDeveloperTools',
-        'Application',
         'DoctrineModule',
         'DoctrineORMModule',
         'ZfcAdmin',
         'ZfcBase',
         'ZfcUser',
         'ZfcUserDoctrineORM',
-        'BjyAuthorize',
+//        'BjyAuthorize',
+        'Application',
         'Admin',
     ),
     'module_listener_options' => array(

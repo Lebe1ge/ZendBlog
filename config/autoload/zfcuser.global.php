@@ -1,7 +1,7 @@
 <?php
 $settings = array(
     'zend_db_adapter' => 'Zend\Db\Adapter\Adapter',
-    'user_entity_class' => 'Application\Entity\User',
+    'user_entity_class' => 'ZfcUser\Entity\User',
     'enable_registration' => true,
     'enable_username' => true,
     'auth_adapters' => array( 100 => 'ZfcUser\Authentication\Adapter\Db' ),
@@ -14,7 +14,7 @@ $settings = array(
     'use_redirect_parameter_if_present' => true,
 
     //'user_login_widget_view_template' => 'zfc-user/user/login.phtml',
-    'login_redirect_route' => 'zfcadmin',
+    //'login_redirect_route' => 'zfcuser',
     //'logout_redirect_route' => 'zfcuser/login',
 
     //'password_cost' => 14,
@@ -23,7 +23,7 @@ $settings = array(
     //'default_user_state' => 1,
     //'allowed_login_states' => array( null, 1 ),
 
-    'table_name' => 'user',
+    'table_name' => 'users',
 );
 
 /**

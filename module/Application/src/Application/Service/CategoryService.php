@@ -26,6 +26,16 @@ class CategoryService extends AbstractService
      * @param string id
      * @return Application\Entity\Category
      */
+    public function getCategory($id)
+    {
+        return $this->getRep()->find($id);
+    }
+
+    /**
+     * Obtient une categorie par son id
+     * @param string id
+     * @return Application\Entity\Category
+     */
     public function getById($id)
     {
         return $this->getRep()->find($id);

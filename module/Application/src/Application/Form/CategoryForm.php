@@ -16,7 +16,7 @@ class CategoryForm extends Form
         ));
 
         $this->add(array(
-            'name' => 'nom',
+            'name' => 'name',
             'type' => 'text',
             'options' => array(
                 'label' => 'Nom',

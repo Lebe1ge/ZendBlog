@@ -56,6 +56,7 @@ class User implements UserInterface, ProviderInterface
 
     /**
      * @var int
+     * @ORM\Column(columnDefinition="TINYINT DEFAULT 1 NOT NULL")
      */
     protected $state;
 
