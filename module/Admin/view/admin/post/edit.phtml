@@ -40,10 +40,10 @@ echo $this->formHidden($form->get('post_id'));
         </div>
     </div>
     <div class="control-group">
-        <?php echo $this->formLabel($form->get('category')->setLabelAttributes(array('class' => 'control-label')));?>
+        <?php echo $this->formLabel($form->get('category_id')->setLabelAttributes(array('class' => 'control-label')));?>
         <div class="controls">
-            <?php echo $this->formSelect($form->get('category'));?>
-            <?php echo $this->formElementErrors($form->get('category'), array('class' => 'error_list'));?>
+            <?php echo $this->formSelect($form->get('category_id'));?>
+            <?php echo $this->formElementErrors($form->get('category_id'), array('class' => 'error_list'));?>
         </div>
     </div>
 

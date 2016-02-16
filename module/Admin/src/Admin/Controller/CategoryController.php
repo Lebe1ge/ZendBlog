@@ -94,7 +94,6 @@ class CategoryController extends AbstractActionController
                 //$this->flashMessenger()->addMessage(array('success' => "Category '{$category->name}' was added successfully"));
                 // Puis on redirige sur la page d'accueil.
                 return $this->redirect()->toRoute('zfcadmin/category');
-
             }
             // Si le formulaire n'est pas valide, on reste sur la page et les erreurs apparaissent
             foreach ($formCategory->getMessages() as $messageId => $message) {

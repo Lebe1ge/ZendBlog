@@ -6,8 +6,8 @@
  *
  */
 namespace Application\Service;
-use Application\Entity\Tag;
 
+use Application\Entity\Tag;
 class TagService extends AbstractService
 {
 
@@ -32,7 +32,7 @@ class TagService extends AbstractService
 
     /**
      * Sauvegarder une tag
-     * @param Application\Entity\Tag
+     * @param Application\Entity\Post
      */
     public function saveTag(Tag $post)
     {
