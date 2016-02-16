@@ -73,6 +73,17 @@ return array(
                     ),
                 ),
             ),
+            'add_comment' => array(
+                'type'    => 'Segment',
+                'options' => array(
+                    'route'    => '/add/comment[/]',
+                    'defaults' => array(
+                        'module'     => 'Application',
+                        'controller' => 'Application\Controller\Comment',
+                        'action'     => 'add',
+                    ),
+                ),
+            ),
             'zfcuser' => array(
                 'type' => 'Zend\Mvc\Router\Http\Literal',
                 'options' => array(
@@ -204,8 +215,8 @@ return array(
             'Application\Controller\Index' => 'Application\Controller\IndexController',
             'Application\Controller\Post' => 'Application\Controller\PostController',
             'Application\Controller\Category' => 'Application\Controller\CategoryController',
+            'Application\Controller\Comment' => 'Application\Controller\CommentController',
             'Admin\Controller\User' => 'Admin\Controller\UserController',
-            'Admin\Controller\Comment' => 'Admin\Controller\CommentController',
             'Admin\Controller\Tag' => 'Admin\Controller\TagController'
         ),
     ),

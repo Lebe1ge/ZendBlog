@@ -11,10 +11,11 @@ use Application\Entity\Comment;
 
 class CommentService extends AbstractService
 {
+    /** @noinspection PhpUndefinedNamespaceInspection */
 
     /**
-     * Obtient tous les posts
-     * @return Application\Model\Comment
+     * Obtient tous les comments
+     * @return Application\Entity\Comment
      */
     public function getAll()
     {
@@ -22,9 +23,9 @@ class CommentService extends AbstractService
     }
 
     /**
-     * Obtient un post par son id
+     * Obtient un comment par son id
      * @param string id
-     * @return Application\Model\Comment
+     * @return Application\Entity\Comment
      */
     public function getById($id)
     {
@@ -32,12 +33,23 @@ class CommentService extends AbstractService
     }
 
     /**
-     * Sauvegarder une categorie
-     * @param Application\Entity\Comment
+     * Obtient un comment par son id
+     * @param string id
+     * @return Application\Entity\Comment
      */
-    public function savePost(Comment $post)
+    public function getByPostId($id)
     {
-        $this->getEm()->persist($post);
+        return $this->getRep()->findBy(array("post_id" => $id));
+    }
+
+    /**
+     * Sauvegarder une categorie
+     * @param Comment $comment
+     * @internal param $ Application\Entity\Comment
+     */
+    public function saveComment(Comment $comment)
+    {
+        $this->getEm()->persist($comment);
         $this->getEm()->flush();
     }
 
@@ -45,10 +57,10 @@ class CommentService extends AbstractService
      * Supprimer une categorie
      * @param int id
      */
-    public function deletePost($id)
+    public function deleteComment($id)
     {
-        $post = $this->getById($id);
-        $this->getEm()->remove($post);
+        $comment = $this->getById($id);
+        $this->getEm()->remove($comment);
         $this->getEm()->flush();
     }
 

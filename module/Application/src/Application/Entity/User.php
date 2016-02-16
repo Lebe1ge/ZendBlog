@@ -22,6 +22,10 @@ use ZfcUser\Entity\UserInterface;
  */
 class User implements UserInterface, ProviderInterface
 {
+    /*********************************
+     * ATTRIBUTS
+     *********************************/
+    protected $inputFilter;
     /**
      * @var int
      * @ORM\Id
@@ -230,4 +234,112 @@ class User implements UserInterface, ProviderInterface
     {
         $this->roles[] = $role;
     }
+
+    /*********************************
+     * METHODES
+     *********************************/
+    /************ PUBLIC ************/
+    /**
+     * Convert the object to an array.
+     *
+     * @return array
+     */
+    public function getArrayCopy()
+    {
+        return get_object_vars($this);
+    }
+    /**
+     * Populate from an array.
+     *
+     * @param array $data
+     */
+    public function exchangeArray ($data = array())
+    {
+        $this->id = (isset($data['id'])) ? $data['id'] : null;
+        $this->username = (isset($data['username'])) ? $data['username'] : null;
+        $this->email = (isset($data['email'])) ? $data['email'] : null;
+        $this->displayName = (isset($data['displayName'])) ? $data['displayName'] : null;
+    }
+    public function setInputFilter(InputFilterInterface $inputFilter)
+    {
+        throw new \Exception("Not used");
+    }
+    public function getInputFilter()
+    {
+        if (!$this->inputFilter) {
+            $inputFilter = new InputFilter();
+            $inputFilter->add(array(
+                'name'     => 'id',
+                'required' => true,
+                'filters'  => array(
+                    array('name' => 'Int'),
+                ),
+            ));
+            $inputFilter->add(array(
+                'name'     => 'username',
+                'required' => true,
+                'filters'  => array(
+                    array('name' => 'StripTags'),
+                    array('name' => 'StringTrim'),
+                ),
+                'validators' => array(
+                    array(
+                        'name'    => 'StringLength',
+                        'options' => array(
+                            'encoding' => 'UTF-8',
+                            'min'      => 1,
+                            'max'      => 255,
+                        ),
+                    ),
+                ),
+            ));
+            $inputFilter->add(array(
+                'name'     => 'email',
+                'required' => true,
+                'filters'  => array(
+                    array('name' => 'StripTags'),
+                    array('name' => 'StringTrim'),
+                ),
+                'validators' => array(
+                    array(
+                        'name'    => 'StringLength',
+                        'options' => array(
+                            'encoding' => 'UTF-8',
+                            'min'      => 1,
+                            'max'      => 255,
+                        ),
+                    ),
+                ),
+            ));
+            $inputFilter->add(array(
+                'name'     => 'displayName',
+                'required' => true,
+                'filters'  => array(
+                    array('name' => 'StripTags'),
+                    array('name' => 'StringTrim'),
+                ),
+                'validators' => array(
+                    array(
+                        'name'    => 'StringLength',
+                        'options' => array(
+                            'encoding' => 'UTF-8',
+                            'min'      => 1,
+                            'max'      => 50,
+                        ),
+                    ),
+                ),
+            ));
+            $inputFilter->add(array(
+                'name'     => 'author',
+                'required' => true,
+                'filters'  => array(
+                    array('name' => 'Int'),
+                ),
+            ));
+            $this->inputFilter = $inputFilter;
+        }
+        return $this->inputFilter;
+    }
+    /*********** PROTECTED **********/
+    /************ PRIVATE ***********/
 }

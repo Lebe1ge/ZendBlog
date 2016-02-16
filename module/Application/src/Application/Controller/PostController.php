@@ -14,7 +14,9 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Query;
 use Zend\View\Model\ViewModel;
 use Application\Form\PostForm;
+use Application\Form\CommentForm;
 use Application\Entity\Post;
+use Application\Entity\Comment;
 
 class PostController extends AbstractActionController
 {
@@ -33,8 +35,45 @@ class PostController extends AbstractActionController
 
     public function showAction()
     {
+        $formComment = new CommentForm();
+
+        // On récupère l'objet Request
+        $request = $this->getRequest();
+
+        // On vérifie si le formulaire a été posté
+        if ($request->isPost()) {
+            // On instancie notre modèle Post
+            $comment = new Comment();
+
+            // Et on passe l'InputFilter de Post au formulaire
+            $formComment->setInputFilter($comment->getInputFilter());
+            $formComment->setData($request->getPost());
+
+            // Si le formulaire est valide
+            if ($formComment->isValid()) {
+                // On prend les données du formulaire qui sont converti pour correspondre à notre modèle Post
+                $comment->exchangeArray($formComment->getData());
+
+                // On enregistre ces données dans la table Post
+                $this->getServiceLocator()->get('Application\Service\CommentService')->saveComment($comment);
+
+                // Puis on redirige sur la page d'accueil.
+                return $this->redirect()->toUrl('/');
+            }
+            // Si le formulaire n'est pas valide, on reste sur la page et les erreurs apparaissent
+        }
+
+        $post = $this->getServiceLocator()->get('Application\Service\PostService')->getById($this->params('id'));
+        $post->category = $this->getServiceLocator()->get('Application\Service\CategoryService')->getById($post->category_id);
+        $post->author = $this->getServiceLocator()->get('Application\Service\UserService')->getById($post->author);
+        $post->comments = $this->getServiceLocator()->get('Application\Service\CommentService')->getByPostId($post->post_id);
+        $formComment->setData(array("post_id" => $post->post_id));
+
         return new ViewModel(array(
-            'post' => $this->getServiceLocator()->get('Application\Service\PostService')->getById($this->params('id')),
+            'post' => $post,
+            'form' => $formComment,
+            'post_id' => $this->params('id'),
+            'flashMessages' => $this->flashMessenger()->getMessages()
         ));
     }
 
@@ -70,7 +109,7 @@ class PostController extends AbstractActionController
 
         return new ViewModel(
             array(
-                'form' => $formPost
+                'form' => $formPost,
             )
         );
     }

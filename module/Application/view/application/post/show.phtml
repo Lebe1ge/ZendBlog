@@ -8,18 +8,36 @@
                 <p></p>
             </div>
             <div class="meta">
-                <time class="published" datetime="2015-11-01">November 1, 2015</time>
-                <a href="#" class="author"><span class="name"><?= $post->author ?></span><img src="/img/avatar.jpg" alt="" /></a>
+                <time class="published" datetime="2015-11-01"><?= $post->date_create->format('j F Y') ?></time>
+                <a href="#" class="author"><span class="name"><?= $post->author->getDisplayName() ?></span><img src="/img/avatar.jpg" alt="" /></a>
             </div>
         </header>
         <a href="#" class="image featured"><img src="/img/pic01.jpg" alt="" /></a>
         <p><?= $post->content ?></p>
         <footer>
             <ul class="stats">
-                <li><a href="#"><?= $post->category ?></a></li>
+                <li><a href="#"><?= $post->category->name ?></a></li>
                 <li><a href="#" class="icon fa-heart">28</a></li>
                 <li><a href="#" class="icon fa-comment">128</a></li>
             </ul>
         </footer>
+        <?php foreach ($post->comments as $comment): ?>
+            <h4><?= $comment->author ?> - <b><?= $comment->date_create->format('j F Y') ?></b></h4>
+            <blockquote><?= $comment->content ?></blockquote>
+        <?php endforeach; ?>
+
+        <?php $this->headTitle('Ajouter un commentaire');?>
+        <h1><?= $this->escapeHtml('Ajouter un commentaire'); ?></h1>
+        <?php
+        $form->setAttribute('action', $this->url('add_comment', array('action' => 'add')));
+        $form->prepare();
+        echo $this->form()->openTag($form);
+        echo $this->formHidden($form->get('comment_id'));
+        echo $this->formHidden($form->get('post_id'));
+        echo $this->formRow($form->get('email'));
+        echo $this->formRow($form->get('content'));
+        echo $this->formSubmit($form->get('submit'));
+        echo $this->form()->closeTag();?>
+
     </article>
 </div>

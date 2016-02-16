@@ -1,5 +1,6 @@
 <?php
 namespace Application\Entity;
+
 use Doctrine\ORM\Mapping as ORM;
 use Zend\InputFilter\InputFilter;
 use Zend\InputFilter\Factory as InputFactory;
@@ -7,7 +8,7 @@ use Zend\InputFilter\InputFilterAwareInterface;
 use Zend\InputFilter\InputFilterInterface;
 
 /**
- * Représentation d'un utilisateur
+ * Représentation d'un commentaire
  *
  * @ORM\Entity
  * @ORM\Table(name="comment")
@@ -35,10 +36,10 @@ class Comment implements InputFilterAwareInterface
      */
     protected $content;
     /**
-     * @var string Id user du commentaire
-     * @ORM\Column(type="string", length=100, name="user_id")
+     * @var string Adresse mail de l'auteur
+     * @ORM\Column(type="string", length=255, name="author")
      */
-    protected $user_id;
+    protected $author;
     /**
      * @var int Statut du commentaire
      * @ORM\Column(type="integer", name="state", nullable = true)
@@ -124,10 +125,10 @@ class Comment implements InputFilterAwareInterface
 
         $this->comment_id = (isset($data['comment_id'])) ? $data['comment_id'] : null;
         $this->content = (isset($data['content'])) ? $data['content'] : null;
-        $this->user_id = (isset($data['user_id'])) ? $data['user_id'] : null;
-        $this->state = (isset($data['state'])) ? $data['state'] : 1;
-        $this->date_create = (isset($data['date_create'])) ? $data['date_create'] : null;
         $this->post_id = (isset($data['post_id'])) ? $data['post_id'] : null;
+        $this->author = (isset($data['email'])) ? $data['email'] : null;
+        $this->state = (isset($data['state'])) ? $data['state'] : 1;
+        $this->date_create = (isset($data['date_create'])) ? $data['date_create'] : new \DateTime();
     }
 
     public function setInputFilter(InputFilterInterface $inputFilter)
@@ -142,7 +143,6 @@ class Comment implements InputFilterAwareInterface
 
             $inputFilter->add(array(
                 'name'     => 'comment_id',
-                'required' => true,
                 'filters'  => array(
                     array('name' => 'Int'),
                 ),
@@ -167,10 +167,20 @@ class Comment implements InputFilterAwareInterface
             ));
 
             $inputFilter->add(array(
-                'name'     => 'user_id',
+                'name'     => 'email',
                 'required' => true,
                 'filters'  => array(
-                    array('name' => 'Int'),
+                    array('name' => 'StripTags'),
+                    array('name' => 'StringTrim'),
+                ),
+                'validators' => array(
+                    array(
+                        'name'    => 'StringLength',
+                        'options' => array(
+                            'encoding' => 'UTF-8',
+                            'min'      => 1,
+                        ),
+                    ),
                 ),
             ));
 
@@ -181,38 +191,6 @@ class Comment implements InputFilterAwareInterface
                     array('name' => 'Int'),
                 ),
             ));
-
-            $inputFilter->add(array(
-                'name'     => 'user_id',
-                'required' => true,
-                'filters'  => array(
-                    array('name' => 'Int'),
-                ),
-            ));
-
-            $inputFilter->add(array(
-                'name' => 'date_create',
-                'type' => 'Zend\Form\Element\DateSelect',
-                'options' => array(
-                    'create_empty_option' => true,
-                    'min_year' => date('Y') - 70,
-                    'max_year' => date('Y') - 16,
-                    'day_attributes' => array(
-                        'class' => 'input-small',
-                        'style' => 'width: 22%',
-                    ),
-                    'month_attributes' => array(
-                        'class' => 'input-medium',
-                        'style' => 'width: 35%',
-                    ),
-                    'year_attributes' => array(
-                        'class' => 'input-small',
-                        'style' => 'width: 25%',
-                    )
-                ),
-            ));
-
-
 
             $this->inputFilter = $inputFilter;
         }

@@ -10,6 +10,7 @@ class CategoryServiceFactory implements FactoryInterface
     /**
      * (non-PHPdoc)
      * @see \Zend\ServiceManager\FactoryInterface::createService()
+     * @param ServiceLocatorInterface $serviceLocator
      * @return Application\Service\ApplicationService
      */
     public function createService(ServiceLocatorInterface $serviceLocator)

@@ -36,6 +36,8 @@ return array(
                 array('route' => 'login', 'roles' => array('guest', 'user', 'admin')),
                 array('route' => 'home', 'roles' => array('guest', 'user', 'admin')),
                 array('route' => 'list_post_page', 'roles' => array('guest', 'user', 'admin')),
+                array('route' => 'add_comment', 'roles' => array('guest', 'user', 'admin')),
+                array('route' => 'add_category', 'roles' => array('guest', 'user', 'admin')),
                 array('route' => 'list_category_page', 'roles' => array('guest', 'user', 'admin')),
                 array('route' => 'zfcuser-login', 'roles' => array('guest', 'user', 'admin')),
                 array('route' => 'zfcuser/register', 'roles' => array('guest', 'user', 'admin')),

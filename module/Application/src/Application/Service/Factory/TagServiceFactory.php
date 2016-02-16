@@ -10,13 +10,14 @@ class TagServiceFactory implements FactoryInterface
     /**
      * (non-PHPdoc)
      * @see \Zend\ServiceManager\FactoryInterface::createService()
+     * @param ServiceLocatorInterface $serviceLocator
      * @return Application\Service\ApplicationService
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
         $entityManager = $serviceLocator->get('Doctrine\ORM\EntityManager');
-        $userRepository = $entityManager->getRepository('Application\Entity\Tag');
+        $tagRepository = $entityManager->getRepository('Application\Entity\Tag');
 
-        return new TagService($entityManager, $userRepository);
+        return new TagService($entityManager, $tagRepository);
     }
 }

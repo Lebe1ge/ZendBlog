@@ -189,35 +189,6 @@ class Post implements InputFilterAwareInterface
                 ),
             ));
             /*$inputFilter->add(array(
-                'name'     => 'state',
-                'filters'  => array(
-                    array('name' => 'Int'),
-                ),
-            ));
-            */
-            /*$inputFilter->add(array(
-                'name' => 'date_create',
-                'type' => 'Zend\Form\Element\DateSelect',
-                'options' => array(
-                    'create_empty_option' => true,
-                    'min_year' => date('Y') - 70,
-                    'max_year' => date('Y') - 30,
-                    'day_attributes' => array(
-                        'class' => 'input-small',
-                        'style' => 'width: 22%',
-                    ),
-                    'month_attributes' => array(
-                        'class' => 'input-medium',
-                        'style' => 'width: 35%',
-                    ),
-                    'year_attributes' => array(
-                        'class' => 'input-small',
-                        'style' => 'width: 25%',
-                    )
-                ),
-            ));
-            */
-            /*$inputFilter->add(array(
                 'name'     => 'path_picture',
                 'required' => true,
                 'filters'  => array(

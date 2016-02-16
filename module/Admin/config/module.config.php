@@ -233,21 +233,26 @@ return array(
                     ),
                     // Profondeur 1
                     'user' => array(
-                        'label' => 'User',
+                        'label' => 'Utilisateurs',
                         'route' => 'zfcadmin/user',
                         'pages' => array(
+                            'new_user' => array(
+                                'label' => 'Nouvelle utilisateur',
+                                'route' => 'zfcadmin/post/action',
+                                'params' => array('action' => 'add')
+                            ),
                             'edit_user' => array(
-                                'label' => 'Edit user',
+                                'label' => 'Editer utilisateur',
                                 'route' => 'zfcadmin/user/action',
                                 'params' => array('action' => 'edit')
                             ),
                             'delete_user' => array(
-                                'label' => 'Delete user',
+                                'label' => 'Supprimer utilisateur',
                                 'route' => 'zfcadmin/user/action',
                                 'params' => array('action' => 'delete')
                             ),
                             'state_user' => array(
-                                'label' => 'State user',
+                                'label' => 'Etat utilisateur',
                                 'route' => 'zfcadmin/user/action',
                                 'params' => array('action' => 'state')
                             )
@@ -255,16 +260,21 @@ return array(
                     ),
                     // Profondeur 1
                     'comment' => array(
-                        'label' => 'Comment',
+                        'label' => 'Commentaires',
                         'route' => 'zfcadmin/comment',
                         'pages' => array(
-                            'delete_category' => array(
-                                'label' => 'Edit comment',
+                            'edit_comment' => array(
+                                'label' => 'Editer commentaire',
+                                'route' => 'zfcadmin/comment/action',
+                                'params' => array('action' => 'delete')
+                            ),
+                            'delete_comment' => array(
+                                'label' => 'Supprimer commentaire',
                                 'route' => 'zfcadmin/comment/action',
                                 'params' => array('action' => 'delete')
                             ),
                             'state_comment' => array(
-                                'label' => 'State comment',
+                                'label' => 'Etat commentaire',
                                 'route' => 'zfcadmin/comment/action',
                                 'params' => array('action' => 'state')
                             )
@@ -276,12 +286,12 @@ return array(
                         'route' => 'zfcadmin/tag',
                         'pages' => array(
                             'new_tag' => array(
-                                'label' => 'New tag',
+                                'label' => 'Nouveau tag',
                                 'route' => 'zfcadmin/tag/action',
                                 'params' => array('action' => 'add')
                             ),
                             'edit_tag' => array(
-                                'label' => 'Edit tag',
+                                'label' => 'Editer tag',
                                 'route' => 'zfcadmin/tag/action',
                                 'params' => array('action' => 'edit')
                             ),
@@ -291,7 +301,7 @@ return array(
                                 'params' => array('action' => 'delete')
                             ),
                             'state_tag' => array(
-                                'label' => 'State tag',
+                                'label' => 'Etat tag',
                                 'route' => 'zfcadmin/tag/action',
                                 'params' => array('action' => 'state')
                             )

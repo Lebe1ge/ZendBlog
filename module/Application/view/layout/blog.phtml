@@ -29,6 +29,9 @@
                 <li><a href="/category/news">News</a></li>
                 <li><a href="/category/music">Music</a></li>
                 <li><a href="/category/events">Events</a></li>
+                <?php if($this->zfcUserIdentity()): ?>
+                    <li><a href="<?= $this->url('zfcadmin'); ?>">Administration</a></li>
+                <?php endif?>
             </ul>
         </nav>
         <nav class="main">
@@ -89,7 +92,13 @@
         <!-- Actions -->
         <section>
             <ul class="actions vertical">
-                <li><a href="<?= $this->url('zfcuser-login'); ?>" class="button big fit">Se connecter</a></li>
+                <?php if(!$this->zfcUserIdentity()): ?>
+                    <!-- display the login form -->
+                    <li><a href="<?= $this->url('zfcuser-login'); ?>" class="button big fit">Se connecter</a></li>
+                <?php else: ?>
+                    <!-- display the 'display name' of the user -->
+                    <li><a href="<?= $this->url('zfcadmin'); ?>" class="button big fit">Administration</a></li>
+                <?php endif?>
             </ul>
         </section>
 
@@ -100,8 +109,8 @@
     <!-- Main -->
 <!--    <div id="main">-->
 
-        <!-- Post -->
-        <!--
+<!--         Post -->
+<!--
             <article class="post">
                 <header>
                     <div class="title">
@@ -414,8 +423,6 @@ print 'It took ' + i + ' iterations to sort the deck.';</code></pre>
 
             </article>
         -->
-
-
 
 <!--    </div>-->
 
