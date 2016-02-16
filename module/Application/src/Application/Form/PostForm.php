@@ -49,7 +49,7 @@ class PostForm extends Form
 
         $this->add(array(
             'type' => 'Zend\Form\Element\Select',
-            'name' => 'category',
+            'name' => 'category_id',
             'options' => array(
                 'label' => 'Categorie',
                 'empty_option' => 'Selectionner une categorie',

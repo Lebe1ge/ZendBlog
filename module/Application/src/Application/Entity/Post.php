@@ -188,13 +188,14 @@ class Post implements InputFilterAwareInterface
                     array('name' => 'Int'),
                 ),
             ));
-            $inputFilter->add(array(
+            /*$inputFilter->add(array(
                 'name'     => 'state',
                 'filters'  => array(
                     array('name' => 'Int'),
                 ),
             ));
-            $inputFilter->add(array(
+            */
+            /*$inputFilter->add(array(
                 'name' => 'date_create',
                 'type' => 'Zend\Form\Element\DateSelect',
                 'options' => array(
@@ -215,7 +216,8 @@ class Post implements InputFilterAwareInterface
                     )
                 ),
             ));
-            $inputFilter->add(array(
+            */
+            /*$inputFilter->add(array(
                 'name'     => 'path_picture',
                 'required' => true,
                 'filters'  => array(
@@ -232,6 +234,7 @@ class Post implements InputFilterAwareInterface
                     ),
                 ),
             ));
+            */
             $this->inputFilter = $inputFilter;
         }
         return $this->inputFilter;

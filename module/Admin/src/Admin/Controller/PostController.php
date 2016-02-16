@@ -36,7 +36,6 @@ class PostController extends AbstractActionController
             $formPost->setData($request->getPost());
             // Si le formulaire est valide
             if ($formPost->isValid()) {
-
                 try{
                     // On prend les données du formulaire qui sont converti pour correspondre à notre modèle Post
                     $post->exchangeArray($formPost->getData());
