@@ -1,0 +1,20 @@
+{
+    "name": "zend/blog",
+    "require": {
+        "php" : ">=5.3.3",
+        "zendframework/zendframework" : "2.*",
+        "doctrine/doctrine-orm-module": "0.*",
+        "zf-commons/zfc-admin": "dev-master",
+        "zf-commons/zfc-user-doctrine-orm": "dev-master",
+        "bjyoungblood/bjy-authorize": "1.3.*",
+        "zendframework/zend-developer-tools": "dev-master",
+        "zendframework/zftool": "v0.1.0",
+        "zendframework/zend-form": "2.6.0"
+    },
+    "authors": [
+        {
+            "name": "Juicy",
+            "email": "julien.decoen@gmail.com"
+        }
+    ]
+}
