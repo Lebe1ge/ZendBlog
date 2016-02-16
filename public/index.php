@@ -1,5 +1,4 @@
 <?php
-phpinfo();
 define('REQUEST_MICROTIME', microtime(true));
 
 
