@@ -14,6 +14,7 @@ class UserController extends AbstractActionController
         $users = $this->getServiceLocator()->get('Application\Service\UserService')->getAll();
         return new ViewModel(array(
             'users' => $users,
+            'flashMessages' => $this->flashMessenger()->getMessages()
         ));
     }
 

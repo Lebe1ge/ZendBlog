@@ -1,32 +1,33 @@
 <div class="container">
+    <a href="<?= $this->url('zfcadmin/user', array('action' => 'add')) ?>"><i class="fam-add"></i>Nouvelle utilisateur</a>
     <table class="table table-hover">
         <thead>
         <tr>
             <th>#</th>
-            <th>Titre</th>
-            <th>Nom</th>
-            <th>Prenom</th>
-            <th>Rôle</th>
+            <th>Username</th>
+            <th>Mail</th>
+            <th>Display Name</th>
             <th>Actions</th>
         </tr>
         </thead>
         <tbody>
-        <?php foreach ($users as $user):?>
+        <?php foreach ($users as $user): var_dump($user->getId);?>
             <tr>
-                <td><?php echo $user->user_id; ?></td>
+                <td><?php echo $user->id; ?></td>
                 <td><?php echo $user->username; ?></td>
-                <td><?php echo $user->name; ?></td>
-                <td><?php echo $user->lastname; ?></td>
-                <td><?php echo $user->type; ?></td>
+                <td><?php echo $user->email; ?></td>
+                <td><?php echo $user->displayName; ?></td>
                 <td>
                     <?php
-                    $urlDelete = $this->url('zfcadmin/user', array('action' => 'delete', 'id' => $user->user_id), null, false);
+                    $urlEdit = $this->url('zfcadmin/user', array('action' => 'edit', 'id' =>$user->user_id));
+                    $urlDelete = $this->url('zfcadmin/user', array('action' => 'delete', 'id' =>$user->user_id));
                     ?>
+                    <a href="<?php echo $urlEdit;?>"><i class="fam-pencil"></i></a>
                     <a href="<?php echo $urlDelete;?>"><i class="fam-delete"></i></a>
                 </td>
             </tr>
         <?php endforeach;?>
         </tbody>
     </table>
-<!--    --><?php //echo $this->paginationControl($this->paginator, 'Sliding', 'paginator'); ?>
+    <!--    --><?php //echo $this->paginationControl($this->paginator, 'Sliding', 'paginator'); ?>
 </div>

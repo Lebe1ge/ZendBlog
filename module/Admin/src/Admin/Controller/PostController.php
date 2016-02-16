@@ -14,83 +14,20 @@ class PostController extends AbstractActionController
         $posts = $this->getServiceLocator()->get('Application\Service\PostService')->getAll();
         return new ViewModel(array(
             'posts' => $posts,
+            'flashMessages' => $this->flashMessenger()->getMessages()
         ));
     }
 
     public function addAction()
     {
         $formPost = new PostForm();
-
-        // On récupère l'objet Request
-        $request = $this->getRequest();
-
-        // On vérifie si le formulaire a été posté
-        if ($request->isPost()) {
-
-            // On instancie notre modèle Post
-            $post= new Post();
-
-            // Et on passe l'InputFilter de Post au formulaire
-            $postInput = $post->getInputFilter();
-            $formPost->setInputFilter($postInput);
-            $formPost->setData($request->getPost());
-            // Si le formulaire est valide
-            if ($formPost->isValid()) {
-                try{
-                    // On prend les données du formulaire qui sont converti pour correspondre à notre modèle Post
-                    $post->exchangeArray($formPost->getData());
-
-                    // On enregistre ces données dans la table Post
-                    $this->getServiceLocator()->get('Application\Service\PostService')->savePost($post);
-                    $this->flashMessenger()->addMessage(array('success' => "Article '{$post->post_id}' posté avec succès"));
-                    // Puis on redirige sur la page d'accueil.
-                    return $this->redirect()->toRoute('zfcadmin/post');
-                }catch(\Exception $e){
-
-                    die($e->getMessage());
-                }
-            }
-            else{
-
-                $formPost->getMessages();
-            }
-            // Si le formulaire n'est pas valide, on reste sur la page et les erreurs apparaissent
-        }
-
-        return new ViewModel(
-            array(
-                'form' => $formPost
-            )
-        );
-    }
-
-    public function deleteAction()
-    {
-        try{
-            $idPost = $this->params('id');
-        } catch( \InvalidArgumentException $e ){
-
-            return $this->redirect()->toRoute('zfcadmin/post');
-        }
-
-        $this->getServiceLocator()->get('Application\Service\PostService')->deletePost($idPost);
-        return $this->redirect()->toRoute('zfcadmin/post');
-
-    }
-
-    public function editAction()
-    {
-        $idPost = $this->params('id');
-        $formPost = new PostForm();
-        $postData = $this->getServiceLocator()->get('Application\Service\PostService')->getById($idPost);
-        $formPost->bind($postData);
         // On récupère l'objet Request
         $request = $this->getRequest();
 
         // On vérifie si le formulaire a été posté
         if ($request->isPost()) {
             // On instancie notre modèle Post
-            $post= new Post();
+            $post = new Post();
 
             // Et on passe l'InputFilter de Post au formulaire
             $formPost->setInputFilter($post->getInputFilter());
@@ -98,34 +35,92 @@ class PostController extends AbstractActionController
 
             // Si le formulaire est valide
             if ($formPost->isValid()) {
+                // On prend les données du formulaire qui sont converti pour correspondre à notre modèle Post
+                $post->exchangeArray($formPost->getData());
 
-                try{
-                    // On prend les données du formulaire qui sont converti pour correspondre à notre modèle Post
-                    $post->exchangeArray($formPost->getData());
-
-                    // On enregistre ces données dans la table Post
-                    $this->getServiceLocator()->get('Application\Service\PostService')->savePost($post);
-                    //$this->flashMessenger()->addMessage(array('success' => "Category '{$post->name}' was added successfully"));
-                    // Puis on redirige sur la page d'accueil.
-                    return $this->redirect()->toRoute('zfcadmin/post');
-
-                } catch(\Exception $e){
-                    die($e->getMessage());
+                // On enregistre ces données dans la table Post
+                $this->getServiceLocator()->get('Application\Service\PostService')->savePost($post);
+                $this->flashMessenger()->addMessage(array('success' => "L'article '{$post->title}' a été ajoutée"));
+                // Puis on redirige sur la page d'accueil.
+                return $this->redirect()->toRoute('zfcadmin/post');
+            } else {
+                // Si le formulaire n'est pas valide, on reste sur la page et les erreurs apparaissent
+                foreach ($formPost->getMessages() as $messageId => $message) {
+                    $this->flashMessenger()->addMessage(array('error' => "Validation failure '$messageId': $message"));
                 }
-
-
             }
-            // Si le formulaire n'est pas valide, on reste sur la page et les erreurs apparaissent
-        }else{
-
-            $formPost->getMessages();
         }
 
         return new ViewModel(
             array(
                 'form' => $formPost,
-                'id'   => $idPost
+                'flashMessages' => $this->flashMessenger()->getMessages()
             )
         );
+    }
+
+    public function editAction()
+    {
+        $id = (int) $this->params('id');
+        if (!$id) {
+            return $this->redirect()->toRoute('zfcadmin/post');
+        }
+
+        try {
+            $post = $this->getServiceLocator()->get('Application\Service\PostService')->getById($id);
+        }
+        catch (\Exception $ex) {
+            return $this->redirect()->toRoute('zfcadmin/post');
+        }
+
+        $formPost = new PostForm();
+        $formPost->bind($post);
+        $formPost->get('submit')->setValue('Modifier');
+
+        // On récupère l'objet Request
+        $request = $this->getRequest();
+
+        // On vérifie si le formulaire a été posté
+        if ($request->isPost()) {
+
+            // Et on passe l'InputFilter de Post au formulaire
+            $formPost->setInputFilter($post->getInputFilter());
+            $formPost->setData($request->getPost());
+
+            // Si le formulaire est valide
+            if ($formPost->isValid()) {
+                // On enregistre ces données dans la table Post
+                $this->getServiceLocator()->get('Application\Service\PostService')->savePost($post);
+                $this->flashMessenger()->addMessage(array('success' => "L'article '{$post->title}' a été modifié"));                // Puis on redirige sur la page d'accueil.
+                return $this->redirect()->toRoute('zfcadmin/post');
+            }
+            // Si le formulaire n'est pas valide, on reste sur la page et les erreurs apparaissent
+            foreach ($formPost->getMessages() as $messageId => $message) {
+                $this->flashMessenger()->addMessage(array('error' => "Validation failure '$messageId': $message"));
+            }
+        }
+
+        return new ViewModel(
+            array(
+                'form' => $formPost,
+                'id'   => $id
+            )
+        );
+    }
+
+    public function deleteAction()
+    {
+        try{
+            $post = $this->getServiceLocator()->get('Application\Service\PostService')->getById($this->params('id'));
+            $post_title = $post->title;
+            $this->getServiceLocator()->get('Application\Service\PostService')->deletePost($post->post_id);
+
+            $this->flashMessenger()->addMessage(array('success' => "L'article '{$post_title}' a été supprimée"));
+            // Puis on redirige sur la page d'accueil.
+            return $this->redirect()->toRoute('zfcadmin/post');
+
+        } catch( \InvalidArgumentException $e ){
+            return $this->redirect()->toRoute('zfcadmin/post');
+        }
     }
 }
