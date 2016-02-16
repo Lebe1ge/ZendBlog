@@ -51,9 +51,13 @@ class PostController extends AbstractActionController
             }
         }
 
+        $category = $this->getServiceLocator()->get('Application\Service\CategoryService')->getAll();
+
+
         return new ViewModel(
             array(
                 'form' => $formPost,
+                '$category' => $category,
                 'flashMessages' => $this->flashMessenger()->getMessages()
             )
         );

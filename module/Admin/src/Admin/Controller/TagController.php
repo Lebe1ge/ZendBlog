@@ -13,7 +13,8 @@ class TagController extends AbstractActionController
     {
         $tags = $this->getServiceLocator()->get('Application\Service\TagService')->getAll();
         return new ViewModel(array(
-            'tags' => $tags
+            'tags' => $tags,
+            'flashMessages' => $this->flashMessenger()->getMessages()
         ));
     }
 

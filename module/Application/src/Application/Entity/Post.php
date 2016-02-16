@@ -121,7 +121,7 @@ class Post implements InputFilterAwareInterface
         $this->category_id = (isset($data['category_id'])) ? $data['category_id'] : null;
         $this->author = (isset($data['author'])) ? $data['author'] : null;
         $this->state = (isset($data['path_picture'])) ? $data['path_picture'] : 1;
-        $this->date_create = (isset($data['date_create'])) ? $data['date_create'] : null;
+        $this->date_create = (isset($data['date_create'])) ? $data['date_create'] : new \DateTime();
         $this->path_picture = (isset($data['path_picture'])) ? $data['path_picture'] : null;
     }
     public function setInputFilter(InputFilterInterface $inputFilter)
