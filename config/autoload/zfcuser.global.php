@@ -23,7 +23,7 @@ $settings = array(
     //'default_user_state' => 1,
     //'allowed_login_states' => array( null, 1 ),
 
-    'table_name' => 'user',
+    'table_name' => 'users',
 );
 
 /**

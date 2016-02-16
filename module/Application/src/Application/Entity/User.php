@@ -12,6 +12,10 @@ use BjyAuthorize\Provider\Role\ProviderInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use ZfcUser\Entity\UserInterface;
+use Zend\InputFilter\InputFilter;
+use Zend\InputFilter\Factory as InputFactory;
+use Zend\InputFilter\InputFilterAwareInterface;
+use Zend\InputFilter\InputFilterInterface;
 
 /**
  * An example of how to implement a role aware user entity.
@@ -20,7 +24,7 @@ use ZfcUser\Entity\UserInterface;
  * @ORM\Table(name="users")
  *
  */
-class User implements UserInterface, ProviderInterface
+class User implements UserInterface, ProviderInterface, InputFilterAwareInterface
 {
     /*********************************
      * ATTRIBUTS

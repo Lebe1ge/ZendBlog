@@ -1,7 +1,5 @@
 <?php
-define('REQUEST_MICROTIME', microtime(true));
-
-
+//phpinfo();
 /**
  * Display all errors when APPLICATION_ENV is development.
  */
