@@ -34,13 +34,16 @@ echo $this->doctype();
     </div>
 </div>
 <div class="container">
-<!--    --><?php
+<?php
 //    echo $this->navigation('admin_navigation')->breadcrumbs()
 //        ->setMinDepth(0)
 //        ->setPartial(array('breadcrumb', 'Admin'));
 //    ?>
-    <?php if (count($this->flashMessages) > 0):?>
-        <?php foreach ($this->flashMessages as $messages):?>
+    <?php
+    $children = $this->viewModel()->getCurrent()->getChildren();
+    $ourView  = $children[0];
+    if (isset($ourView->flashMessages) && count($ourView->flashMessages)):?>
+        <?php foreach ($ourView->flashMessages as $messages):?>
             <?php foreach ($messages as $key => $message):?>
                 <div class="alert alert-<?php echo $key;?>">
                     <button type="button" class="close" data-dismiss="alert">×</button>

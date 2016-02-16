@@ -8,7 +8,6 @@
 return array(
     'modules' => array(
         'ZendDeveloperTools',
-        'Application',
         'DoctrineModule',
         'DoctrineORMModule',
         'ZfcAdmin',
@@ -16,6 +15,7 @@ return array(
         'ZfcUser',
         'ZfcUserDoctrineORM',
         'BjyAuthorize',
+        'Application',
         'Admin',
     ),
     'module_listener_options' => array(

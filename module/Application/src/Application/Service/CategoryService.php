@@ -52,4 +52,15 @@ class CategoryService extends AbstractService
         $this->getEm()->flush();
     }
 
+    /**
+     * Supprimer une categorie
+     * @param int id
+     */
+    public function deleteCategory($id)
+    {
+        $categorie = $this->getById($id);
+        $this->getEm()->remove($categorie);
+        $this->getEm()->flush();
+    }
+
 }

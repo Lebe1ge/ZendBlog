@@ -111,13 +111,12 @@ class Category implements InputFilterAwareInterface
      */
     public function exchangeArray ($data = array())
     {
+        var_dump($data);
         $slugifyFilter = new Slugify();
-
         $this->category_id = (isset($data['category_id'])) ? $data['category_id'] : null;
-        $this->nom = (isset($data['nom'])) ? $data['nom'] : null;
-        $this->slug = (isset($data['slug'])) ? $data['slug'] : $slugifyFilter->filter($this->nom);
+        $this->name = (isset($data['name'])) ? $data['name'] : null;
+        $this->slug = (isset($data['slug'])) ? $data['slug'] : $slugifyFilter->filter($this->name);
         $this->state = (isset($data['state'])) ? $data['state'] : 1;
-        $this->user_id = (isset($data['user_id'])) ? $data['user_id'] : null;
     }
 
     public function setInputFilter(InputFilterInterface $inputFilter)
@@ -140,7 +139,7 @@ class Category implements InputFilterAwareInterface
 
             $inputFilter->add(
                 array(
-                    'name'     => 'nom',
+                    'name'     => 'name',
                     'required' => true,
                     'filters'  => array(
                         array('name' => 'StripTags'),

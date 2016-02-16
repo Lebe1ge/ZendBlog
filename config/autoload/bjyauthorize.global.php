@@ -27,6 +27,11 @@ return array(
         'guards' => array(
             'BjyAuthorize\Guard\Route' => array(
                 array('route' => 'zfcadmin', 'roles' => array('admin')),
+                array('route' => 'zfcadmin/category', 'roles' => array('admin')),
+                array('route' => 'zfcadmin/post', 'roles' => array('admin')),
+                array('route' => 'zfcadmin/user', 'roles' => array('admin')),
+                array('route' => 'zfcadmin/comment', 'roles' => array('admin')),
+                array('route' => 'zfcadmin/tag', 'roles' => array('admin')),
                 array('route' => 'zfcadmin/logout', 'roles' => array('user', 'admin')),
                 array('route' => 'login', 'roles' => array('guest', 'user', 'admin')),
                 array('route' => 'home', 'roles' => array('guest', 'user', 'admin')),
