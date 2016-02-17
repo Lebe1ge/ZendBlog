@@ -39,21 +39,8 @@ class UserService extends AbstractService
         return $this->getRep()->find($id);
     }
 
-
     /**
-     * Sauvegarder une categorie
-     * @param User $user
-     * @return Application\Entity\Post
-     * @internal param $ Application\Entity\User
-     */
-    public function savePost(User $user)
-    {
-        $this->getEm()->persist($user);
-        $this->getEm()->flush();
-    }
-
-    /**
-     * Supprimer une categorie
+     * Supprimer un user
      * @param int id
      */
     public function deletePost($id)
