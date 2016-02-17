@@ -2,17 +2,18 @@
 /**
  * Service
  * @package Application\Service
- * @author Bidoum
+ * @author Julien
  *
  */
 namespace Application\Service;
 
 use Application\Entity\Tag;
+
 class TagService extends AbstractService
 {
 
     /**
-     * Obtient tous les tags
+     * Obtient toutes les categories
      * @return Application\Entity\Tag
      */
     public function getAll()
@@ -21,7 +22,7 @@ class TagService extends AbstractService
     }
 
     /**
-     * Obtient un tag par son id
+     * Obtient une categorie par son id
      * @param string id
      * @return Application\Entity\Tag
      */
@@ -31,23 +32,34 @@ class TagService extends AbstractService
     }
 
     /**
-     * Sauvegarder une tag
-     * @param Application\Entity\Post
+     * Obtient une categorie par son slug
+     * @param string slug
+     * @return Application\Entity\Tag
      */
-    public function saveTag(Tag $post)
+    public function getTagBySlug($slug)
     {
-        $this->getEm()->persist($post);
+        return $this->getRep()->findOneBy(array('slug' => $slug));
+    }
+
+    /**
+     * Sauvegarder une categorie
+     * @param Tag $tag
+     * @internal param $ Application\Entity\Tag
+     */
+    public function saveTag(Tag $tag)
+    {
+        $this->getEm()->persist($tag);
         $this->getEm()->flush();
     }
 
     /**
-     * Supprimer un tag
+     * Supprimer une categorie
      * @param int id
      */
     public function deleteTag($id)
     {
-        $post = $this->getById($id);
-        $this->getEm()->remove($post);
+        $tag = $this->getById($id);
+        $this->getEm()->remove($tag);
         $this->getEm()->flush();
     }
 

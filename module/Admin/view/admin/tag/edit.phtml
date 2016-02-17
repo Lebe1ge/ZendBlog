@@ -1,5 +1,5 @@
 <?php
-$title = 'Editer un tag';
+$title = 'Editer une tag';
 $this->headTitle($title);
 ?>
 
@@ -21,7 +21,7 @@ echo $this->formHidden($form->get('tag_id'));
         <?php echo $this->formLabel($form->get('name')->setLabelAttributes(array('class' => 'control-label')));?>
         <div class="controls">
             <?php echo $this->formText($form->get('name'));?>
-            <?php echo $this->formElementErrors($form->get('title'), array('class' => 'error_list'));?>
+            <?php echo $this->formElementErrors($form->get('name'), array('class' => 'error_list'));?>
         </div>
     </div>
 
