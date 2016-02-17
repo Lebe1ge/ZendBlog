@@ -1,11 +1,17 @@
 <?php
 namespace Application\Form;
+
+use DoctrineModule\Persistence\ObjectManagerAwareInterface;
+use Doctrine\Common\Persistence\ObjectManager;
 use Zend\Form\Form;
 
-class PostForm extends Form
+class PostForm extends Form implements ObjectManagerAwareInterface
 {
-    public function __construct($name = null)
+    protected $objectManager;
+
+    public function __construct(ObjectManager $objectManager)
     {
+        $this->setObjectManager($objectManager);
         // On ne veut pas tenir compte du parametre $name,
         // On va le surcharger via le contructeur du parent
         parent::__construct('Post');
@@ -48,17 +54,25 @@ class PostForm extends Form
         ));
 
         $this->add(array(
-            'type' => 'Zend\Form\Element\Select',
+            'type' => 'DoctrineModule\Form\Element\ObjectSelect',
             'name' => 'category_id',
             'options' => array(
                 'label' => 'Categorie',
-                'empty_option' => 'Selectionner une categorie',
-                'value_options' => array(
-                    '0' => 'French',
-                    '1' => 'English',
-                    '2' => 'Japanese',
-                    '3' => 'Chinese',
-                ),
+                'object_manager' => $this->getObjectManager(),
+                'target_class'   => 'Application\Entity\Category',
+                'property'       => 'name',
+                'empty_option' => 'Selectionner un catégorie',
+            )
+        ));
+
+        $this->add(array(
+            'type' => 'DoctrineModule\Form\Element\ObjectMultiCheckbox',
+            'name' => 'tags',
+            'options' => array(
+                'label' => 'Tags',
+                'object_manager' => $this->getObjectManager(),
+                'target_class'   => 'Application\Entity\Tag',
+                'property'       => 'name',
             )
         ));
 
@@ -71,5 +85,25 @@ class PostForm extends Form
                 'id' => 'submit',      // et l'id
             ),
         ));
+    }
+
+    /**
+     * Set the object manager
+     *
+     * @param ObjectManager $objectManager
+     * @return $this
+     */
+    public function setObjectManager(ObjectManager $objectManager) {
+        $this->objectManager = $objectManager;
+        return $this;
+    }
+
+    /**
+     * Get the object manager
+     *
+     * @return ObjectManager
+     */
+    public function getObjectManager() {
+        return $this->objectManager;
     }
 }

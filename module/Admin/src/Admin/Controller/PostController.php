@@ -12,6 +12,10 @@ class PostController extends AbstractActionController
     public function indexAction()
     {
         $posts = $this->getServiceLocator()->get('Application\Service\PostService')->getAll();
+        foreach($posts as $post){
+            $post->category = $this->getServiceLocator()->get('Application\Service\CategoryService')->getById($post->category_id);
+            $post->author = $this->getServiceLocator()->get('Application\Service\UserService')->getById($post->author);
+        }
         return new ViewModel(array(
             'posts' => $posts,
             'flashMessages' => $this->flashMessenger()->getMessages()
@@ -20,7 +24,8 @@ class PostController extends AbstractActionController
 
     public function addAction()
     {
-        $formPost = new PostForm();
+        $entityManager  = $this->getServiceLocator()->get('Doctrine\ORM\EntityManager');
+        $formPost = new PostForm($entityManager);
         // On récupère l'objet Request
         $request = $this->getRequest();
 
@@ -45,19 +50,18 @@ class PostController extends AbstractActionController
                 return $this->redirect()->toRoute('zfcadmin/post');
             } else {
                 // Si le formulaire n'est pas valide, on reste sur la page et les erreurs apparaissent
-                foreach ($formPost->getMessages() as $messageId => $message) {
-                    $this->flashMessenger()->addMessage(array('error' => "Validation failure '$messageId': $message"));
+                foreach ($formPost->getMessages() as $messageId => $messages) {
+                    foreach($messages as $message) {
+                        $this->flashMessenger()->addMessage(array('error' => "Validation failure '$messageId': $message"));
+                    }
                 }
             }
         }
-
-        $category = $this->getServiceLocator()->get('Application\Service\CategoryService')->getAll();
 
 
         return new ViewModel(
             array(
                 'form' => $formPost,
-                '$category' => $category,
                 'flashMessages' => $this->flashMessenger()->getMessages()
             )
         );
@@ -77,7 +81,8 @@ class PostController extends AbstractActionController
             return $this->redirect()->toRoute('zfcadmin/post');
         }
 
-        $formPost = new PostForm();
+        $entityManager  = $this->getServiceLocator()->get('Doctrine\ORM\EntityManager');
+        $formPost = new PostForm($entityManager);
         $formPost->bind($post);
         $formPost->get('submit')->setValue('Modifier');
 

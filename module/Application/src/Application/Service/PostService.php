@@ -21,7 +21,12 @@ class PostService extends AbstractService
      */
     public function getAll()
     {
-        return $this->getRep()->findAll();
+        $data = $this->getRep()->findAll();
+        foreach($data as $v){
+            if($v->tags)
+                $v->tags = explode("-", $v->tags);
+        }
+        return $data;
     }
 
     /**
@@ -31,7 +36,9 @@ class PostService extends AbstractService
      */
     public function getById($id)
     {
-        return $this->getRep()->find($id);
+        $data = $this->getRep()->find($id);
+        $data->tags = explode("-", $data->tags);
+        return $data;
     }
 
     /**

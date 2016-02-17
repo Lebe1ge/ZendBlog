@@ -61,6 +61,11 @@ class Post implements InputFilterAwareInterface
      * @ORM\Column(type="string", length=255, nullable=true, name="path_picture")
      */
     protected $path_picture;
+    /**
+     * @var string Tag de l'article
+     * @ORM\Column(type="string", length=255, name="tags")
+     */
+    protected $tags;
     /*********************************
      * ACCESSEURS
      *********************************/
@@ -123,6 +128,7 @@ class Post implements InputFilterAwareInterface
         $this->state = (isset($data['path_picture'])) ? $data['path_picture'] : 1;
         $this->date_create = (isset($data['date_create'])) ? $data['date_create'] : new \DateTime();
         $this->path_picture = (isset($data['path_picture'])) ? $data['path_picture'] : null;
+        $this->tags = (isset($data['tags'])) ? implode("-", $data['tags']) : null;
     }
     public function setInputFilter(InputFilterInterface $inputFilter)
     {

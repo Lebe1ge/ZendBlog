@@ -54,6 +54,16 @@ class Category implements InputFilterAwareInterface
 
     /**
      * Magic getter to expose protected properties.
+     * @return mixed
+     * @internal param string $property
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Magic getter to expose protected properties.
      *
      * @param string $property
      * @return mixed

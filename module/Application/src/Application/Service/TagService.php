@@ -42,6 +42,19 @@ class TagService extends AbstractService
     }
 
     /**
+     * Obtient une categorie par son slug
+     * @param string slug
+     * @return Application\Entity\Tag
+     */
+    public function getByArrayId($array)
+    {
+        foreach($array as $k => $v){
+            $array[$k] = $this->getRep()->findOneBy(array('tag_id'=>$v));;
+        }
+        return $array;
+    }
+
+    /**
      * Sauvegarder une categorie
      * @param Tag $tag
      * @internal param $ Application\Entity\Tag

@@ -48,6 +48,14 @@ echo $this->formHidden($form->get('post_id'));
     </div>
 
     <div class="control-group">
+        <?php echo $this->formLabel($form->get('tags')->setLabelAttributes(array('class' => 'control-label')));?>
+        <div class="controls">
+            <?php echo $this->formMulticheckbox($form->get('tags'));?>
+            <?php echo $this->formElementErrors($form->get('tags'), array('class' => 'error_list'));?>
+        </div>
+    </div>
+
+    <div class="control-group">
         <div class="controls">
             <?php echo $this->formSubmit($form->get('submit'), array('class' => 'btn'));?>
         </div>

@@ -25,6 +25,15 @@
                     <li><a href="#" class="icon fa-comment">128</a></li>
                 </ul>
             </footer>
+            <?php if($post->tags): ?>
+            <footer>
+                <ul class="icons">
+                    <?php foreach($post->tags as $tag): ?>
+                        <li><a href="<?= $this->url('list_tag_page', array('slug' => $tag->slug)) ?>" class="button small"><?= $tag->name ?></a></li>
+                    <?php endforeach; ?>
+                </ul>
+            </footer>
+            <?php endif; ?>
         </article>
     <?php endforeach; ?>
     <!-- Pagination -->

@@ -5,7 +5,9 @@
         <tr>
             <th>#</th>
             <th>Titre</th>
+            <th>Catégorie</th>
             <th>Contenue</th>
+            <th>Auteur</th>
             <th>Actions</th>
         </tr>
         </thead>
@@ -14,7 +16,9 @@
             <tr>
                 <td><?php echo $post->post_id; ?></td>
                 <td><?php echo $post->title; ?></td>
+                <td><?php echo $post->category->name; ?></td>
                 <td><?php echo $post->content; ?></td>
+                <td><?php echo $post->author->getDisplayName(); ?></td>
                 <td>
                     <?php
                     $urlEdit = $this->url('zfcadmin/post', array('action' => 'edit', 'id' => $post->post_id), null, false);

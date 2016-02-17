@@ -51,6 +51,22 @@ return array(
                     ),
                 ),
             ),
+            'list_tag_page' => array(
+                'type'    => 'Segment',
+                'options' => array(
+                    'route'    => '/tag/:slug[/page/[:page]]',
+                    'constraints' => array(
+                        'page'   => '[0-9]+',
+                        'slug'   => '[a-zA-Z][a-zA-Z_-]*'
+                    ),
+                    'defaults' => array(
+                        'module'     => 'Application',
+                        'controller' => 'Application\Controller\Tag',
+                        'action'     => 'list',
+                        'page'       => 1
+                    ),
+                ),
+            ),
             'add_post' => array(
                 'type'    => 'Segment',
                 'options' => array(

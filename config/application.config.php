@@ -15,8 +15,8 @@ return array(
         'ZfcUser',
         'ZfcUserDoctrineORM',
         'BjyAuthorize',
-        'Application',
         'Admin',
+        'Application',
     ),
     'module_listener_options' => array(
         'module_paths' => array(
