@@ -14,7 +14,7 @@ $settings = array(
     'use_redirect_parameter_if_present' => true,
 
     //'user_login_widget_view_template' => 'zfc-user/user/login.phtml',
-    'login_redirect_route' => 'zfcuser',
+    //'login_redirect_route' => '/',
     //'logout_redirect_route' => 'zfcuser/login',
 
     //'password_cost' => 14,

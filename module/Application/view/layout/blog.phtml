@@ -31,6 +31,7 @@
                 <li><a href="/category/events">Events</a></li>
                 <?php if($this->zfcUserIdentity()): ?>
                     <li><a href="<?= $this->url('zfcadmin'); ?>">Administration</a></li>
+                    <li><a href="<?= $this->url('zfcuser/logout'); ?>">Déconnexion</a></li>
                 <?php endif?>
             </ul>
         </nav>
@@ -94,7 +95,7 @@
             <ul class="actions vertical">
                 <?php if(!$this->zfcUserIdentity()): ?>
                     <!-- display the login form -->
-                    <li><a href="<?= $this->url('zfcuser-login'); ?>" class="button big fit">Se connecter</a></li>
+                    <li><a href="<?= $this->url('zfcuser_login'); ?>" class="button big fit">Se connecter</a></li>
                 <?php else: ?>
                     <!-- display the 'display name' of the user -->
                     <li><a href="<?= $this->url('zfcadmin'); ?>" class="button big fit">Administration</a></li>

@@ -9,6 +9,15 @@
 namespace Application;
 
 return array(
+    'zfcuser' => array(
+        'enable_registration' => false,
+        'auth_identity_fields' => array(
+            'username'
+        ),
+        'use_redirect_parameter_if_present' => true,
+        'login_redirect_route' => '/',
+        'logout_redirect_route' => 'zfcuser/login'
+    ),
     'router' => array(
         'routes' => array(
             'home' => array(
@@ -106,7 +115,7 @@ return array(
                     'route' => '', // the route is void isntead of default 'user'
                 ),
             ),
-            'zfcuser-login' => array(
+            'zfcuser_login' => array(
                 'type' => 'Literal',
                 'options' => array(
                     'route' => '/login',
@@ -116,7 +125,7 @@ return array(
                     ),
                 ),
             ),
-            'zfcuser-authenticate' => array(
+            'zfcuser_authenticate' => array(
                 'type' => 'Literal',
                 'options' => array(
                     'route' => '/authenticate',
@@ -126,7 +135,7 @@ return array(
                     ),
                 ),
             ),
-            'zfcuser-logout' => array(
+            'zfcuser_logout' => array(
                 'type' => 'Literal',
                 'options' => array(
                     'route' => '/logout',
@@ -136,7 +145,7 @@ return array(
                     ),
                 ),
             ),
-            'zfcuser-register' => array(
+            'zfcuser_register' => array(
                 'type' => 'Literal',
                 'options' => array(
                     'route' => '/register',
@@ -146,7 +155,7 @@ return array(
                     ),
                 ),
             ),
-            'zfcuser-changepassword' => array(
+            'zfcuser_changepassword' => array(
                 'type' => 'Literal',
                 'options' => array(
                     'route' => '/change-password',
@@ -156,7 +165,7 @@ return array(
                     ),
                 ),
             ),
-            'zfcuser-changeemail' => array(
+            'zfcuser_changeemail' => array(
                 'type' => 'Literal',
                 'options' => array(
                     'route' => '/change-email',

@@ -32,17 +32,17 @@ return array(
                 array('route' => 'zfcadmin/user', 'roles' => array('admin')),
                 array('route' => 'zfcadmin/comment', 'roles' => array('admin')),
                 array('route' => 'zfcadmin/tag', 'roles' => array('admin')),
-                array('route' => 'zfcadmin/logout', 'roles' => array('user', 'admin')),
+                array('route' => 'zfcuser_logout', 'roles' => array('guest','user', 'admin')),
                 array('route' => 'login', 'roles' => array('guest', 'user', 'admin')),
                 array('route' => 'home', 'roles' => array('guest', 'user', 'admin')),
                 array('route' => 'list_post_page', 'roles' => array('guest', 'user', 'admin')),
                 array('route' => 'add_comment', 'roles' => array('guest', 'user', 'admin')),
                 array('route' => 'add_category', 'roles' => array('guest', 'user', 'admin')),
                 array('route' => 'list_category_page', 'roles' => array('guest', 'user', 'admin')),
-                array('route' => 'zfcuser-login', 'roles' => array('guest', 'user', 'admin')),
+                array('route' => 'zfcuser_login', 'roles' => array('guest', 'user', 'admin')),
                 array('route' => 'zfcuser/register', 'roles' => array('guest', 'user', 'admin')),
-                array('route' => 'zfcuser-authenticate', 'roles' => array('guest', 'user', 'admin')),
-                array('route' => 'zfcuser-register', 'roles' => array('guest', 'user', 'admin'))
+                array('route' => 'zfcuser_authenticate', 'roles' => array('guest', 'user', 'admin')),
+                array('route' => 'zfcuser_register', 'roles' => array('guest', 'user', 'admin'))
             )
         )
     )
