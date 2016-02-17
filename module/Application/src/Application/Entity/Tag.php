@@ -2,6 +2,7 @@
 namespace Application\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Zend\InputFilter\InputFilter;
+use Application\Filter\Slugify;
 use Zend\InputFilter\Factory as InputFactory;
 use Zend\InputFilter\InputFilterAwareInterface;
 use Zend\InputFilter\InputFilterInterface;
@@ -23,29 +24,24 @@ class Tag implements InputFilterAwareInterface
     protected $inputFilter;
 
     /**
-     * @var int L'identifiant utilisateur
+     * @var int L'identifiant de la categorie
      * @ORM\Id
      * @ORM\Column(type="integer", name="tag_id")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $tag_id;
     /**
-     * @var string Le nom du tag
-     * @ORM\Column(type="string", length=255, unique=true, nullable=true, name="name")
+     * @var string Le nom de la catégorie
+     * @ORM\Column(type="string", length=100, unique=true, nullable=true, name="name")
      */
     protected $name;
     /**
-     * @var int Id du user
-     * @ORM\Column(type="integer", name="user_id", nullable=true)
+     * @var string Le slug
+     * @ORM\Column(type="string", unique=true,  length=100, name="slug")
      */
-    protected $user_id;
+    protected $slug;
     /**
-     * @var int Id de l'article
-     * @ORM\Column(type="integer", name="post_id", nullable=true)
-     */
-    protected $post_id;
-    /**
-     * @var int Statut du tag
+     * @var int Statut de la categorie
      * @ORM\Column(type="integer", name="state")
      */
     protected $state;
@@ -115,11 +111,10 @@ class Tag implements InputFilterAwareInterface
      */
     public function exchangeArray ($data = array())
     {
-
+        $slugifyFilter = new Slugify();
         $this->tag_id = (isset($data['tag_id'])) ? $data['tag_id'] : null;
         $this->name = (isset($data['name'])) ? $data['name'] : null;
-        $this->user_id = (isset($data['user_id'])) ? $data['user_id'] : null;
-        $this->post_id = (isset($data['post_id'])) ? $data['post_id'] : null;
+        $this->slug = (isset($data['slug'])) ? $data['slug'] : $slugifyFilter->filter($this->name);
         $this->state = (isset($data['state'])) ? $data['state'] : 1;
     }
 
@@ -133,7 +128,6 @@ class Tag implements InputFilterAwareInterface
         if (!$this->inputFilter) {
             $inputFilter = new InputFilter();
 
-
             $inputFilter->add(array(
                 'name'     => 'tag_id',
                 'required' => true,
@@ -142,55 +136,33 @@ class Tag implements InputFilterAwareInterface
                 ),
             ));
 
-            $inputFilter->add(array(
-                'name'     => 'name',
-                'required' => true,
-                'filters'  => array(
-                    array('name' => 'StripTags'),
-                    array('name' => 'StringTrim'),
-                ),
-                'validators' => array(
-                    array(
-                        'name'    => 'StringLength',
-                        'options' => array(
-                            'encoding' => 'UTF-8',
-                            'min'      => 1,
-                            'max'      => 255,
+            $inputFilter->add(
+                array(
+                    'name'     => 'name',
+                    'required' => true,
+                    'filters'  => array(
+                        array('name' => 'StripTags'),
+                        array('name' => 'StringTrim'),
+                    ),
+                    'validators' => array(
+                        array(
+                            'name'    => 'StringLength',
+                            'options' => array(
+                                'encoding' => 'UTF-8',
+                                'min'      => 1,
+                                'max'      => 100,
+                            ),
                         ),
                     ),
-                ),
-            ));
-
-
-            $inputFilter->add(array(
-                'name'     => 'post_id',
-                'required' => true,
-                'filters'  => array(
-                    array('name' => 'Int'),
-                ),
-            ));
-
-
-            $inputFilter->add(array(
-                'name'     => 'user_id',
-                'required' => true,
-                'filters'  => array(
-                    array('name' => 'Int'),
-                ),
-            ));
-
-            $inputFilter->add(array(
-                'name'     => 'state',
-                'filters'  => array(
-                    array('name' => 'Int'),
-                ),
-            ));
+                )
+            );
 
             $this->inputFilter = $inputFilter;
         }
 
         return $this->inputFilter;
     }
+
 
     /*********** PROTECTED **********/
 

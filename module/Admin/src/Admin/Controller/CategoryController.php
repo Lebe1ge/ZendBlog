@@ -105,7 +105,8 @@ class CategoryController extends AbstractActionController
         return new ViewModel(
             array(
                 'form'  => $formCategory,
-                'id'    => $id
+                'id'    => $id,
+                'flashMessages' => $this->flashMessenger()->getMessages()
             )
         );
     }

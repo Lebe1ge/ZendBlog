@@ -107,7 +107,8 @@ class PostController extends AbstractActionController
         return new ViewModel(
             array(
                 'form' => $formPost,
-                'id'   => $id
+                'id'   => $id,
+                'flashMessages' => $this->flashMessenger()->getMessages()
             )
         );
     }
