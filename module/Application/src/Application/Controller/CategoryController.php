@@ -16,6 +16,13 @@ use Zend\View\Model\ViewModel;
 use Application\Form\CategoryForm;
 use Application\Entity\Category;
 
+ use DoctrineORMModule\Paginator\Adapter\DoctrinePaginator as DoctrineAdapter;
+ use Doctrine\ORM\Tools\Pagination\Paginator as ORMPaginator;
+ use Zend\Paginator\Paginator;
+
+ use Zend\Paginator\Adapter\ArrayAdapter;
+  use Zend\Zend_Paginator;
+
 class CategoryController extends AbstractActionController
 {
 
@@ -27,9 +34,24 @@ class CategoryController extends AbstractActionController
             $post->category = $this->getServiceLocator()->get('Application\Service\CategoryService')->getById($post->category_id);
             $post->author = $this->getServiceLocator()->get('Application\Service\UserService')->getById($post->author);
         }
-        return new ViewModel(array(
-            'posts' => $posts,
-        ));
+
+        
+        $view =  new ViewModel();
+
+        $paginator = new Paginator(new ArrayAdapter($posts));
+
+
+       $paginator->setDefaultItemCountPerPage(1);
+       
+
+        $page=  (int)$this->params()->fromRoute('page');
+
+       if($page) $paginator->setCurrentPageNumber($page);
+       
+       $view->setVariable('paginator',$paginator);
+
+
+        return $view;
     }
 
     public function showAction()

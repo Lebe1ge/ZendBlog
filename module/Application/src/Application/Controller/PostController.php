@@ -41,7 +41,7 @@ class PostController extends AbstractActionController
 
        $adapter = new DoctrineAdapter(new ORMPaginator($repository->createQueryBuilder('post')));
        $paginator = new Paginator($adapter);
-       $paginator->setDefaultItemCountPerPage(4);
+       $paginator->setDefaultItemCountPerPage(2);
        
        //$page = (int)$this->params()->fromQuery(''); //GET 
 
