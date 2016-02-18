@@ -332,6 +332,7 @@ return array(
             'Admin\Controller\Category' => 'Admin\Controller\CategoryController',
             'Admin\Controller\Post' => 'Admin\Controller\PostController',
             'Admin\Controller\Comment' => 'Admin\Controller\CommentController',
+            'Admin\Controller\User' => 'Admin\Controller\UserController',
             'Admin\Controller\Tag' => 'Admin\Controller\TagController'
         ),
     ),

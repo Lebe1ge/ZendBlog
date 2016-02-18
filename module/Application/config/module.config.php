@@ -242,7 +242,7 @@ return array(
             'Application\Controller\Category' => 'Application\Controller\CategoryController',
             'Application\Controller\Comment' => 'Application\Controller\CommentController',
             'Admin\Controller\User' => 'Admin\Controller\UserController',
-            'Admin\Controller\Tag' => 'Admin\Controller\TagController'
+            'Application\Controller\Tag' => 'Application\Controller\TagController'
         ),
     ),
     'view_manager' => array(
