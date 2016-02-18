@@ -10,14 +10,30 @@
 namespace Application\View\Helper;
 
 use Zend\View\Helper\AbstractHelper;
+use Application\Entity\Category;
 
 class widgetCategoryController extends AbstractHelper
 {
+
+    protected $category;
+
+    public function __construct($category=null)
+    {
+        // pas de gestion d'exception pour la simplicité
+        $this->category = $category;
+    }
+
+    public function setUCategory($category)
+    {
+        // pas de gestion d'exception pour la simplicité
+        $this->category = $category;
+    }
+
     public function __invoke($params = array())
     {
-        $html = "<ul>";
+        $category = $this->category->getAll();
 
-        return $html;
+        return $category;
     }
 
 }
