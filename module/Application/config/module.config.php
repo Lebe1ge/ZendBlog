@@ -16,7 +16,7 @@ return array(
             'home' => array(
                 'type' => 'segment',
                 'options' => array(
-                    'route'    => '/[:page]',
+                    'route'    => '/[page/:page]',
                     'constraints' => array(
                         'page'    => '[0-9]+'
                     ),
