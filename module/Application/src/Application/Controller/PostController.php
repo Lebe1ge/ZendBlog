@@ -18,21 +18,41 @@ use Application\Form\CommentForm;
 use Application\Entity\Post;
 use Application\Entity\Comment;
 
+ use DoctrineORMModule\Paginator\Adapter\DoctrinePaginator as DoctrineAdapter;
+ use Doctrine\ORM\Tools\Pagination\Paginator as ORMPaginator;
+ use Zend\Paginator\Paginator;
+
 class PostController extends AbstractActionController
 {
 
     public function listAction()
     {
+        // //entity manager c'est posts $entityManager
         $posts = $this->getServiceLocator()->get('Application\Service\PostService')->getAll();
         foreach($posts as $post){
             $post->category = $this->getServiceLocator()->get('Application\Service\CategoryService')->getById($post->category_id);
             $post->author = $this->getServiceLocator()->get('Application\Service\UserService')->getById($post->author);
-            if($post->tags)
-                $post->tags = $this->getServiceLocator()->get('Application\Service\TagService')->getByArrayId($post->tags);
         }
-        return new ViewModel(array(
-            'posts' => $posts,
-        ));
+
+        $view =  new ViewModel();
+   
+       $entityManager = $this->getServiceLocator()->get('doctrine.entitymanager.orm_default');
+       $repository = $entityManager->getRepository('Application\Entity\Post');
+
+       $adapter = new DoctrineAdapter(new ORMPaginator($repository->createQueryBuilder('post')));
+       $paginator = new Paginator($adapter);
+       $paginator->setDefaultItemCountPerPage(4);
+       
+       //$page = (int)$this->params()->fromQuery(''); //GET 
+
+        $page=  (int)$this->params()->fromRoute('page');
+
+       if($page) $paginator->setCurrentPageNumber($page);
+       
+       $view->setVariable('paginator',$paginator);
+
+
+        return $view;
     }
 
     public function showAction()

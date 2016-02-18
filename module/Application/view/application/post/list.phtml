@@ -1,6 +1,6 @@
 <!-- Main -->
 <div id="main">
-    <?php foreach ($posts as $post): ?>
+    <?php foreach ($paginator as $post): ?>
         <!-- Post -->
         <article id="<?= $post->post_id ?>" class="post">
             <header>
@@ -38,7 +38,9 @@
     <?php endforeach; ?>
     <!-- Pagination -->
     <ul class="actions pagination">
-        <li><a href="" class="disabled button big previous">Previous Page</a></li>
-        <li><a href="<?= $this->url('list_post_page', array('action' => 'list', 'page' => 2)); ?>" class="button big next">Next Page</a></li>
+        <li><a href="http://blog-zend.com/<?php  $tmp= $paginator->getCurrentPageNumber()-1; echo $tmp;?>" class="<?php if ($tmp == 0): echo"disabled" ?>
+            
+        <?php endif ?> button big previous">Previous Page</a></li>
+        <li><a href="http://blog-zend.com/<?php  $tmp= $paginator->getCurrentPageNumber()+1; echo $tmp;?>" class="button big next">Next Page</a></li>
     </ul>
 </div>
