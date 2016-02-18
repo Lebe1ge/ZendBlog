@@ -255,6 +255,11 @@ return array(
             'zfc-user' => __DIR__ . '/view',
         ),
     ),
+    'view_helpers' => array(
+        'invokables' => array(
+            'widgetCategory' => 'Application\View\Helper\WidgetCategory'
+        )
+    ),
     // Placeholder for console routes
     'console' => array(
         'router' => array(
