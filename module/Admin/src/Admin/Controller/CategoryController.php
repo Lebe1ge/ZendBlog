@@ -44,7 +44,7 @@ class CategoryController extends AbstractActionController
 
                 $this->flashMessenger()->addMessage(array('success' => "La catégorie '{$category->name}' a été ajoutée"));
                 // Puis on redirige sur la page d'accueil.
-                return $this->redirect()->toRoute('zfcadmin/category');
+                return $this->redirect()->toUrl('zfcadmin/category');
             } else {
                 // Si le formulaire n'est pas valide, on reste sur la page et les erreurs apparaissent
                 foreach ($formCategory->getMessages() as $messageId => $message) {
@@ -65,14 +65,14 @@ class CategoryController extends AbstractActionController
     {
         $id = (int) $this->params('id');
         if (!$id) {
-            return $this->redirect()->toRoute('zfcadmin/category');
+            return $this->redirect()->toUrl('zfcadmin/category');
         }
 
         try {
             $category = $this->getServiceLocator()->get('Application\Service\CategoryService')->getById($id);
         }
         catch (\Exception $ex) {
-            return $this->redirect()->toRoute('zfcadmin/category');
+            return $this->redirect()->toUrl('zfcadmin/category');
         }
 
         $formCategory = new CategoryForm();
@@ -94,7 +94,7 @@ class CategoryController extends AbstractActionController
                 // On enregistre ces données dans la table Category
                 $this->getServiceLocator()->get('Application\Service\CategoryService')->saveCategory($category);
                 $this->flashMessenger()->addMessage(array('success' => "La catégorie '{$category->name}' a été modifié"));                // Puis on redirige sur la page d'accueil.
-                return $this->redirect()->toRoute('zfcadmin/category');
+                return $this->redirect()->toUrl('zfcadmin/category');
             }
             // Si le formulaire n'est pas valide, on reste sur la page et les erreurs apparaissent
             foreach ($formCategory->getMessages() as $messageId => $message) {
@@ -120,10 +120,10 @@ class CategoryController extends AbstractActionController
 
             $this->flashMessenger()->addMessage(array('success' => "La catégorie '{$category_name}' a été supprimée"));
             // Puis on redirige sur la page d'accueil.
-            return $this->redirect()->toRoute('zfcadmin/category');
+            return $this->redirect()->toUrl('zfcadmin/category');
 
         } catch( \InvalidArgumentException $e ){
-            return $this->redirect()->toRoute('zfcadmin/category');
+            return $this->redirect()->toUrl('zfcadmin/category');
         }
     }
 }

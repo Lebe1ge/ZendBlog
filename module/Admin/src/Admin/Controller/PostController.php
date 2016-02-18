@@ -104,8 +104,10 @@ class PostController extends AbstractActionController
                 return $this->redirect()->toRoute('zfcadmin/post');
             }
             // Si le formulaire n'est pas valide, on reste sur la page et les erreurs apparaissent
-            foreach ($formPost->getMessages() as $messageId => $message) {
-                $this->flashMessenger()->addMessage(array('error' => "Validation failure '$messageId': $message"));
+            foreach ($formPost->getMessages() as $messageId => $messages) {
+                foreach($messages as $message) {
+                    $this->flashMessenger()->addMessage(array('error' => "Validation failure '$messageId': $message"));
+                }
             }
         }
 

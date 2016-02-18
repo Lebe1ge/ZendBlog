@@ -2,5 +2,4 @@
 /.idea/
 .idea/
 /config/autoload/global.php
-/vendor
 .idea/workspace.xml

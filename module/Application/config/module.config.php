@@ -8,16 +8,9 @@
  */
 namespace Application;
 
+use Application\Controller\UserController;
+
 return array(
-    'zfcuser' => array(
-        'enable_registration' => false,
-        'auth_identity_fields' => array(
-            'username'
-        ),
-        'use_redirect_parameter_if_present' => true,
-        'login_redirect_route' => '/',
-        'logout_redirect_route' => 'zfcuser/login'
-    ),
     'router' => array(
         'routes' => array(
             'home' => array(
@@ -242,7 +235,7 @@ return array(
             'Application\Controller\Category' => 'Application\Controller\CategoryController',
             'Application\Controller\Comment' => 'Application\Controller\CommentController',
             'Admin\Controller\User' => 'Admin\Controller\UserController',
-            'Application\Controller\Tag' => 'Application\Controller\TagController'
+            'Application\Controller\Tag' => 'Application\Controller\TagController',
         ),
     ),
     'view_manager' => array(

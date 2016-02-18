@@ -8,8 +8,12 @@ echo $this->doctype();
     <?php echo $this->headTitle('ZfcAdmin - Zend Framework 2 Admin Interface')->setSeparator(' - ')->setAutoEscape(false) ?>
     <?php echo $this->headMeta()->appendName('viewport', 'width=device-width, initial-scale=1.0') ?>
     <!-- Le styles -->
-    <?php echo $this->headLink()->prependStylesheet('/css/admin.css');?>
-    <?php echo $this->headLink()->prependStylesheet('/css/bootstrap.min.css') ?>
+    <!--[if lte IE 8]><script src="/js/ie/html5shiv.js"></script><![endif]-->
+
+    <?php echo $this->headLink()->prependStylesheet('/css/bootstrap.css');?>
+    <link rel="stylesheet" href="/css/main.css" />
+    <!--[if lte IE 9]><link rel="stylesheet" href="/css/ie9.css" /><![endif]-->
+    <!--[if lte IE 8]><link rel="stylesheet" href="/css/ie8.css" /><![endif]-->
     <?php echo $this->headLink()->prependStylesheet('/css/fam-icons.css');?>
 
     <!-- Scripts -->
@@ -18,46 +22,62 @@ echo $this->doctype();
         ->prependFile('//html5shiv.googlecode.com/svn/trunk/html5.js', 'text/javascript', array('conditional' => 'lt IE 9',)) ?>
 </head>
 <body>
-<div class="navbar">
-    <div class="navbar-inner">
-        <div class="container">
-            <a class="brand" href="<?php echo $this->url('zfcadmin') ?>">Blog :: Administration</a>
-            <div class="nav-collapse">
-                <?php echo $this->navigation('admin_navigation')->menu()
-                    ->setUlClass('nav')
-                    ->setMinDepth(1)
-                    ->setMaxDepth(1)
-                    ->setRenderInvisible(false)->render();?>
-            </div>
-<!--            --><?php //echo $this->partial( "userNav" ); ?>
-        </div>
+
+<!-- Wrapper -->
+<div id="wrapper">
+
+    <!-- Header -->
+    <header id="header">
+        <h1><a href="<?php echo $this->url('zfcadmin')?>">GUETTAPEN :: Administration</a></h1>
+        <nav class="links">
+            <?php echo $this->navigation('admin_navigation')->menu()
+                ->setUlClass('nav')
+                ->setMinDepth(1)
+                ->setMaxDepth(1)
+                ->setRenderInvisible(false)->render();?>
+        </nav>
+        <nav class="main">
+            <ul>
+                <li class="search">
+                    <a class="fa-search" href="#search">Rechercher</a>
+                    <form id="search" method="get" action="#">
+                        <input type="text" name="query" placeholder="Search" />
+                    </form>
+                </li>
+                <li class="menu">
+                    <a class="fa-bars" href="#menu">Menu</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Main -->
+    <div id="main">
+        <!-- Post -->
+
+        <article>
+            <?= $this->navigation('admin_navigation')->breadcrumbs()->setMinDepth(0)->setPartial(array('breadcrumb', 'Admin')); ?>
+            <?php
+            $children = $this->viewModel()->getCurrent()->getChildren();
+            $ourView  = $children[0];
+            if (isset($ourView->flashMessages) && count($ourView->flashMessages)):?>
+                <?php foreach ($ourView->flashMessages as $messages):?>
+                    <?php foreach ($messages as $key => $message):?>
+                        <div class="alert alert-<?php echo $key;?>">
+                            <button type="button" class="close" data-dismiss="alert">×</button>
+                            <?php echo $message;?>
+                        </div>
+                    <?php endforeach;?>
+                <?php endforeach;?>
+            <?php endif; ?>
+        </article>
+        <article class="post">
+            <?php echo $this->content; ?>
+        </article>
     </div>
 </div>
-<div class="container">
-<?php
-//    echo $this->navigation('admin_navigation')->breadcrumbs()
-//        ->setMinDepth(0)
-//        ->setPartial(array('breadcrumb', 'Admin'));
-//    ?>
-    <?php
-    $children = $this->viewModel()->getCurrent()->getChildren();
-    $ourView  = $children[0];
-    if (isset($ourView->flashMessages) && count($ourView->flashMessages)):?>
-        <?php foreach ($ourView->flashMessages as $messages):?>
-            <?php foreach ($messages as $key => $message):?>
-                <div class="alert alert-<?php echo $key;?>">
-                    <button type="button" class="close" data-dismiss="alert">×</button>
-                    <?php echo $message;?>
-                </div>
-            <?php endforeach;?>
-        <?php endforeach;?>
-    <?php endif; ?>
-    <?php echo $this->content; ?>
-    <hr>
-    <footer>
-        <p>&copy; 2016 <?php echo $this->translate('by');?> ESGI - Blog ZF2</p>
-    </footer>
-</div> <!-- /container -->
+<script src="/js/skel.min.js"></script>
+<script src="/js/main.js"></script>
 <?php echo $this->inlineScript() ?>
 </body>
 </html>

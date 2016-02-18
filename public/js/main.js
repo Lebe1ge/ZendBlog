@@ -14,6 +14,22 @@
 		xsmall:	'(max-width: 480px)'
 	});
 
+	$(".checkbox > label").click(function(event) {
+		event.preventDefault();
+		if($(this).hasClass("checked"))
+			$(this).removeClass("checked");
+		else
+			$(this).addClass("checked");
+	});
+
+	$(".checkbox > label").focus(function(event) {
+		event.preventDefault();
+		if($(this).hasClass("focus"))
+			$(this).removeClass("focus");
+		else
+			$(this).addClass("focus");
+	});
+
 	$(function() {
 
 		var	$window = $(window),

@@ -21,14 +21,6 @@ class PostForm extends Form implements ObjectManagerAwareInterface
             'type' => 'Hidden',
         ));
 
-        /*$this->add(
-            array(
-                'name' => 'csrf',
-                'type' => 'Csrf',
-            )
-        );
-        */
-
         $this->add(array(
             'name' => 'title',
             'type' => 'text',
@@ -73,6 +65,9 @@ class PostForm extends Form implements ObjectManagerAwareInterface
                 'object_manager' => $this->getObjectManager(),
                 'target_class'   => 'Application\Entity\Tag',
                 'property'       => 'name',
+                'attributes' => array(
+                    'id' => 'tag_name',
+                ),
             )
         ));
 
