@@ -22,6 +22,9 @@ use Application\Entity\Comment;
  use Doctrine\ORM\Tools\Pagination\Paginator as ORMPaginator;
  use Zend\Paginator\Paginator;
 
+  use Zend\Paginator\Adapter\ArrayAdapter;
+  use Zend\Zend_Paginator;
+
 class PostController extends AbstractActionController
 {
 
@@ -35,17 +38,14 @@ class PostController extends AbstractActionController
         }
 
         $view =  new ViewModel();
-   
-       $entityManager = $this->getServiceLocator()->get('doctrine.entitymanager.orm_default');
-       $repository = $entityManager->getRepository('Application\Entity\Post');
 
-       $adapter = new DoctrineAdapter(new ORMPaginator($repository->createQueryBuilder('post')));
-       $paginator = new Paginator($adapter);
-       $paginator->setDefaultItemCountPerPage(2);
+        $paginator = new Paginator(new ArrayAdapter($posts));
+
+
+        $paginator->setDefaultItemCountPerPage(1);
        
-       //$page = (int)$this->params()->fromQuery(''); //GET 
 
-        $page=  (int)$this->params()->fromRoute('page');
+        $page = (int)$this->params()->fromRoute('page');
 
        if($page) $paginator->setCurrentPageNumber($page);
        
