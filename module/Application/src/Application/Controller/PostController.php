@@ -35,7 +35,7 @@ class PostController extends AbstractActionController
         foreach($posts as $post){
             $post->category = $this->getServiceLocator()->get('Application\Service\CategoryService')->getById($post->category_id);
             $post->author = $this->getServiceLocator()->get('Application\Service\UserService')->getById($post->author);
-            if(is_array($post->tags))
+            if(!empty($post->tags))
                 $post->tags = $this->getServiceLocator()->get('Application\Service\TagService')->getByArrayId($post->tags);
         }
 
@@ -92,9 +92,12 @@ class PostController extends AbstractActionController
         $post->category = $this->getServiceLocator()->get('Application\Service\CategoryService')->getById($post->category_id);
         $post->author = $this->getServiceLocator()->get('Application\Service\UserService')->getById($post->author);
         $post->comments = $this->getServiceLocator()->get('Application\Service\CommentService')->getByPostId($post->post_id);
-        if($post->tags)
+
+        if(!empty($post->tags))
             $post->tags = $this->getServiceLocator()->get('Application\Service\TagService')->getByArrayId($post->tags);
         $formComment->setData(array("post_id" => $post->post_id));
+
+
 
         return new ViewModel(array(
             'post' => $post,

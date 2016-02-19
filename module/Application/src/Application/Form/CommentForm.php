@@ -24,7 +24,7 @@ class CommentForm extends Form
             'name' => 'email',
             'type' => 'email',
             'options' => array(
-                'label' => 'email',
+                'label' => 'Email',
             ),
         ));
 
@@ -32,7 +32,7 @@ class CommentForm extends Form
             'name' => 'content',
             'type' => 'textarea',
             'options' => array(
-                'label' => 'content',
+                'label' => 'Contenue',
             ),
         ));
 

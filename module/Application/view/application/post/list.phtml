@@ -25,7 +25,7 @@
                     <li><a href="#" class="icon fa-comment">128</a></li>
                 </ul>
             </footer>
-            <?php if($post->tags): ?>
+            <?php if(!empty($post->tags)): ?>
             <footer>
                 <ul class="icons">
                     <?php foreach($post->tags as $tag): ?>

@@ -23,7 +23,7 @@ class PostService extends AbstractService
     {
         $data = $this->getRep()->findAll();
         foreach($data as $v){
-            if($v->tags)
+            if(!empty($v->tags))
                 $v->tags = explode("-", $v->tags);
         }
         return $data;
@@ -37,7 +37,8 @@ class PostService extends AbstractService
     public function getById($id)
     {
         $data = $this->getRep()->find($id);
-        $data->tags = explode("-", $data->tags);
+        if(!empty($data->tags))
+            $data->tags = explode("-", $data->tags);
         return $data;
     }
 
@@ -48,7 +49,10 @@ class PostService extends AbstractService
      */
     public function getPostByCategory($category)
     {
-        return $this->getRep()->findBy(array("category_id" => $category));
+        $data = $this->getRep()->findBy(array("category_id" => $category));
+        if(!empty($data->tags))
+            $data->tags = explode("-", $data->tags);
+        return $data;
     }
 
     /**

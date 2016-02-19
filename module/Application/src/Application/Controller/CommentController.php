@@ -79,7 +79,8 @@ class CommentController extends AbstractActionController
 
         return new ViewModel(
             array(
-                'form' => $formComment
+                'form' => $formComment,
+                'flashMessages' => $this->flashMessenger()->getMessages()
             )
         );
     }

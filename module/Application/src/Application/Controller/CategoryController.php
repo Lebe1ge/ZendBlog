@@ -46,9 +46,6 @@ class CategoryController extends AbstractActionController
         $view->setVariable('last', count($paginator));
         $view->setVariable('slugStr', $this->params('slug'));
 
-
-        
-
         return $view;
     }
 
