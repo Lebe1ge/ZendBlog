@@ -29,10 +29,6 @@ class CategoryController extends AbstractActionController
             $post->category = $this->getServiceLocator()->get('Application\Service\CategoryService')->getById($post->category_id);
             $post->author = $this->getServiceLocator()->get('Application\Service\UserService')->getById($post->author);
         }
-
-
-
-
         $view =  new ViewModel();
 
         $paginator = new Paginator(new ArrayAdapter($posts));
@@ -46,7 +42,7 @@ class CategoryController extends AbstractActionController
 
        if($page) $paginator->setCurrentPageNumber($page);
        
-       $view->setVariable('paginator',$paginator);
+        $view->setVariable('paginator',$paginator);
         $view->setVariable('last', count($paginator));
         $view->setVariable('slugStr', $this->params('slug'));
 
