@@ -28,11 +28,15 @@
         </article>
     <?php endforeach; ?>
     <!-- Pagination -->
-
-
-   <ul class="actions pagination">
+<?php if (!empty($post)): ?>
+    <ul class="actions pagination">
         <li><a href="<?= $this->url('list_category_page', array('slug' => $slugStr, 'page' => $paginator->getCurrentPageNumber()-1));?>" class="<?php if ($paginator->getCurrentPageNumber() == 1): echo"disabled" ?><?php endif ?> button big previous">Previous Page</a></li>
         <li><a href="<?= $this->url('list_category_page', array('slug' => $slugStr, 'page' => $paginator->getCurrentPageNumber()+1));?>" class="<?php if (intval($last) == $paginator->getCurrentPageNumber()): ?> disabled <?php endif ?>button big next">Next Page</a></li>
 
     </ul>
+<?php else : ?>
+    <h1>Aucun article pour cette categorie encore...</h1>
+<?php endif ?>
+
+   
 </div>
