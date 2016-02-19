@@ -487,13 +487,16 @@ print 'It took ' + i + ' iterations to sort the deck.';</code></pre>
 <!--            </div>-->
 <!--        </section>-->
 
-        <!-- Posts List -->
+        <!-- Category List -->
         <section>
             <h2>Catégories</h2>
-            <ul class="posts">
-                <?php echo $this->WidgetCategory(); ?>
-                <li><h4><a href="#">Music</a></h4></li>
-            </ul>
+            <?= $this->widgetCategory(); ?>
+        </section>
+
+        <!-- Tag List -->
+        <section>
+            <h2>Tags</h2>
+            <?= $this->widgetTag(); ?>
         </section>
 
         <!-- About -->

@@ -216,7 +216,6 @@ return array(
             'Application\Service\UserService' => 'Application\Service\Factory\UserServiceFactory',
             'Application\Service\CommentService' => 'Application\Service\Factory\CommentServiceFactory',
             'Application\Service\TagService' => 'Application\Service\Factory\TagServiceFactory',
-            'UserProfile' => 'Application\Service\CategoryServiceFactory'
         ),
         'aliases' => array(
             'translator' => 'MvcTranslator',
@@ -260,9 +259,9 @@ return array(
         ),
     ),
     'view_helpers' => array(
-        'invokables' => array(
-//            'widgetCategory' => 'Application\View\Helper\WidgetCategory'
-        ),
+        'invokables'=> array(
+//            'WidgetCategory' => 'Application\View\Helper\WidgetCategory'
+        )
     ),
     // Placeholder for console routes
     'console' => array(

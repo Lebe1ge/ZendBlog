@@ -10,18 +10,12 @@
 namespace Application\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Query;
 use Zend\View\Model\ViewModel;
-use Application\Form\CategoryForm;
-use Application\Entity\Category;
 
- use DoctrineORMModule\Paginator\Adapter\DoctrinePaginator as DoctrineAdapter;
- use Doctrine\ORM\Tools\Pagination\Paginator as ORMPaginator;
  use Zend\Paginator\Paginator;
-
  use Zend\Paginator\Adapter\ArrayAdapter;
-  use Zend\Zend_Paginator;
+use Zend\Zend_Paginator;
 
 class CategoryController extends AbstractActionController
 {
