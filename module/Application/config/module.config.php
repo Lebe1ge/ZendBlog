@@ -29,7 +29,7 @@ return array(
             'list_post_page' => array(
                 'type'    => 'segment',
                 'options' => array(
-                    'route'    => '/post[/:action][/:id]',
+                    'route'    => '/post[/page/[:page]]',
                     'constraints' => array(
                         'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
                         'id'     => '[0-9]+',
@@ -215,7 +215,7 @@ return array(
             'Application\Service\CategoryService' => 'Application\Service\Factory\CategoryServiceFactory',
             'Application\Service\UserService' => 'Application\Service\Factory\UserServiceFactory',
             'Application\Service\CommentService' => 'Application\Service\Factory\CommentServiceFactory',
-            'Application\Service\TagService' => 'Application\Service\Factory\TagServiceFactory'
+            'Application\Service\TagService' => 'Application\Service\Factory\TagServiceFactory',
         ),
         'aliases' => array(
             'translator' => 'MvcTranslator',
@@ -257,6 +257,11 @@ return array(
             __DIR__ . '/../view',
             'zfc-user' => __DIR__ . '/view',
         ),
+    ),
+    'view_helpers' => array(
+        'invokables'=> array(
+//            'WidgetCategory' => 'Application\View\Helper\WidgetCategory'
+        )
     ),
     // Placeholder for console routes
     'console' => array(

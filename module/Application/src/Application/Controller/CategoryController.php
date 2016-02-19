@@ -10,18 +10,12 @@
 namespace Application\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Query;
 use Zend\View\Model\ViewModel;
-use Application\Form\CategoryForm;
-use Application\Entity\Category;
 
- use DoctrineORMModule\Paginator\Adapter\DoctrinePaginator as DoctrineAdapter;
- use Doctrine\ORM\Tools\Pagination\Paginator as ORMPaginator;
  use Zend\Paginator\Paginator;
-
  use Zend\Paginator\Adapter\ArrayAdapter;
-  use Zend\Zend_Paginator;
+use Zend\Zend_Paginator;
 
 class CategoryController extends AbstractActionController
 {
@@ -33,23 +27,27 @@ class CategoryController extends AbstractActionController
         foreach($posts as $post){
             $post->category = $this->getServiceLocator()->get('Application\Service\CategoryService')->getById($post->category_id);
             $post->author = $this->getServiceLocator()->get('Application\Service\UserService')->getById($post->author);
-            $post->slug = $this->params('slug');
         }
 
-        
+
         $view =  new ViewModel();
 
         $paginator = new Paginator(new ArrayAdapter($posts));
 
 
-        $paginator->setDefaultItemCountPerPage(1);       
+
+        $paginator->setDefaultItemCountPerPage(1);
+       
 
         $page = (int)$this->params()->fromRoute('page');
 
        if($page) $paginator->setCurrentPageNumber($page);
        
        $view->setVariable('paginator',$paginator);
-       $view->setVariable('last', count($paginator));
+        $view->setVariable('last', count($paginator));
+
+
+        
 
         return $view;
     }

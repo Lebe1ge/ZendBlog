@@ -9,6 +9,8 @@
 
 namespace Application;
 
+use Application\View\Helper\WidgetCategory;
+use Application\View\Helper\WidgetTag;
 use Zend\Mvc\ModuleRouteListener;
 use Zend\Mvc\MvcEvent;
 
@@ -19,6 +21,7 @@ class Module
         $eventManager        = $e->getApplication()->getEventManager();
         $moduleRouteListener = new ModuleRouteListener();
         $moduleRouteListener->attach($eventManager);
+
     }
 
     public function getConfig()
@@ -36,4 +39,19 @@ class Module
             ),
         );
     }
+
+    public function getViewHelperConfig()
+    {
+        return array(
+            'factories' => array(
+                'WidgetCategory' => function($sm) {
+                    return new WidgetCategory($sm);
+                },
+                'WidgetTag' => function($sm) {
+                    return new WidgetTag($sm);
+                }
+            )
+        );
+    }
+
 }

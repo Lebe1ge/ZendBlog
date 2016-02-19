@@ -392,7 +392,8 @@ print 'It took ' + i + ' iterations to sort the deck.';</code></pre>
                             </div>
                             <div class="12u$">
                                 <ul class="actions">
-                                    <li><input type="submit" value="Send Message" /></li>
+                                    <li><input type="submi
+                                    t" value="Send Message" /></li>
                                     <li><input type="reset" value="Reset" /></li>
                                 </ul>
                             </div>
@@ -486,12 +487,16 @@ print 'It took ' + i + ' iterations to sort the deck.';</code></pre>
 <!--            </div>-->
 <!--        </section>-->
 
-        <!-- Posts List -->
+        <!-- Category List -->
         <section>
             <h2>Catégories</h2>
-            <ul class="posts">
-                <li><h4><a href="#">Music</a></h4></li>
-            </ul>
+            <?= $this->widgetCategory(); ?>
+        </section>
+
+        <!-- Tag List -->
+        <section>
+            <h2>Tags</h2>
+            <?= $this->widgetTag(); ?>
         </section>
 
         <!-- About -->

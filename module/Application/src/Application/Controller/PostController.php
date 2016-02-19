@@ -35,6 +35,8 @@ class PostController extends AbstractActionController
         foreach($posts as $post){
             $post->category = $this->getServiceLocator()->get('Application\Service\CategoryService')->getById($post->category_id);
             $post->author = $this->getServiceLocator()->get('Application\Service\UserService')->getById($post->author);
+            if(is_array($post->tags))
+                $post->tags = $this->getServiceLocator()->get('Application\Service\TagService')->getByArrayId($post->tags);
         }
 
         $view =  new ViewModel();
