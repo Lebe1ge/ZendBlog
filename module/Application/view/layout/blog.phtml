@@ -32,6 +32,8 @@
                 <?php if($this->zfcUserIdentity()): ?>
                     <li><a href="<?= $this->url('zfcadmin'); ?>">Administration</a></li>
                     <li><a href="<?= $this->url('zfcuser/logout'); ?>">Déconnexion</a></li>
+                    <div style="float:right; margin-right:15px"> Bonjour <?php echo $this->zfcUserIdentity()->getDisplayname(); ?> ! </div>
+
                 <?php endif?>
             </ul>
         </nav>

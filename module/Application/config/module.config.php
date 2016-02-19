@@ -233,12 +233,12 @@ return array(
     ),
     'controllers' => array(
         'invokables' => array(
-            'Application\Controller\Index'      => 'Application\Controller\IndexController',
-            'Application\Controller\Post'       => 'Application\Controller\PostController',
-            'Application\Controller\Category'   => 'Application\Controller\CategoryController',
-            'Application\Controller\Comment'    => 'Application\Controller\CommentController',
-            'Admin\Controller\User'             => 'Admin\Controller\UserController',
-            'Application\Controller\Tag'        => 'Application\Controller\TagController',
+            'Application\Controller\Index' => 'Application\Controller\IndexController',
+            'Application\Controller\Post' => 'Application\Controller\PostController',
+            'Application\Controller\Category' => 'Application\Controller\CategoryController',
+            'Application\Controller\Comment' => 'Application\Controller\CommentController',
+            'Admin\Controller\User' => 'Admin\Controller\UserController',
+            'Application\Controller\Tag' => 'Application\Controller\TagController',
         ),
     ),
     'view_manager' => array(
