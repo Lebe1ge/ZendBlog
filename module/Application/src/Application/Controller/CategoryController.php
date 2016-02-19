@@ -27,23 +27,23 @@ class CategoryController extends AbstractActionController
         foreach($posts as $post){
             $post->category = $this->getServiceLocator()->get('Application\Service\CategoryService')->getById($post->category_id);
             $post->author = $this->getServiceLocator()->get('Application\Service\UserService')->getById($post->author);
-            $post->slug = $this->params('slug');
         }
 
-        
+
         $view =  new ViewModel();
 
         $paginator = new Paginator(new ArrayAdapter($posts));
 
 
         $paginator->setDefaultItemCountPerPage(1);
-       
+
 
         $page = (int)$this->params()->fromRoute('page');
 
        if($page) $paginator->setCurrentPageNumber($page);
        
        $view->setVariable('paginator',$paginator);
+       $view->setVariable('slug', $this->params('slug'));
 
 
         return $view;
