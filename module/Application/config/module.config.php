@@ -29,7 +29,7 @@ return array(
             'list_post_page' => array(
                 'type'    => 'segment',
                 'options' => array(
-                    'route'    => '/post[/:action][/:id]',
+                    'route'    => '/post[/page/[:page]]',
                     'constraints' => array(
                         'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
                         'id'     => '[0-9]+',

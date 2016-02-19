@@ -38,8 +38,8 @@
     <?php endforeach; ?>
     <!-- Pagination -->
     <ul class="actions pagination">
-        <li><a href="<?= $this->url('list_category_page', array('page' => $paginator->getCurrentPageNumber()-1)); ?>" class="button big previous<?php if (!$tmp){echo"disabled";} ?>">Previous Page</a></li>
+        <li><a href="<?= $this->url('list_post_page', array('page' => $paginator->getCurrentPageNumber()-1)); ?>" class="button big previous<?php if (!$tmp){echo"disabled";} ?>">Previous Page</a></li>
 
-        <li><a href="<?= $this->url('list_category_page', array('page' => $paginator->getCurrentPageNumber()+1)); ?>" class="button big next">Next Page</a></li>
+        <li><a href="<?= $this->url('list_post_page', array('page' => $paginator->getCurrentPageNumber()+1)); ?>" class="button big next">Next Page</a></li>
     </ul>
 </div>
