@@ -50,6 +50,7 @@ class PostController extends AbstractActionController
        if($page) $paginator->setCurrentPageNumber($page);
        
        $view->setVariable('paginator',$paginator);
+        $view->setVariable('last', count($paginator));
 
 
         return $view;

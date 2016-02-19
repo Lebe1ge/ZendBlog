@@ -38,9 +38,10 @@
     <?php endforeach; ?>
     <!-- Pagination -->
     <ul class="actions pagination">
-        <li><a href="http://blog-zend.com/page/<?php $tmp= $paginator->getCurrentPageNumber()-1; echo $tmp;?>" class="<?php if ($tmp == 0): echo"disabled" ?>
+        <li><a href="<?= $this->url('home', array('page' => $paginator->getCurrentPageNumber()-1)); ?>" class="<?php if ($paginator->getCurrentPageNumber() == '1'): echo"disabled" ?>
             
         <?php endif ?> button big previous">Previous Page</a></li>
-        <li><a href="http://blog-zend.com/page/<?php  $tmp= $paginator->getCurrentPageNumber()+1; echo $tmp;?>" class="button big next">Next Page</a></li>
+        <li><a href="<?= $this->url('home', array('page' => $paginator->getCurrentPageNumber()+1)); ?>" 
+            class="<?php if (intval($last) == $paginator->getCurrentPageNumber()): ?> disabled <?php endif ?> button big next">Next Page</a></li>
     </ul>
 </div>

@@ -42,15 +42,14 @@ class CategoryController extends AbstractActionController
         $paginator = new Paginator(new ArrayAdapter($posts));
 
 
-        $paginator->setDefaultItemCountPerPage(1);
-       
+        $paginator->setDefaultItemCountPerPage(1);       
 
         $page = (int)$this->params()->fromRoute('page');
 
        if($page) $paginator->setCurrentPageNumber($page);
        
        $view->setVariable('paginator',$paginator);
-
+       $view->setVariable('last', count($paginator));
 
         return $view;
     }

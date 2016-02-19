@@ -15,7 +15,7 @@ $settings = array(
 
     //'user_login_widget_view_template' => 'zfc-user/user/login.phtml',
     'login_redirect_route' => 'admin',
-    'logout_redirect_route' => '/',
+    'logout_redirect_route' => 'home',
 
     //'password_cost' => 14,
     //'enable_user_state' => true,
@@ -37,3 +37,8 @@ return array(
         ),
     ),
 );
+
+
+
+
+
