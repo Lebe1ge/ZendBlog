@@ -28,25 +28,23 @@ use Application\Entity\Comment;
 class PostController extends AbstractActionController
 {
 
-    public function listAction()
+    public function listAction($pas = 2)
     {
         // //entity manager c'est posts $entityManager
         $posts = $this->getServiceLocator()->get('Application\Service\PostService')->getAll();
-        foreach($posts as $post){
+        foreach($posts as $k => $post){
             $post->category = $this->getServiceLocator()->get('Application\Service\CategoryService')->getById($post->category_id);
             $post->author = $this->getServiceLocator()->get('Application\Service\UserService')->getById($post->author);
-            if(!empty($post->tags))
-                $post->tags = $this->getServiceLocator()->get('Application\Service\TagService')->getByArrayId($post->tags);
-        }
+            if(is_array($post->tags))
+                $posts[$k]->tags = $this->getServiceLocator()->get('Application\Service\TagService')->getByArrayId($post->tags);
+            }
 
         $view =  new ViewModel();
 
         $paginator = new Paginator(new ArrayAdapter($posts));
 
 
-        $paginator->setDefaultItemCountPerPage(1);
-       
-
+        $paginator->setDefaultItemCountPerPage($pas);
         $page = (int)$this->params()->fromRoute('page');
 
        if($page) $paginator->setCurrentPageNumber($page);
@@ -92,9 +90,10 @@ class PostController extends AbstractActionController
         $post->category = $this->getServiceLocator()->get('Application\Service\CategoryService')->getById($post->category_id);
         $post->author = $this->getServiceLocator()->get('Application\Service\UserService')->getById($post->author);
         $post->comments = $this->getServiceLocator()->get('Application\Service\CommentService')->getByPostId($post->post_id);
-
-        if(!empty($post->tags))
+        if(is_array($post->tags)) {
             $post->tags = $this->getServiceLocator()->get('Application\Service\TagService')->getByArrayId($post->tags);
+        }
+
         $formComment->setData(array("post_id" => $post->post_id));
 
 

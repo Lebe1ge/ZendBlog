@@ -26,9 +26,9 @@
         <nav class="links">
             <ul>
                 <li><a href="/">Home</a></li>
-                <li><a href="/category/news">News</a></li>
-                <li><a href="/category/music">Music</a></li>
-                <li><a href="/category/events">Events</a></li>
+                <li><a href="/category/news/page/1">News</a></li>
+                <li><a href="/category/music/page/1">Music</a></li>
+                <li><a href="/category/events/page/1">Events</a></li>
                 <?php if($this->zfcUserIdentity()): ?>
                     <li><a href="<?= $this->url('zfcadmin'); ?>">Administration</a></li>
                     <li><a href="<?= $this->url('zfcuser/logout'); ?>">Déconnexion</a></li>
@@ -106,6 +106,18 @@
         </section>
 
     </section>
+
+    <?php
+        if (isset($ourView->flashMessages) && count($ourView->flashMessages)):?>
+            <?php foreach ($ourView->flashMessages as $messages):?>
+                <?php foreach ($messages as $key => $message):?>
+                    <div class="alert alert-<?php echo $key;?>">
+                        <button type="button" class="close" data-dismiss="alert">×</button>
+                        <?php echo $message;?>
+                    </div>
+                <?php endforeach;?>
+            <?php endforeach;?>
+        <?php endif; ?>
 
     <?php  echo $this->content; ?>
 

@@ -46,6 +46,14 @@ class PostForm extends Form implements ObjectManagerAwareInterface
         ));
 
         $this->add(array(
+            'name' => 'path_picture',
+            'type' => 'text',
+            'options' => array(
+                'label' => 'Url de l\'image',
+            ),
+        ));
+
+        $this->add(array(
             'type' => 'DoctrineModule\Form\Element\ObjectSelect',
             'name' => 'category_id',
             'options' => array(

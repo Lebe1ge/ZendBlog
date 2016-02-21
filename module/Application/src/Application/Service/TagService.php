@@ -49,7 +49,7 @@ class TagService extends AbstractService
     public function getByArrayId($array)
     {
         foreach($array as $k => $v){
-            $array[$k] = $this->getRep()->findOneBy(array('tag_id'=>$v));;
+            $array[$k] = $this->getRep()->findOneBy(array('tag_id'=>$v));
         }
         return $array;
     }

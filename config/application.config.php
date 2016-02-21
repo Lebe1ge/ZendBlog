@@ -7,7 +7,7 @@
  */
 return array(
     'modules' => array(
-        'ZendDeveloperTools',
+//        'ZendDeveloperTools',
         'DoctrineModule',
         'DoctrineORMModule',
         'ZfcAdmin',

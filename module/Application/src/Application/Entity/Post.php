@@ -194,9 +194,8 @@ class Post implements InputFilterAwareInterface
                     array('name' => 'Int'),
                 ),
             ));
-            /*$inputFilter->add(array(
+            $inputFilter->add(array(
                 'name'     => 'path_picture',
-                'required' => true,
                 'filters'  => array(
                     array('name' => 'StripTags'),
                     array('name' => 'StringTrim'),
@@ -211,7 +210,7 @@ class Post implements InputFilterAwareInterface
                     ),
                 ),
             ));
-            */
+
             $this->inputFilter = $inputFilter;
         }
         return $this->inputFilter;

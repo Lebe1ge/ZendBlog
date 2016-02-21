@@ -20,14 +20,16 @@ use Zend\Zend_Paginator;
 class CategoryController extends AbstractActionController
 {
 
-    public function listAction()
+    public function listAction($pas = 2)
     {
 
         $category = $this->getServiceLocator()->get('Application\Service\CategoryService')->getCategoryBySlug($this->params('slug'));
         $posts = $this->getServiceLocator()->get('Application\Service\PostService')->getPostByCategory($category->category_id);
-        foreach($posts as $post){
+        foreach($posts as $k => $post){
             $post->category = $this->getServiceLocator()->get('Application\Service\CategoryService')->getById($post->category_id);
             $post->author = $this->getServiceLocator()->get('Application\Service\UserService')->getById($post->author);
+            if(is_array($post->tags))
+                $posts[$k]->tags = $this->getServiceLocator()->get('Application\Service\TagService')->getByArrayId($post->tags);
         }
         $view =  new ViewModel();
 
@@ -35,7 +37,7 @@ class CategoryController extends AbstractActionController
 
 
 
-        $paginator->setDefaultItemCountPerPage(1);
+        $paginator->setDefaultItemCountPerPage($pas);
        
 
         $page = (int)$this->params()->fromRoute('page');

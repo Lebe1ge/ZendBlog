@@ -16,28 +16,42 @@ use Zend\View\Model\ViewModel;
 use Application\Form\TagForm;
 use Application\Entity\Tag;
 
+
+use Zend\Paginator\Paginator;
+use Zend\Paginator\Adapter\ArrayAdapter;
+use Zend\Zend_Paginator;
 class TagController extends AbstractActionController
 {
 
-    public function listAction()
+    public function listAction($pas = 2)
     {
+
         $tag = $this->getServiceLocator()->get('Application\Service\TagService')->getTagBySlug($this->params('slug'));
-        $posts = $this->getServiceLocator()->get('Application\Service\PostService')->getAll();
+        $posts = $this->getServiceLocator()->get('Application\Service\PostService')->getPostByTag($tag->tag_id);
         foreach($posts as $k => $post){
             $post->category = $this->getServiceLocator()->get('Application\Service\CategoryService')->getById($post->category_id);
             $post->author = $this->getServiceLocator()->get('Application\Service\UserService')->getById($post->author);
-
-            if(is_array($post->tags)) {
-                $post->tags = $this->getServiceLocator()->get('Application\Service\TagService')->getByArrayId($post->tags);
-                if(!in_array($tag, $post->tags))
-                    unset($posts[$k]);
-            } else {
-                unset($posts[$k]);
-            }
+            if(is_array($post->tags))
+                $posts[$k]->tags = $this->getServiceLocator()->get('Application\Service\TagService')->getByArrayId($post->tags);
         }
-        return new ViewModel(array(
-            'posts' => $posts,
-        ));
+        $view =  new ViewModel();
+
+        $paginator = new Paginator(new ArrayAdapter($posts));
+
+
+
+        $paginator->setDefaultItemCountPerPage($pas);
+
+
+        $page = (int)$this->params()->fromRoute('page');
+
+        if($page) $paginator->setCurrentPageNumber($page);
+
+        $view->setVariable('paginator',$paginator);
+        $view->setVariable('last', count($paginator));
+        $view->setVariable('slugStr', $this->params('slug'));
+
+        return $view;
     }
 
     public function showAction()

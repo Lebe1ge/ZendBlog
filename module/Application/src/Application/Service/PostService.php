@@ -23,7 +23,7 @@ class PostService extends AbstractService
     {
         $data = $this->getRep()->findAll();
         foreach($data as $v){
-            if(!empty($v->tags))
+            if($v->tags)
                 $v->tags = explode("-", $v->tags);
         }
         return $data;
@@ -37,8 +37,9 @@ class PostService extends AbstractService
     public function getById($id)
     {
         $data = $this->getRep()->find($id);
-        if(!empty($data->tags))
+        if($data->tags) {
             $data->tags = explode("-", $data->tags);
+        }
         return $data;
     }
 
@@ -50,8 +51,33 @@ class PostService extends AbstractService
     public function getPostByCategory($category)
     {
         $data = $this->getRep()->findBy(array("category_id" => $category));
-        if(!empty($data->tags))
-            $data->tags = explode("-", $data->tags);
+        foreach($data as $v){
+            if($v->tags)
+                $v->tags = explode("-", $v->tags);
+        }
+        return $data;
+    }
+
+    /**
+     * Obtient un post par son id
+     * @param string category
+     * @return Application\Entity\Post
+     */
+    public function getPostByTag($tag)
+    {
+        $data = $this->getRep()->findAll();
+        foreach($data as $k => $v){
+            if($v->tags) {
+                $v->tags = explode("-", $v->tags);
+                $check = false;
+                foreach($v->tags as $post){
+                    if($tag == $post){$check = true;break;}
+                }
+                if(!$check)
+                    unset($data[$k]);
+            }
+            else unset($data[$k]);
+        }
         return $data;
     }
 

@@ -21,7 +21,7 @@
                 <li><a href="#" class="icon fa-comment">128</a></li>
             </ul>
         </footer>
-        <?php if($post->tags): ?>
+        <?php if(is_array($post->tags)):?>
         <footer>
             <ul class="icons">
                 <?php foreach($post->tags as $tag): ?>
@@ -43,7 +43,10 @@
         echo $this->form()->openTag($form);
         echo $this->formHidden($form->get('comment_id'));
         echo $this->formHidden($form->get('post_id'));
-        echo $this->formRow($form->get('email'));
+        if($this->zfcUserIdentity())
+            echo $this->formRow($form->get('email')->setValue($this->zfcUserIdentity()->getEmail()));
+        else
+            echo $this->formRow($form->get('email'));
         echo $this->formRow($form->get('content'));
         echo $this->formSubmit($form->get('submit'));
         echo $this->form()->closeTag();?>
