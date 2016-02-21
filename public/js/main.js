@@ -16,10 +16,14 @@
 
 	$(".checkbox > label").click(function(event) {
 		event.preventDefault();
-		if($(this).hasClass("checked"))
+		if($(this).hasClass("checked")) {
 			$(this).removeClass("checked");
-		else
+			$(this).find("input").removeAttr('checked');
+		}
+		else {
 			$(this).addClass("checked");
+			$(this).find("input").attr('checked', 'checked');
+		}
 	});
 
 	$(".checkbox > label").focus(function(event) {
