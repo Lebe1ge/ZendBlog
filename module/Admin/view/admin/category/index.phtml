@@ -1,0 +1,31 @@
+<div class="table-wrapper">
+    <h4><a href="<?= $this->url('zfcadmin/category', array('action' => 'add')) ?>"><i class="fam-add"></i>Nouvelle catégorie</a></h4>
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>Catégorie</th>
+            <th>Slug</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($category as $cat):?>
+            <tr>
+                <td><?php echo $cat->category_id; ?></td>
+                <td><?php echo $cat->name; ?></td>
+                <td><?php echo $cat->slug; ?></td>
+                <td>
+                    <?php
+                    $urlEdit = $this->url('zfcadmin/category', array('action' => 'edit', 'id' =>$cat->category_id));
+                    $urlDelete = $this->url('zfcadmin/category', array('action' => 'delete', 'id' =>$cat->category_id));
+                    ?>
+                    <a href="<?php echo $urlEdit;?>"><i class="fam-pencil"></i></a>
+                    <a href="<?php echo $urlDelete;?>"><i class="fam-delete"></i></a>
+                </td>
+            </tr>
+        <?php endforeach;?>
+        </tbody>
+    </table>
+<!--    --><?php //echo $this->paginationControl($this->paginator, 'Sliding', 'paginator'); ?>
+</div>

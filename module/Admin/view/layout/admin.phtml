@@ -1,0 +1,79 @@
+<?php
+echo $this->doctype();
+?>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <?php echo $this->headTitle('ZfcAdmin - Zend Framework 2 Admin Interface')->setSeparator(' - ')->setAutoEscape(false) ?>
+    <?php echo $this->headMeta()->appendName('viewport', 'width=device-width, initial-scale=1.0') ?>
+    <!-- Le styles -->
+    <!--[if lte IE 8]><script src="/js/ie/html5shiv.js"></script><![endif]-->
+
+    <?php echo $this->headLink()->prependStylesheet('/css/main.css');?>
+    <!--[if lte IE 9]><link rel="stylesheet" href="/css/ie9.css" /><![endif]-->
+    <!--[if lte IE 8]><link rel="stylesheet" href="/css/ie8.css" /><![endif]-->
+    <?php echo $this->headLink()->prependStylesheet('/css/fam-icons.css');?>
+
+    <!-- Scripts -->
+    <?php echo $this->headScript()->prependFile('/js/bootstrap.min.js')
+        ->prependFile('//code.jquery.com/jquery.min.js')
+        ->prependFile('//html5shiv.googlecode.com/svn/trunk/html5.js', 'text/javascript', array('conditional' => 'lt IE 9',)) ?>
+</head>
+<body>
+
+<!-- Wrapper -->
+<div id="wrapper">
+
+    <!-- Header -->
+    <header id="header">
+        <h1><a href="<?php echo $this->url('zfcadmin')?>">GUETTAPEN :: Administration</a></h1>
+        <nav class="links">
+            <?php echo $this->navigation('admin_navigation')->menu()
+                ->setUlClass('nav')
+                ->setMinDepth(1)
+                ->setMaxDepth(1)
+                ->setRenderInvisible(false)->render();?>
+            <ul class="nav">
+                <li><a href="<?= $this->url('zfcuser/logout'); ?>">Déconnexion</a></li>
+            </ul>
+        </nav>
+        <nav class="main">
+            <ul>
+                <ul class="nav">
+                    <li><a class="fa-close" href="<?= $this->url('zfcuser/logout'); ?>">Déconnexion</a></li>
+                </ul>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Main -->
+    <div id="main">
+        <!-- Post -->
+
+        <article>
+            <?= $this->navigation('admin_navigation')->breadcrumbs()->setMinDepth(0)->setPartial(array('breadcrumb', 'Admin')); ?>
+            <?php
+            $children = $this->viewModel()->getCurrent()->getChildren();
+            $ourView  = $children[0];
+            if (isset($ourView->flashMessages) && count($ourView->flashMessages)):?>
+                <?php foreach ($ourView->flashMessages as $messages):?>
+                    <?php foreach ($messages as $key => $message):?>
+                        <div class="alert alert-<?php echo $key;?>">
+                            <button type="button" class="close" data-dismiss="alert">×</button>
+                            <?php echo $message;?>
+                        </div>
+                    <?php endforeach;?>
+                <?php endforeach;?>
+            <?php endif; ?>
+        </article>
+        <article class="post">
+            <?php echo $this->content; ?>
+        </article>
+    </div>
+</div>
+<script src="/js/skel.min.js"></script>
+<script src="/js/main.js"></script>
+<?php echo $this->inlineScript() ?>
+</body>
+</html>

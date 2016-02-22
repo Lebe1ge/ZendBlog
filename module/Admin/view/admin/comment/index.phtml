@@ -1,0 +1,28 @@
+<div class="container">
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>Article</th>
+            <th>Contenue</th>
+            <th>Auteur</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($comments as $comment):?>
+            <tr>
+                <td><?php echo $comment->comment_id; ?></td>
+                <td><?php echo $comment->content; ?></td>
+                <td> <a href="<?php echo $this->url('list_post_page', array('action' => 'show', 'id' => $comment->article->post_id))?>"><?php echo $comment->article->title; ?></a></td>
+                <td><?php echo $comment->author; ?></td>
+                <td>
+                    <?php $urlDelete = $this->url('zfcadmin/comment', array('action' => 'delete', 'id' => $comment->comment_id), null, false); ?>
+                    <a href="<?php echo $urlDelete;?>"><i class="fam-delete"></i></a>
+                </td>
+            </tr>
+        <?php endforeach;?>
+        </tbody>
+    </table>
+<!--    --><?php //echo $this->paginationControl($this->paginator, 'Sliding', 'paginator'); ?>
+</div>

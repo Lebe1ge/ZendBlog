@@ -1,0 +1,49 @@
+<!-- Main -->
+<div id="main">
+    <?php foreach ($paginator as $post): ?>
+        <!-- Post -->
+        <article id="<?= $post->post_id ?>" class="post">
+            <header>
+                <div class="title">
+                    <h2><a href="#"><?= $post->title ?></a></h2>
+                    <p></p>
+                </div>
+                <div class="meta">
+                    <time class="published" datetime="2015-11-01">November 1, 2015</time>
+                    <a href="#" class="author"><span class="name"><?= $post->author->getDisplayName() ?></span><img src="/img/avatar.jpg" alt="" /></a>
+                </div>
+            </header>
+            <a href="#" class="image featured"><img src="/img/pic01.jpg" alt="" /></a>
+            <p><?= $post->content ?></p>
+            <footer>
+                <ul class="actions">
+                    <li><a href="<?= $this->url('list_post_page', array('action' => 'show', 'id' => $post->post_id)); ?>" class="button big">En savoir plus</a></li>
+                </ul>
+                <ul class="stats">
+                    <li><a href="<?= $this->url('list_category_page', array('slug' => $post->category->slug)) ?>"><?= $post->category->name ?></a></li>
+                    <li><a href="#" class="icon fa-heart">28</a></li>
+                    <li><a href="#" class="icon fa-comment">128</a></li>
+                </ul>
+            </footer>
+
+            <?php if($post->tags): ?>
+                <footer>
+                    <ul class="icons">
+                        <?php foreach($post->tags as $tag): ?>
+                            <li><a href="<?= $this->url('list_tag_page', array('slug' => $tag->slug)) ?>" class="button small"><?= $tag->name ?></a></li>
+                        <?php endforeach; ?>
+                    </ul>
+                </footer>
+            <?php endif; ?>
+        </article>
+    <?php endforeach; ?>
+    <!-- Pagination -->
+    <?php if ($paginator): ?>
+        <ul class="actions pagination">
+            <li><a href="<?= $this->url('list_tag_page', array('slug' => $slugStr, 'page' => $paginator->getCurrentPageNumber()-1));?>" class="<?php if ($paginator->getCurrentPageNumber() == 1): echo"disabled" ?><?php endif ?> button big previous">Previous Page</a></li>
+            <li><a href="<?= $this->url('list_tag_page', array('slug' => $slugStr, 'page' => $paginator->getCurrentPageNumber()+1));?>" class="<?php if (intval($last) == $paginator->getCurrentPageNumber()): ?> disabled <?php endif ?>button big next">Next Page</a></li>
+        </ul>
+    <?php else : ?>
+        <h1>Aucun article pour cette categorie encore...</h1>
+    <?php endif ?>
+</div>
