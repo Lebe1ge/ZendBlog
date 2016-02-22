@@ -238,6 +238,7 @@ return array(
             'Application\Controller\Category' => 'Application\Controller\CategoryController',
             'Application\Controller\Comment' => 'Application\Controller\CommentController',
             'Admin\Controller\User' => 'Admin\Controller\UserController',
+            'Application\Controller\User' => 'Application\Controller\UserController',
             'Application\Controller\Tag' => 'Application\Controller\TagController',
         ),
     ),

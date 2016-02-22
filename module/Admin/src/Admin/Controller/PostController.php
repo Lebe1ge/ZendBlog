@@ -102,12 +102,14 @@ class PostController extends AbstractActionController
             if ($formPost->isValid()) {
                 // On enregistre ces données dans la table Post
                 $this->getServiceLocator()->get('Application\Service\PostService')->savePost($post);
+                $this->getServiceLocator()->get('Zend\Log')->info("L'article '{$post->title}' a été modifié");
                 $this->flashMessenger()->addMessage(array('success' => "L'article '{$post->title}' a été modifié"));                // Puis on redirige sur la page d'accueil.
 //                return $this->redirect()->toRoute('zfcadmin/post');
             }
             // Si le formulaire n'est pas valide, on reste sur la page et les erreurs apparaissent
             foreach ($formPost->getMessages() as $messageId => $messages) {
                 foreach($messages as $message) {
+                    $this->getServiceLocator()->get('Zend\Log')->err("Validation failure '$messageId': $message");
                     $this->flashMessenger()->addMessage(array('error' => "Validation failure '$messageId': $message"));
                 }
             }
@@ -129,6 +131,7 @@ class PostController extends AbstractActionController
             $post_title = $post->title;
             $this->getServiceLocator()->get('Application\Service\PostService')->deletePost($post->post_id);
 
+            $this->getServiceLocator()->get('Zend\Log')->info("L'article '{$post_title}' a été supprimée");
             $this->flashMessenger()->addMessage(array('success' => "L'article '{$post_title}' a été supprimée"));
             // Puis on redirige sur la page d'accueil.
             return $this->redirect()->toRoute('zfcadmin/post');

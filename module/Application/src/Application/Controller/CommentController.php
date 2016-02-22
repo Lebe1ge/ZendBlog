@@ -64,6 +64,7 @@ class CommentController extends AbstractActionController
 
                 // On enregistre ces données dans la table Comment
                 $this->getServiceLocator()->get('Application\Service\CommentService')->saveComment($comment);
+                $this->getServiceLocator()->get('Zend\Log')->info("Un commentaire a été ajoutée");
                 $this->flashMessenger()->addMessage(array('success' => "Votre commentaire a été ajoutée"));
                 // Puis on redirige sur la page d'accueil.
                 return $this->redirect()->toUrl($this->getRequest()->getServer('HTTP_REFERER'));
@@ -71,6 +72,7 @@ class CommentController extends AbstractActionController
                 // Si le formulaire n'est pas valide, on reste sur la page et les erreurs apparaissent
                 foreach ($formComment->getMessages() as $messageId => $messages) {
                     foreach ($messages as $message) {
+                        $this->getServiceLocator()->get('Zend\Log')->err("Validation failure '$messageId': $message");
                         $this->flashMessenger()->addMessage(array('error' => "Validation failure '$messageId': $message"));
                     }
                 }

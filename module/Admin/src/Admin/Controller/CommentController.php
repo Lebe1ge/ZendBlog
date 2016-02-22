@@ -28,6 +28,7 @@ class CommentController extends AbstractActionController
             $comment_author = $comment->author;
             $this->getServiceLocator()->get('Application\Service\CommentService')->deleteComment($comment->comment_id);
 
+            $this->getServiceLocator()->get('Zend\Log')->info("Le commentaire de '{$comment_author}' a été supprimée");
             $this->flashMessenger()->addMessage(array('success' => "Le commentaire de '{$comment_author}' a été supprimée"));
             // Puis on redirige sur la page d'accueil.
             return $this->redirect()->toRoute('zfcadmin/comment');

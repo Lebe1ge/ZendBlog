@@ -41,13 +41,14 @@ class CategoryController extends AbstractActionController
 
                 // On enregistre ces données dans la table Category
                 $this->getServiceLocator()->get('Application\Service\CategoryService')->saveCategory($category);
-
+                $this->getServiceLocator()->get('Zend\Log')->info("La catégorie '{$category->name}' a été ajoutée");
                 $this->flashMessenger()->addMessage(array('success' => "La catégorie '{$category->name}' a été ajoutée"));
                 // Puis on redirige sur la page d'accueil.
                 return $this->redirect()->toRoute('zfcadmin/category');
             } else {
                 // Si le formulaire n'est pas valide, on reste sur la page et les erreurs apparaissent
                 foreach ($formCategory->getMessages() as $messageId => $message) {
+                    $this->getServiceLocator()->get('Zend\Log')->err("Validation failure '$messageId': $message");
                     $this->flashMessenger()->addMessage(array('error' => "Validation failure '$messageId': $message"));
                 }
             }
@@ -93,11 +94,14 @@ class CategoryController extends AbstractActionController
             if ($formCategory->isValid()) {
                 // On enregistre ces données dans la table Category
                 $this->getServiceLocator()->get('Application\Service\CategoryService')->saveCategory($category);
+
+                $this->getServiceLocator()->get('Zend\Log')->info("La catégorie '{$category->name}' a été modifié");
                 $this->flashMessenger()->addMessage(array('success' => "La catégorie '{$category->name}' a été modifié"));                // Puis on redirige sur la page d'accueil.
                 return $this->redirect()->toRoute('zfcadmin/category');
             }
             // Si le formulaire n'est pas valide, on reste sur la page et les erreurs apparaissent
             foreach ($formCategory->getMessages() as $messageId => $message) {
+                $this->getServiceLocator()->get('Zend\Log')->err("Validation failure '$messageId': $message");
                 $this->flashMessenger()->addMessage(array('error' => "Validation failure '$messageId': $message"));
             }
         }
@@ -117,7 +121,7 @@ class CategoryController extends AbstractActionController
             $category = $this->getServiceLocator()->get('Application\Service\CategoryService')->getById($this->params('id'));
             $category_name = $category->name;
             $this->getServiceLocator()->get('Application\Service\CategoryService')->deleteCategory($category->category_id);
-
+            $this->getServiceLocator()->get('Zend\Log')->info("La catégorie '{$category->name}' a été supprimée");
             $this->flashMessenger()->addMessage(array('success' => "La catégorie '{$category_name}' a été supprimée"));
             // Puis on redirige sur la page d'accueil.
             return $this->redirect()->toUrl('zfcadmin/category');

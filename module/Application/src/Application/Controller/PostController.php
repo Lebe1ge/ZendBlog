@@ -24,6 +24,7 @@ use Application\Entity\Comment;
 
   use Zend\Paginator\Adapter\ArrayAdapter;
   use Zend\Zend_Paginator;
+use Zend\Log;
 
 class PostController extends AbstractActionController
 {

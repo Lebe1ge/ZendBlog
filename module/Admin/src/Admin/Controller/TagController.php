@@ -40,13 +40,14 @@ class TagController extends AbstractActionController
 
                 // On enregistre ces données dans la table Tag
                 $this->getServiceLocator()->get('Application\Service\TagService')->saveTag($tag);
-
+                $this->getServiceLocator()->get('Zend\Log')->info("Le tag '{$tag->name}' a été ajoutée");
                 $this->flashMessenger()->addMessage(array('success' => "Le tag '{$tag->name}' a été ajoutée"));
                 // Puis on redirige sur la page d'accueil.
                 return $this->redirect()->toRoute('zfcadmin/tag');
             } else {
                 // Si le formulaire n'est pas valide, on reste sur la page et les erreurs apparaissent
                 foreach ($formTag->getMessages() as $messageId => $message) {
+                    $this->getServiceLocator()->get('Zend\Log')->err("Validation failure '$messageId': $message");
                     $this->flashMessenger()->addMessage(array('error' => "Validation failure '$messageId': $message"));
                 }
             }
@@ -93,14 +94,15 @@ class TagController extends AbstractActionController
             if ($formTag->isValid()) {
                 // On enregistre ces données dans la table Tag
                 $this->getServiceLocator()->get('Application\Service\TagService')->saveTag($tag);
+                $this->getServiceLocator()->get('Zend\Log')->info("Le tag '{$tag->name}' a été modifié");
                 $this->flashMessenger()->addMessage(array('success' => "Le tag '{$tag->name}' a été modifié"));
                 // Puis on redirige sur la page d'accueil.
                 return $this->redirect()->toRoute('zfcadmin/tag');
             } else {
                 // Si le formulaire n'est pas valide, on reste sur la page et les erreurs apparaissent
                 foreach ($formTag->getMessages() as $messageId => $messages) {
-                    var_dump($messages);
                     foreach($messages as $message) {
+                        $this->getServiceLocator()->get('Zend\Log')->err("Validation failure '$messageId': $message");
                         $this->flashMessenger()->addMessage(array('error' => "Validation failure '$messageId': $message"));
                     }
                 }
@@ -122,7 +124,7 @@ class TagController extends AbstractActionController
             $tag = $this->getServiceLocator()->get('Application\Service\TagService')->getById($this->params('id'));
             $tag_name = $tag->name;
             $this->getServiceLocator()->get('Application\Service\TagService')->deleteTag($tag->tag_id);
-
+            $this->getServiceLocator()->get('Zend\Log')->info("La catégorie '{$tag_name}' a été supprimée");
             $this->flashMessenger()->addMessage(array('success' => "La catégorie '{$tag_name}' a été supprimée"));
             // Puis on redirige sur la page d'accueil.
             return $this->redirect()->toRoute('zfcadmin/tag');
