@@ -109,6 +109,9 @@ return array(
                 'type' => 'Zend\Mvc\Router\Http\Literal',
                 'options' => array(
                     'route' => '', // the route is void isntead of default 'user'
+                    'defaults' => array(
+                        'controller' => 'Application\Controller\User',
+                    ),
                 ),
             ),
             'zfcuser_login' => array(
@@ -116,7 +119,7 @@ return array(
                 'options' => array(
                     'route' => '/login',
                     'defaults' => array(
-                        'controller' => 'zfcuser',
+                        'controller' => 'Application\Controller\User',
                         'action' => 'login',
                     ),
                 ),
@@ -126,7 +129,7 @@ return array(
                 'options' => array(
                     'route' => '/authenticate',
                     'defaults' => array(
-                        'controller' => 'zfcuser',
+                        'controller' => 'Application\Controller\User',
                         'action' => 'authenticate',
                     ),
                 ),
@@ -136,7 +139,7 @@ return array(
                 'options' => array(
                     'route' => '/logout',
                     'defaults' => array(
-                        'controller' => 'zfcuser',
+                        'controller' => 'Application\Controller\User',
                         'action'     => 'logout',
                     ),
                 ),
@@ -146,7 +149,7 @@ return array(
                 'options' => array(
                     'route' => '/register',
                     'defaults' => array(
-                        'controller' => 'zfcuser',
+                        'controller' => 'Application\Controller\User',
                         'action'     => 'register',
                     ),
                 ),
@@ -156,7 +159,7 @@ return array(
                 'options' => array(
                     'route' => '/change-password',
                     'defaults' => array(
-                        'controller' => 'zfcuser',
+                        'controller' => 'Application\Controller\User',
                         'action'     => 'changepassword',
                     ),
                 ),
@@ -166,7 +169,7 @@ return array(
                 'options' => array(
                     'route' => '/change-email',
                     'defaults' => array(
-                        'controller' => 'zfcuser',
+                        'controller' => 'Application\Controller\User',
                         'action' => 'changeemail',
                     ),
                 ),
@@ -238,9 +241,20 @@ return array(
             'Application\Controller\Category' => 'Application\Controller\CategoryController',
             'Application\Controller\Comment' => 'Application\Controller\CommentController',
             'Admin\Controller\User' => 'Admin\Controller\UserController',
-            'Application\Controller\User' => 'Application\Controller\UserController',
+//            'zfcuser' => 'Application\Controller\UserController',
             'Application\Controller\Tag' => 'Application\Controller\TagController',
         ),
+        'factories' => array(
+            'Application\Controller\User' => function($controllerManager) {
+                /* @var ControllerManager $controllerManager*/
+                $serviceManager = $controllerManager->getServiceLocator();
+                /* @var RedirectCallback $redirectCallback */
+                $redirectCallback = $serviceManager->get('zfcuser_redirect_callback');
+                /* @var UserController $controller */
+                $controller = new UserController($redirectCallback);
+                return $controller;
+            },
+        )
     ),
     'view_manager' => array(
         'display_not_found_reason' => true,

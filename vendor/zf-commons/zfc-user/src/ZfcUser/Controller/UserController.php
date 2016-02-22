@@ -111,7 +111,6 @@ class UserController extends AbstractActionController
         $form->setData($request->getPost());
 
         if (!$form->isValid()) {
-            $this->getServiceLocator()->get('Zend\Log')->info("Erreur login");
             $this->flashMessenger()->setNamespace('zfcuser-login-form')->addMessage($this->failedLoginMessage);
             return $this->redirect()->toUrl($this->url()->fromRoute(static::ROUTE_LOGIN).($redirect ? '?redirect='. rawurlencode($redirect) : ''));
         }
@@ -132,10 +131,9 @@ class UserController extends AbstractActionController
         $this->zfcUserAuthentication()->getAuthAdapter()->logoutAdapters();
         $this->zfcUserAuthentication()->getAuthService()->clearIdentity();
 
-//        $redirect = $this->redirectCallback;
-        return $this->redirect()->toRoute('home');
+        $redirect = $this->redirectCallback;
 
-//        return $redirect();
+        return $redirect();
     }
 
     /**
@@ -143,7 +141,6 @@ class UserController extends AbstractActionController
      */
     public function authenticateAction()
     {
-
         if ($this->zfcUserAuthentication()->hasIdentity()) {
             return $this->redirect()->toRoute($this->getOptions()->getLoginRedirectRoute());
         }
@@ -161,8 +158,6 @@ class UserController extends AbstractActionController
         $auth = $this->zfcUserAuthentication()->getAuthService()->authenticate($adapter);
 
         if (!$auth->isValid()) {
-            $this->getServiceLocator()->get('Zend\Log')->info("Erreur login");
-
             $this->flashMessenger()->setNamespace('zfcuser-login-form')->addMessage($this->failedLoginMessage);
             $adapter->resetAdapters();
             return $this->redirect()->toUrl(
@@ -171,13 +166,9 @@ class UserController extends AbstractActionController
             );
         }
 
+        $redirect = $this->redirectCallback;
 
-        $this->getServiceLocator()->get('Zend\Log')->info("Connexion réussie");
-
-//        $redirect = $this->redirectCallback;
-        return $this->redirect()->toRoute('home');
-
-//        return $redirect();
+        return $redirect();
     }
 
     /**
