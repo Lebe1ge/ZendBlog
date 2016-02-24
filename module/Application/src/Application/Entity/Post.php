@@ -118,7 +118,7 @@ class Post implements InputFilterAwareInterface
      *
      * @param array $data
      */
-    public function exchangeArray ($data = array())
+    public function exchangeArray ($data)
     {
         $this->post_id = (isset($data['post_id'])) ? $data['post_id'] : null;
         $this->title = (isset($data['title'])) ? $data['title'] : null;

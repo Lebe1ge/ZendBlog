@@ -16,6 +16,12 @@ use Zend\View\Model\ViewModel;
 use Application\Form\CommentForm;
 use Application\Entity\Comment;
 use Zend\Form\Element;
+use Zend\Log;
+use Zend\Mail\Message;
+use Zend\Mail\Transport\Smtp as SmtpTransport;
+use Zend\Mime\Message as MimeMessage;
+use Zend\Mime\Part as MimePart;
+use Zend\Mail\Transport\SmtpOptions;
 
 class CommentController extends AbstractActionController
 {
@@ -62,6 +68,10 @@ class CommentController extends AbstractActionController
                 // On prend les données du formulaire qui sont converti pour correspondre à notre modèle Comment
                 $comment->exchangeArray($formComment->getData());
 
+                $destinataire = $formComment->getData()['email'];
+
+                $this->sendMail($formComment->getData()['email']);
+
                 // On enregistre ces données dans la table Comment
                 $this->getServiceLocator()->get('Application\Service\CommentService')->saveComment($comment);
                 $this->getServiceLocator()->get('Zend\Log')->info("Un commentaire a été ajoutée");
@@ -85,6 +95,36 @@ class CommentController extends AbstractActionController
                 'flashMessages' => $this->flashMessenger()->getMessages()
             )
         );
+    }
+
+    public function sendMail($destinataire){
+
+        $message = new Message();
+        $message->addTo($destinataire)
+            ->addFrom('blog.zend@gmail.com')
+            ->setSubject('Merci pour votre commentaire');
+
+        // Setup SMTP transport using LOGIN authentication
+        $transport = new SmtpTransport();
+        $options   = new SmtpOptions(array(
+            'host'              => 'smtp.gmail.com',
+            'connection_class'  => 'login',
+            'connection_config' => array(
+                'ssl'       => 'tls',
+                'username' => 'lauctonflow@gmail.com',
+                'password' => 'Fucklapolice95',
+//                'username' => 'scarpa.zend@gmail.com',
+//                'password' => 'scarpa1234'
+            ),
+            'port' => 587,
+        ));
+        $html = new MimePart('Merci pour votre commentaire et bonne navigation.');
+        $html->type = "text/html";
+        $body = new MimeMessage();
+        $body->addPart($html);
+        $message->setBody($body);
+        $transport->setOptions($options);
+        $transport->send($message);
     }
 
 }

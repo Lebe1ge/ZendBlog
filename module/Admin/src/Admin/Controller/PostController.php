@@ -96,15 +96,16 @@ class PostController extends AbstractActionController
             $formPost->setInputFilter($post->getInputFilter());
             $formPost->setData($request->getPost());
 
-            var_dump(($request->getPost()));
+
 
             // Si le formulaire est valide
             if ($formPost->isValid()) {
+
                 // On enregistre ces données dans la table Post
                 $this->getServiceLocator()->get('Application\Service\PostService')->savePost($post);
                 $this->getServiceLocator()->get('Zend\Log')->info("L'article '{$post->title}' a été modifié");
                 $this->flashMessenger()->addMessage(array('success' => "L'article '{$post->title}' a été modifié"));                // Puis on redirige sur la page d'accueil.
-//                return $this->redirect()->toRoute('zfcadmin/post');
+                return $this->redirect()->toRoute('zfcadmin/post');
             }
             // Si le formulaire n'est pas valide, on reste sur la page et les erreurs apparaissent
             foreach ($formPost->getMessages() as $messageId => $messages) {

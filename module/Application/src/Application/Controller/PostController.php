@@ -77,9 +77,11 @@ class PostController extends AbstractActionController
             if ($formComment->isValid()) {
                 // On prend les données du formulaire qui sont converti pour correspondre à notre modèle Post
                 $comment->exchangeArray($formComment->getData());
-
+                var_dump($formComment->getData());
+                $this->getServiceLocator()->get('Zend\Log')->info("Un commentaire ajouté !");
+                $this->sendMail($formComment->getData());
                 // On enregistre ces données dans la table Post
-                $this->getServiceLocator()->get('Application\Service\CommentService')->saveComment($comment);
+//                $this->getServiceLocator()->get('Application\Service\CommentService')->saveComment($comment);
 
                 // Puis on redirige sur la page d'accueil.
                 return $this->redirect()->toUrl('/');
@@ -106,4 +108,6 @@ class PostController extends AbstractActionController
             'flashMessages' => $this->flashMessenger()->getMessages()
         ));
     }
+
+
 }
